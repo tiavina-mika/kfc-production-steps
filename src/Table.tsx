@@ -5,8 +5,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
+import { Collapse, IconButton } from "@mui/material";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useState } from "react";
 
 // ----------------------------------------------- //
 // --------------------- utils ------------------- //
@@ -122,6 +127,8 @@ const StyledTableHeadCell = styled(TableCell, {
 });
 
 const Table = () => {
+  const [openSectionRow, setOpenSectionRow] = useState<boolean>(false);
+  
   return (
     <TableContainer
       style={{
@@ -160,26 +167,44 @@ const Table = () => {
         </TableHead>
         <TableBody>
           {sections.map((section, index) => (
-            <TableRow key={section.name + index}>
-              <TableCell
-                sx={{ ...sx.sticky, backgroundColor: "#fff" }}
-                component="th"
-                scope="row"
-              >
-                {section.name}
-              </TableCell>
-              <TableCell align="center">{section.inputWeight}</TableCell>
-              <TableCell align="center">{section.pricePerKg}</TableCell>
-              <TableCell align="center">{section.foodcost}</TableCell>
-              <TableCell align="center">{section.transformation}</TableCell>
-              <TableCell align="center">{section.transformationRate}</TableCell>
-              <TableCell align="center">{section.outputWeight}</TableCell>
-              <TableCell align="center">{section.kitchenArea}</TableCell>
-              <TableCell align="center">{section.machineType}</TableCell>
-              <TableCell align="center">{section.machineSetting}</TableCell>
-              <TableCell align="center">{section.stepDurationValue}</TableCell>
-              <TableCell align="center">{section.stepDurationUnit}</TableCell>
-            </TableRow>
+            <>
+              <TableRow key={section.name + index}>
+                <TableCell
+                  sx={{ ...sx.sticky, backgroundColor: "#fff" }}
+                  component="th"
+                  scope="row"
+                >
+                <Collapse
+                  in={openSectionRow}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <Stack>
+                    <IconButton
+                      aria-label="expand row"
+                      size="small"
+                      onClick={() => setOpenSectionRow(!openSectionRow)}
+                    >
+                      {openSectionRow ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    </IconButton>
+                  </Stack>
+                  {section.name}
+                </TableCell>
+                <TableCell align="center">{section.inputWeight}</TableCell>
+                <TableCell align="center">{section.pricePerKg}</TableCell>
+                <TableCell align="center">{section.foodcost}</TableCell>
+                <TableCell align="center">{section.transformation}</TableCell>
+                <TableCell align="center">{section.transformationRate}</TableCell>
+                <TableCell align="center">{section.outputWeight}</TableCell>
+                <TableCell align="center">{section.kitchenArea}</TableCell>
+                <TableCell align="center">{section.machineType}</TableCell>
+                <TableCell align="center">{section.machineSetting}</TableCell>
+                <TableCell align="center">{section.stepDurationValue}</TableCell>
+                <TableCell align="center">{section.stepDurationUnit}</TableCell>
+              </TableRow>
+
+                {/* <Typography>Cool</Typography> */}
+            </>
           ))}
         </TableBody>
       </MUITable>
