@@ -1,35 +1,14 @@
-import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
-import { getCellAlignment } from "../utils";
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
+import SectionsPreview from "./SectionsPreview";
+
+const TABLE_WIDTH = 2600;
 
 // ----------------------------------------------- //
 // --------------------- utils ------------------- //
 // ----------------------------------------------- //
 const random = (number = 1): number => Math.floor(Math.random() * 10 * number);
-
-// ----------------------------------------------- //
-// -------------------- styles ------------------- //
-// ----------------------------------------------- //
-const stickyStyle = {
-  position: "sticky",
-  left: 0,
-  borderRight: "1px solid " + grey[300]
-};
-
-const firstColumnStyle = {
-  width: 300
-};
-
-const sx = {
-  sticky: stickyStyle,
-  firstColumn: firstColumnStyle,
-  cell: {
-    paddingRight: 8,
-    paddingLeft: 8
-  }
-};
 
 const createData = (
   name: string,
@@ -93,38 +72,12 @@ const headers = [
   { label: "Durée de l'étape (unité)" }
 ];
 
-const OTHER_COLUMNS_WIDTH = (2600 - 300) / (headers.length - 1);
+const OTHER_COLUMNS_WIDTH = (TABLE_WIDTH - 300) / (headers.length - 1);
 
 // ----------------------------------------------- //
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
 // body row
-const StyledRow = styled(Box)({
-  minHeight: 60
-});
-
-// body cell
-type StyledBodyCellProps = {
-  align: "left" | "center" | "right";
-};
-
-const StyledBodyCell = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "align"
-})<StyledBodyCellProps>((props) => {
-  let defaultStyles: Record<string, any> = {
-    display: "flex",
-    alignItems: "center",
-    width: OTHER_COLUMNS_WIDTH,
-    alignSelf: "stretch",
-    ...sx.cell
-  };
-
-  if (props.align) {
-    defaultStyles.justifyContent = getCellAlignment(props.align);
-  }
-
-  return defaultStyles;
-});
 
 const ProductionSteps = () => {
   return (
@@ -136,7 +89,7 @@ const ProductionSteps = () => {
       }}
     >
       <Box
-        sx={{ minWidth: 2600 }}
+        sx={{ minWidth: TABLE_WIDTH }}
         aria-label="recipe table"
         style={{ tableLayout: "fixed" }}
       >
@@ -148,53 +101,7 @@ const ProductionSteps = () => {
 
         {/* table body */}
         <Box className="flexColumn">
-          {sections.map((section, index) => (
-            <StyledRow className="flexRow" key={section.name + index}>
-              {/* section name */}
-              <Box
-                className="flex flex1 stretchSelf center justifyCenter"
-                sx={{
-                  ...stickyStyle,
-                  ...firstColumnStyle,
-                  px: 1.2,
-                  bgColor: "#fff"
-                }}
-              >
-                <p>{section.name}</p>
-              </Box>
-              <StyledBodyCell align="center">
-                {section.inputWeight}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.pricePerKg}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">{section.foodcost}</StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.transformation}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.transformationRate}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.outputWeight}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.kitchenArea}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.machineType}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.machineSetting}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.stepDurationValue}
-              </StyledBodyCell>
-              <StyledBodyCell align="center">
-                {section.stepDurationUnit}
-              </StyledBodyCell>
-            </StyledRow>
-          ))}
+          <SectionsPreview sections={sections} width={OTHER_COLUMNS_WIDTH} />
         </Box>
       </Box>
     </div>
