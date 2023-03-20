@@ -177,6 +177,7 @@ const Table = () => {
         {/* table head */}
         <StyledHeadRow className="flexRow center">
           {headers.map((header, index) => (
+            // first head column
             <StyledHeadCell
               key={header.label + index}
               isFirstColumn={index === 0}
@@ -210,7 +211,12 @@ const Table = () => {
               {/* section name */}
               <Box
                 className="flex flex1 stretchSelf center justifyCenter"
-                sx={{ ...stickyStyle, ...firstColumnStyle, px: 1.2 }}
+                sx={{
+                  ...stickyStyle,
+                  ...firstColumnStyle,
+                  px: 1.2,
+                  bgColor: "#fff"
+                }}
               >
                 <p>{section.name}</p>
               </Box>
