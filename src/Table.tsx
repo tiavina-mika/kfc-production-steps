@@ -1,17 +1,8 @@
-import MUITable from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
-import { Collapse, IconButton } from "@mui/material";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useState } from "react";
+import { Box } from "@mui/material";
+import { getCellAlignment } from "./utils";
 
 // ----------------------------------------------- //
 // --------------------- utils ------------------- //
@@ -33,7 +24,11 @@ const firstColumnStyle = {
 
 const sx = {
   sticky: stickyStyle,
-  firstColumn: firstColumnStyle
+  firstColumn: firstColumnStyle,
+  cell: {
+    paddingRight: 8,
+    paddingLeft: 8
+  }
 };
 
 const createData = (
@@ -98,117 +93,166 @@ const headers = [
   { label: "Durée de l'étape (unité)" }
 ];
 
-type StyledTableHeadCellProps = {
-  isFirstColumn: boolean;
-};
+const OTHER_COLUMNS_WIDTH = (2600 - 300) / (headers.length - 1);
 
 // ----------------------------------------------- //
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
-const StyledTableHeadCell = styled(TableCell, {
-  shouldForwardProp: (prop) => prop !== "isFirstColumn"
+type StyledTableHeadCellProps = {
+  isFirstColumn: boolean;
+  align: "left" | "center" | "right";
+};
+
+const StyledHeadCell = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isFirstColumn" && prop !== "align"
 })<StyledTableHeadCellProps>((props) => {
   let defaultStyles: Record<string, any> = {
-    height: 40,
-    backgroundColor: "#2196f3",
-    color: "#fff"
+    height: "100%",
+    color: "#fff",
+    ...sx.cell
   };
 
   if (props.isFirstColumn) {
     defaultStyles = {
       ...defaultStyles,
-      ...stickyStyle,
-      ...firstColumnStyle
+      ...stickyStyle
     };
     defaultStyles.zIndex = 1000;
+  }
+
+  if (props.align) {
+    defaultStyles.justifyContent = getCellAlignment(props.align);
   }
 
   return defaultStyles;
 });
 
+const StyledHeadRow = styled(Box)({
+  backgroundColor: "#2196f3",
+  height: 72
+});
+
+// body row
+const StyledRow = styled(Box)({
+  // paddingRight: 8,
+  // paddingLeft: 8,
+  // paddingTop: 20,
+  // paddingBottom: 20,
+  // backgroundColor: 'red'
+  // height: '100%',
+  "box-sizing": "border-box"
+});
+
+// body cell
+type StyledBodyCellProps = {
+  align: "left" | "center" | "right";
+};
+
+const StyledBodyCell = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "align"
+})<StyledBodyCellProps>((props) => {
+  let defaultStyles: Record<string, any> = {
+    display: "flex",
+    alignItems: "center",
+    width: OTHER_COLUMNS_WIDTH,
+    ...sx.cell
+  };
+
+  if (props.align) {
+    defaultStyles.justifyContent = getCellAlignment(props.align);
+  }
+
+  return defaultStyles;
+});
+
+const StyledFirstBodyColumn = styled(Box)({
+  ...sx.sticky,
+  bgcolor: "#fff",
+  ...firstColumnStyle
+});
+
 const Table = () => {
-  const [openSectionRow, setOpenSectionRow] = useState<boolean>(false);
-  
   return (
-    <TableContainer
+    <div
       style={{
         maxWidth: "100vw",
         maxHeight: "95vh",
         border: "1px solid " + grey[300]
       }}
     >
-      <MUITable
+      <Box
         sx={{ minWidth: 2600 }}
         aria-label="recipe table"
         style={{ tableLayout: "fixed" }}
-        stickyHeader
       >
-        <TableHead>
-          <TableRow>
-            {headers.map((header, index) => (
-              <StyledTableHeadCell
-                key={header.label + index}
-                align={index === 0 ? "left" : "center"}
-                isFirstColumn={index === 0}
+        <StyledHeadRow className="flexRow center">
+          {headers.map((header, index) => (
+            <StyledHeadCell
+              key={header.label + index}
+              isFirstColumn={index === 0}
+              style={
+                index === 0
+                  ? { ...firstColumnStyle }
+                  : {
+                      width: OTHER_COLUMNS_WIDTH
+                    }
+              }
+              align={index === 0 ? "left" : "center"}
+              className="flexRow center alignCenter"
+            >
+              <Typography
+                sx={{
+                  textAlign: index === 0 ? "left" : "center",
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  lineHeight: "22px"
+                }}
               >
-                <Typography
-                  sx={{
-                    textAlign: index === 0 ? "left" : "center",
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    lineHeight: "22px"
-                  }}
-                >
-                  {header.label}
-                </Typography>
-              </StyledTableHeadCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {sections.map((section, index) => (
-            <>
-              <TableRow key={section.name + index}>
-                <TableCell
-                  sx={{ ...sx.sticky, backgroundColor: "#fff" }}
-                  component="th"
-                  scope="row"
-                >
-                <Collapse
-                  in={openSectionRow}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <Stack>
-                    <IconButton
-                      aria-label="expand row"
-                      size="small"
-                      onClick={() => setOpenSectionRow(!openSectionRow)}
-                    >
-                      {openSectionRow ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                  </Stack>
-                  {section.name}
-                </TableCell>
-                <TableCell align="center">{section.inputWeight}</TableCell>
-                <TableCell align="center">{section.pricePerKg}</TableCell>
-                <TableCell align="center">{section.foodcost}</TableCell>
-                <TableCell align="center">{section.transformation}</TableCell>
-                <TableCell align="center">{section.transformationRate}</TableCell>
-                <TableCell align="center">{section.outputWeight}</TableCell>
-                <TableCell align="center">{section.kitchenArea}</TableCell>
-                <TableCell align="center">{section.machineType}</TableCell>
-                <TableCell align="center">{section.machineSetting}</TableCell>
-                <TableCell align="center">{section.stepDurationValue}</TableCell>
-                <TableCell align="center">{section.stepDurationUnit}</TableCell>
-              </TableRow>
-
-                {/* <Typography>Cool</Typography> */}
-            </>
+                {header.label}
+              </Typography>
+            </StyledHeadCell>
           ))}
-        </TableBody>
-      </MUITable>
-    </TableContainer>
+        </StyledHeadRow>
+        <Box className="flexColumn">
+          {sections.map((section, index) => (
+            <StyledRow className="flexRow" key={section.name + index}>
+              <StyledFirstBodyColumn>{section.name}</StyledFirstBodyColumn>
+              <StyledBodyCell align="center">
+                {section.inputWeight}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.pricePerKg}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">{section.foodcost}</StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.transformation}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.transformationRate}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.outputWeight}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.kitchenArea}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.machineType}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.machineSetting}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.stepDurationValue}
+              </StyledBodyCell>
+              <StyledBodyCell align="center">
+                {section.stepDurationUnit}
+              </StyledBodyCell>
+            </StyledRow>
+          ))}
+        </Box>
+      </Box>
+    </div>
   );
 };
 
