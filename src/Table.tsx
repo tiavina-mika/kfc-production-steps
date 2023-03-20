@@ -1,8 +1,8 @@
-import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
 import { getCellAlignment } from "./utils";
+import TableHead from "./TableHead";
 
 // ----------------------------------------------- //
 // --------------------- utils ------------------- //
@@ -98,40 +98,6 @@ const OTHER_COLUMNS_WIDTH = (2600 - 300) / (headers.length - 1);
 // ----------------------------------------------- //
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
-type StyledTableHeadCellProps = {
-  isFirstColumn: boolean;
-  align: "left" | "center" | "right";
-};
-
-const StyledHeadCell = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isFirstColumn" && prop !== "align"
-})<StyledTableHeadCellProps>((props) => {
-  let defaultStyles: Record<string, any> = {
-    height: "100%",
-    color: "#fff",
-    ...sx.cell
-  };
-
-  if (props.isFirstColumn) {
-    defaultStyles = {
-      ...defaultStyles,
-      ...stickyStyle
-    };
-    defaultStyles.zIndex = 1000;
-  }
-
-  if (props.align) {
-    defaultStyles.justifyContent = getCellAlignment(props.align);
-  }
-
-  return defaultStyles;
-});
-
-const StyledHeadRow = styled(Box)({
-  backgroundColor: "#2196f3",
-  height: 72
-});
-
 // body row
 const StyledRow = styled(Box)({
   minHeight: 60
@@ -175,35 +141,8 @@ const Table = () => {
         style={{ tableLayout: "fixed" }}
       >
         {/* table head */}
-        <StyledHeadRow className="flexRow center">
-          {headers.map((header, index) => (
-            // first head column
-            <StyledHeadCell
-              key={header.label + index}
-              isFirstColumn={index === 0}
-              style={
-                index === 0
-                  ? { ...firstColumnStyle }
-                  : {
-                      width: OTHER_COLUMNS_WIDTH
-                    }
-              }
-              align={index === 0 ? "left" : "center"}
-              className="flexRow center alignCenter"
-            >
-              <Typography
-                sx={{
-                  textAlign: index === 0 ? "left" : "center",
-                  fontWeight: 500,
-                  fontSize: "14px",
-                  lineHeight: "22px"
-                }}
-              >
-                {header.label}
-              </Typography>
-            </StyledHeadCell>
-          ))}
-        </StyledHeadRow>
+        <TableHead headers={headers} width={OTHER_COLUMNS_WIDTH} />
+
         {/* table body */}
         <Box className="flexColumn">
           {sections.map((section, index) => (
