@@ -2,13 +2,8 @@ import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
-import { getCellAlignment } from "./utils";
 import { FC } from "react";
-
-// ----------------------------------------------- //
-// --------------------- utils ------------------- //
-// ----------------------------------------------- //
-const random = (number = 1): number => Math.floor(Math.random() * 10 * number);
+import { getCellAlignment } from "../utils";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -73,7 +68,7 @@ type Props = {
   width?: number;
   headers?: any[];
 };
-const TableHead: FC<Props> = ({ headers, width }) => {
+const ProductionStepsTableHead: FC<Props> = ({ headers, width }) => {
   return (
     <StyledHeadRow className="flexRow center">
       {headers.map((header, index) => (
@@ -107,4 +102,4 @@ const TableHead: FC<Props> = ({ headers, width }) => {
   );
 };
 
-export default TableHead;
+export default ProductionStepsTableHead;

@@ -126,7 +126,7 @@ const StyledBodyCell = styled(Box, {
   return defaultStyles;
 });
 
-const Table = () => {
+const ProductionSteps = () => {
   return (
     <div
       style={{
@@ -198,4 +198,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default ProductionSteps;
