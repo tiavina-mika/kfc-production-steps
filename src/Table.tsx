@@ -134,13 +134,7 @@ const StyledHeadRow = styled(Box)({
 
 // body row
 const StyledRow = styled(Box)({
-  // paddingRight: 8,
-  // paddingLeft: 8,
-  // paddingTop: 20,
-  // paddingBottom: 20,
-  // backgroundColor: 'red'
-  // height: '100%',
-  "box-sizing": "border-box"
+  minHeight: 60
 });
 
 // body cell
@@ -155,6 +149,7 @@ const StyledBodyCell = styled(Box, {
     display: "flex",
     alignItems: "center",
     width: OTHER_COLUMNS_WIDTH,
+    alignSelf: "stretch",
     ...sx.cell
   };
 
@@ -163,12 +158,6 @@ const StyledBodyCell = styled(Box, {
   }
 
   return defaultStyles;
-});
-
-const StyledFirstBodyColumn = styled(Box)({
-  ...sx.sticky,
-  bgcolor: "#fff",
-  ...firstColumnStyle
 });
 
 const Table = () => {
@@ -185,6 +174,7 @@ const Table = () => {
         aria-label="recipe table"
         style={{ tableLayout: "fixed" }}
       >
+        {/* table head */}
         <StyledHeadRow className="flexRow center">
           {headers.map((header, index) => (
             <StyledHeadCell
@@ -213,10 +203,17 @@ const Table = () => {
             </StyledHeadCell>
           ))}
         </StyledHeadRow>
+        {/* table body */}
         <Box className="flexColumn">
           {sections.map((section, index) => (
             <StyledRow className="flexRow" key={section.name + index}>
-              <StyledFirstBodyColumn>{section.name}</StyledFirstBodyColumn>
+              {/* section name */}
+              <Box
+                className="flex flex1 stretchSelf center justifyCenter"
+                sx={{ ...stickyStyle, ...firstColumnStyle, px: 1.2 }}
+              >
+                <p>{section.name}</p>
+              </Box>
               <StyledBodyCell align="center">
                 {section.inputWeight}
               </StyledBodyCell>
