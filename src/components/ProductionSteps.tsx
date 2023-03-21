@@ -2,9 +2,10 @@ import { grey } from "@mui/material/colors";
 import { Box, Button, Stack } from "@mui/material";
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import SectionsPreview from "./SectionsPreview";
-import { useState } from "react";
-
-const TABLE_WIDTH = 2600;
+import { FC } from "react";
+import { PRODUCTION_STEPS_OTHER_COLUMNS_WIDTH } from "../utils/constant";
+import ProductionStepsTable from "./ProductionStepsTable";
+import { getProductionStepsColumnWidth } from "../utils/utils";
 
 // ----------------------------------------------- //
 // --------------------- utils ------------------- //
@@ -73,26 +74,10 @@ const headers = [
   { label: "Durée de l'étape (unité)" }
 ];
 
-const OTHER_COLUMNS_WIDTH = (TABLE_WIDTH - 300) / (headers.length - 1);
-
-const ProductionSteps = () => {
-  const [openProductionStepEditForm, setOpenProductionStepEditForm] = useState<
-    boolean
-  >(false);
-
-  const toggleProductionStepEditForm = () =>
-    setOpenProductionStepEditForm(!openProductionStepEditForm);
-
-  const onCancel = () => {
-    console.log("cancel");
-    toggleProductionStepEditForm();
-  };
-
-  const onSave = () => {
-    console.log("save");
-    toggleProductionStepEditForm();
-  };
-
+type Props = {
+  toggleEditForm: () => void;
+};
+const ProductionSteps: FC<Props> = ({ toggleEditForm }) => {
   return (
     <div>
       {/* buttons */}
@@ -100,57 +85,20 @@ const ProductionSteps = () => {
         className="flexRow justifyEnd"
         sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
       >
-        {openProductionStepEditForm ? (
-          <Stack direction="row" spacing={5}>
-            <Button onClick={onCancel}>Annuler</Button>
-            <Button onClick={onSave} variant="contained">
-              Enregistrer
-            </Button>
-          </Stack>
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleProductionStepEditForm}
-          >
-            Éditer
-          </Button>
-        )}
+        <Button variant="contained" color="primary" onClick={toggleEditForm}>
+          Éditer
+        </Button>
       </Box>
-      {/* table content */}
-      <Box sx={{ mt: 10 }}>
-        <div
-          style={{
-            maxWidth: "100vw",
-            maxHeight: "95vh",
-            border: "1px solid " + grey[300]
-          }}
-        >
-          <Box
-            sx={{ minWidth: TABLE_WIDTH }}
-            aria-label="recipe table"
-            style={{ tableLayout: "fixed" }}
-          >
-            {/* table head */}
-            <ProductionStepsTableHead
-              headers={headers}
-              width={OTHER_COLUMNS_WIDTH}
-            />
-
-            {/* table body */}
-            {openProductionStepEditForm ? (
-              <p>Edit form</p>
-            ) : (
-              <Box className="flexColumn">
-                <SectionsPreview
-                  sections={sections}
-                  width={OTHER_COLUMNS_WIDTH}
-                />
-              </Box>
-            )}
-          </Box>
-        </div>
-      </Box>
+      <ProductionStepsTable>
+        {/* table head */}
+        <ProductionStepsTableHead headers={headers} />
+        <Box className="flexColumn">
+          <SectionsPreview
+            sections={sections}
+            width={getProductionStepsColumnWidth(headers)}
+          />
+        </Box>
+      </ProductionStepsTable>
     </div>
   );
 };

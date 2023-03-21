@@ -1,0 +1,1 @@
+export const PRODUCTION_STEPS_TABLE_WIDTH = 2600;

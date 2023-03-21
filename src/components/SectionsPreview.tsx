@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
-import { getCellAlignment } from "../utils";
+import { getCellAlignment } from "../utils/utils";
 import { FC } from "react";
 
 // ----------------------------------------------- //

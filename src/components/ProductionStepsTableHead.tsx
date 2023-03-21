@@ -1,9 +1,13 @@
+import { FC } from "react";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
-import { FC } from "react";
-import { getCellAlignment } from "../utils";
+
+import {
+  getProductionStepsColumnWidth,
+  getCellAlignment
+} from "../utils/utils";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -66,10 +70,9 @@ const StyledHeadRow = styled(Box)({
 });
 
 type Props = {
-  width?: number;
   headers?: any[];
 };
-const ProductionStepsTableHead: FC<Props> = ({ headers, width }) => {
+const ProductionStepsTableHead: FC<Props> = ({ headers }) => {
   return (
     <StyledHeadRow className="flexRow center">
       {headers.map((header, index) => (
@@ -81,7 +84,7 @@ const ProductionStepsTableHead: FC<Props> = ({ headers, width }) => {
             index === 0
               ? { ...firstColumnStyle }
               : {
-                  width
+                  width: getProductionStepsColumnWidth(headers)
                 }
           }
           align={index === 0 ? "left" : "center"}
