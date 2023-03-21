@@ -96,7 +96,10 @@ const ProductionSteps = () => {
   return (
     <div>
       {/* buttons */}
-      <Box className="flexRow justifyEnd" sx={{ py: 3, pr: 4 }}>
+      <Box
+        className="flexRow justifyEnd"
+        sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
+      >
         {openProductionStepEditForm ? (
           <Stack direction="row" spacing={5}>
             <Button onClick={onCancel}>Annuler</Button>
@@ -114,37 +117,40 @@ const ProductionSteps = () => {
           </Button>
         )}
       </Box>
-      <div
-        style={{
-          maxWidth: "100vw",
-          maxHeight: "95vh",
-          border: "1px solid " + grey[300]
-        }}
-      >
-        <Box
-          sx={{ minWidth: TABLE_WIDTH }}
-          aria-label="recipe table"
-          style={{ tableLayout: "fixed" }}
+      {/* table content */}
+      <Box sx={{ mt: 10 }}>
+        <div
+          style={{
+            maxWidth: "100vw",
+            maxHeight: "95vh",
+            border: "1px solid " + grey[300]
+          }}
         >
-          {/* table head */}
-          <ProductionStepsTableHead
-            headers={headers}
-            width={OTHER_COLUMNS_WIDTH}
-          />
+          <Box
+            sx={{ minWidth: TABLE_WIDTH }}
+            aria-label="recipe table"
+            style={{ tableLayout: "fixed" }}
+          >
+            {/* table head */}
+            <ProductionStepsTableHead
+              headers={headers}
+              width={OTHER_COLUMNS_WIDTH}
+            />
 
-          {/* table body */}
-          {openProductionStepEditForm ? (
-            <p>Edit form</p>
-          ) : (
-            <Box className="flexColumn">
-              <SectionsPreview
-                sections={sections}
-                width={OTHER_COLUMNS_WIDTH}
-              />
-            </Box>
-          )}
-        </Box>
-      </div>
+            {/* table body */}
+            {openProductionStepEditForm ? (
+              <p>Edit form</p>
+            ) : (
+              <Box className="flexColumn">
+                <SectionsPreview
+                  sections={sections}
+                  width={OTHER_COLUMNS_WIDTH}
+                />
+              </Box>
+            )}
+          </Box>
+        </div>
+      </Box>
     </div>
   );
 };
