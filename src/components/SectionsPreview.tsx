@@ -75,7 +75,7 @@ const SectionsPreview: FC<Props> = ({ sections, width }) => {
               ...stickyStyle,
               ...firstColumnStyle,
               px: 1.2,
-              bgColor: "#fff"
+              bgcolor: "#fff"
             }}
           >
             <p>{section.name}</p>

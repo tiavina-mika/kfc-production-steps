@@ -41,6 +41,7 @@ const StyledHeadCell = styled(Box, {
   let defaultStyles: Record<string, any> = {
     height: "100%",
     color: "#fff",
+    backgroundColor: "#2196f3",
     ...sx.cell
   };
 
