@@ -2,10 +2,12 @@ import React, { FC } from "react";
 
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
-import { Box } from "@mui/material";
+import { Accordion, AccordionProps, AccordionSummary, AccordionSummaryProps, Box, BoxProps, Typography } from "@mui/material";
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 
 import { getCellAlignment } from "../utils/utils";
 
+const FIRST_COL_WIDTH = 300;
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
 // ----------------------------------------------- //
@@ -16,7 +18,7 @@ const stickyStyle = {
 };
 
 const firstColumnStyle = {
-  width: 300
+  width: FIRST_COL_WIDTH,
 };
 
 const sx = {
@@ -31,10 +33,23 @@ const sx = {
 // ----------------------------------------------- //
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
-// body row
+// -------------- Table -------------- //
 const StyledRow = styled(Box)({
   minHeight: 60,
-  borderBottom: "1px solid " + grey[300]
+  borderBottom: "1px solid " + grey[300],
+  margin: 0,
+});
+
+const StyledFirstBodyColumn = styled((props: BoxProps) => (
+  <Box
+    {...props}
+    sx={{ ...stickyStyle }}
+  />
+))({
+  paddingLeft: 8,
+  paddingRight: 8,
+  backgroundColor: "#fff",
+  width: FIRST_COL_WIDTH,
 });
 
 // body cell
@@ -51,6 +66,7 @@ const StyledBodyCell = styled(Box, {
     alignItems: "center",
     width: props.width,
     alignSelf: "stretch",
+    margin: 0,
     ...sx.cell
   };
 
@@ -59,6 +75,40 @@ const StyledBodyCell = styled(Box, {
   }
 
   return defaultStyles;
+});
+
+// -------------- Accordion -------------- //
+const StyledAccordion = styled((props: AccordionProps) => (
+  <Accordion {...props} />
+))({
+  '&:not(:last-child)': {
+    borderBottom: 0,
+  },
+  '&:before': {
+    display: 'none',
+  },
+});
+
+const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
+  <AccordionSummary
+    {...props}
+  />
+))({
+  flexDirection: 'row-reverse',
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    transform: 'rotate(90deg)',
+  },
+  '& .MuiAccordionSummary-content': {
+    padding: 0,
+    margin: 0,
+  },
+  '&.MuiAccordionSummary-root': {
+    paddingLeft: 0,
+  },
+  '& .Mui-expanded': {
+    position: 'sticky',
+    left: 0,
+  },
 });
 
 type Props = {
@@ -70,53 +120,55 @@ const Sections: FC<Props> = ({ sections, width }) => {
   return (
     <Box className="flexColumn">
       {sections.map((section, index) => (
-        <StyledRow className="flexRow" key={section.name + index}>
-          {/* section name */}
-          <Box
-            className="flex flex1 stretchSelf center justifyCenter"
-            sx={{
-              ...stickyStyle,
-              ...firstColumnStyle,
-              px: 1.2,
-              bgcolor: "#fff"
-            }}
+        <StyledAccordion
+          elevation={0}
+          defaultExpanded
+          square
+          disableGutters
+        >
+          <StyledAccordionSummary
+              expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
           >
-            <p>{section.name}</p>
-          </Box>
-          <StyledBodyCell align="center" width={width}>
-            {section.inputWeight}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.pricePerKg}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.foodcost}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.transformation}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.transformationRate}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.outputWeight}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.kitchenArea}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.machineType}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.machineSetting}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.stepDurationValue}
-          </StyledBodyCell>
-          <StyledBodyCell align="center" width={width}>
-            {section.stepDurationUnit}
-          </StyledBodyCell>
-        </StyledRow>
+            <StyledRow className="flexRow" key={section.name + index}>
+              <StyledFirstBodyColumn>
+                <p>{section.name}</p>
+              </StyledFirstBodyColumn>
+              <StyledBodyCell align="center" width={width}>
+                {section.inputWeight}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.pricePerKg}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.foodcost}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.transformation}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.transformationRate}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.outputWeight}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.kitchenArea}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.machineType}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.machineSetting}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.stepDurationValue}
+              </StyledBodyCell>
+              <StyledBodyCell align="center" width={width}>
+                {section.stepDurationUnit}
+              </StyledBodyCell>
+            </StyledRow> 
+          </StyledAccordionSummary>
+        </StyledAccordion>
       ))}
     </Box>
   );
