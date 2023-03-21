@@ -1,6 +1,7 @@
+import React, { FC, ReactNode } from "react";
+
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
-import { FC, ReactNode } from "react";
 
 import { PRODUCTION_STEPS_TABLE_WIDTH } from "../utils/constant";
 

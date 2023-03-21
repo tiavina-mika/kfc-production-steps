@@ -1,4 +1,5 @@
-import { FC } from "react";
+import React, { FC } from "react";
+
 import { Box, Button, Stack } from "@mui/material";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";

@@ -1,9 +1,9 @@
-import { grey } from "@mui/material/colors";
-import { Box, Button, Stack } from "@mui/material";
+import React, { FC } from "react";
+
+import { Box, Button } from "@mui/material";
+
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
-import SectionsPreview from "./SectionsPreview";
-import { FC } from "react";
-import { PRODUCTION_STEPS_OTHER_COLUMNS_WIDTH } from "../utils/constant";
+import Sections from "./Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
 import { getProductionStepsColumnWidth } from "../utils/utils";
 
@@ -93,7 +93,7 @@ const ProductionSteps: FC<Props> = ({ toggleEditForm }) => {
         {/* table head */}
         <ProductionStepsTableHead headers={headers} />
         <Box className="flexColumn">
-          <SectionsPreview
+          <Sections
             sections={sections}
             width={getProductionStepsColumnWidth(headers)}
           />

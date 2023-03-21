@@ -1,8 +1,10 @@
+import React, { FC } from "react";
+
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
+
 import { getCellAlignment } from "../utils/utils";
-import { FC } from "react";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -31,7 +33,8 @@ const sx = {
 // ----------------------------------------------- //
 // body row
 const StyledRow = styled(Box)({
-  minHeight: 60
+  minHeight: 60,
+  borderBottom: "1px solid " + grey[300]
 });
 
 // body cell
