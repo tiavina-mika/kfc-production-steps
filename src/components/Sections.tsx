@@ -63,7 +63,7 @@ type Props = {
   width: number;
 };
 
-const SectionsPreview: FC<Props> = ({ sections, width }) => {
+const Sections: FC<Props> = ({ sections, width }) => {
   return (
     <Box className="flexColumn">
       {sections.map((section, index) => (
@@ -119,4 +119,4 @@ const SectionsPreview: FC<Props> = ({ sections, width }) => {
   );
 };
 
-export default SectionsPreview;
+export default Sections;

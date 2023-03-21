@@ -33,7 +33,7 @@ const ProductionStepsForm: FC<Props> = ({ onCancel, onSave }) => {
       {/* buttons */}
       <Box
         className="flexRow justifyEnd"
-        sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
+        sx={{ py: 3, pr: 4, position: "absolute", top: 0, right: 0 }}
       >
         <Stack direction="row" spacing={5}>
           <Button onClick={onCancel}>Annuler</Button>
