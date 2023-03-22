@@ -8,7 +8,7 @@ import {
   getProductionStepsColumnWidth,
   getCellAlignment
 } from "../utils/utils";
-import { PRODUCTION_STEPS_FIRST_COL_WIDTH } from "../utils/constant";
+import { PRODUCTION_STEPS } from "../utils/constant";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -20,7 +20,7 @@ const stickyStyle = {
 };
 
 const firstColumnStyle = {
-  width: PRODUCTION_STEPS_FIRST_COL_WIDTH
+  width: PRODUCTION_STEPS.FIRST_COL_WIDTH
 };
 
 const sx = {
@@ -55,7 +55,7 @@ const StyledHeadCell = styled(Box, {
       ...defaultStyles,
       ...stickyStyle,
       zIndex: 1000,
-      paddingLeft: 80
+      paddingLeft: PRODUCTION_STEPS.FIRST_COL_PADDING_LEFT
     };
   }
 

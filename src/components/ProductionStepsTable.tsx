@@ -3,7 +3,7 @@ import React, { FC, ReactNode } from "react";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
 
-import { PRODUCTION_STEPS_TABLE_WIDTH } from "../utils/constant";
+import { PRODUCTION_STEPS } from "../utils/constant";
 
 type Props = {
   children: ReactNode;
@@ -19,7 +19,7 @@ const ProductionStepsTable: FC<Props> = ({ children }) => {
         }}
       >
         <Box
-          sx={{ minWidth: PRODUCTION_STEPS_TABLE_WIDTH }}
+          sx={{ minWidth: PRODUCTION_STEPS.TABLE_WIDTH }}
           aria-label="recipe table"
         >
           {children}

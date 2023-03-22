@@ -14,7 +14,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { getCellAlignment } from "../utils/utils";
-import { COLORS, PRODUCTION_STEPS_FIRST_COL_WIDTH } from "../utils/constant";
+import { COLORS, PRODUCTION_STEPS } from "../utils/constant";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -26,7 +26,7 @@ const stickyStyle = {
 };
 
 const firstColumnStyle = {
-  width: PRODUCTION_STEPS_FIRST_COL_WIDTH
+  width: PRODUCTION_STEPS.FIRST_COL_WIDTH
 };
 
 const sx = {
@@ -45,10 +45,10 @@ const sx = {
 const StyledFirstBodyColumn = styled((props: BoxProps) => (
   <Box {...props} sx={{ ...stickyStyle }} />
 ))({
-  paddingLeft: 80,
+  paddingLeft: PRODUCTION_STEPS.FIRST_COL_PADDING_LEFT,
   paddingRight: 8,
   backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
-  width: PRODUCTION_STEPS_FIRST_COL_WIDTH
+  width: PRODUCTION_STEPS.FIRST_COL_WIDTH
 });
 
 // body cell
