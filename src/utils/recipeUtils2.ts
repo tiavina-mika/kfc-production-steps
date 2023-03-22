@@ -205,7 +205,6 @@ export const getDefaultSteps = () => {
     name: "",
     description: "",
     ingredients: [getDefaultIngredients()],
-    stepComponents: [getDefaultIngredients()],
     error: true
   };
 };
@@ -218,7 +217,6 @@ export const getDefaultSection = () => {
     generic: false,
     reusable: false,
     steps: [getDefaultSteps()],
-    productionSteps: [getDefaultSteps()],
     error: true
   };
 };
@@ -299,9 +297,6 @@ export const parseStepsToObject = (steps, percent = false) => {
       name: step.name || "",
       index: step.index || uuidv4(),
       description: step.description || "",
-      stepComponents: step.stepComponents
-        ? parseIngredientsListToObject(step.stepComponents, percent)
-        : [getDefaultIngredients()],
       ingredients: step.ingredients
         ? parseIngredientsListToObject(step.ingredients, percent)
         : [getDefaultIngredients()],
@@ -386,9 +381,6 @@ export const parseSectionToObject = (sections, percent = false) => {
           : true,
       reusable: false,
       steps: section.steps ? parseStepsToObject(section.steps, percent) : [],
-      productionSteps: section.productionSteps
-        ? parseStepsToObject(section.productionSteps, percent)
-        : [],
       error: section.name && section.name !== "" ? false : true,
       parentId: section.parentId ? section.parentId : null,
       parentPercent:
@@ -441,10 +433,13 @@ export function computeRecipeData(recipe) {
     : null;
 }
 
-export function computeStepData(step, ingredientsField = "ingredients") {
-  const { stepCost, stepRealCost, stepNetWeight, stepGrossWeight } = step[
-    ingredientsField
-  ].reduce(
+export function computeStepData(step) {
+  const {
+    stepCost,
+    stepRealCost,
+    stepNetWeight,
+    stepGrossWeight
+  } = step.ingredients.reduce(
     (acc, ingredient) => {
       acc.stepCost += ingredient.cost || 0;
       acc.stepRealCost += ingredient.realCost || 0;
@@ -462,13 +457,13 @@ export function computeStepData(step, ingredientsField = "ingredients") {
   step.realCost = stepRealCost;
 }
 
-export function computeSectionData(section, stepsField = "steps") {
+export function computeSectionData(section) {
   const {
     sectionCost,
     sectionRealCost,
     sectionNetWeight,
     sectionGrossWeight
-  } = section[stepsField].reduce(
+  } = section.steps.reduce(
     (acc, step) => {
       acc.sectionCost += step.cost || 0;
       acc.sectionRealCost += step.realCost || 0;
@@ -494,15 +489,10 @@ export function computeSectionData(section, stepsField = "steps") {
 /**
  * @TODO 3 nested loops isn't a good design, check for better possibilities
  */
-function computeDisplayData(
-  recipe,
-  isRecipe = true,
-  stepsField = "steps",
-  stepIngredientField = "ingredients"
-) {
+function computeDisplayData(recipe, isRecipe = true) {
   for (const section of recipe.sections) {
-    for (const step of section[stepsField]) {
-      for (const ingredient of step[stepIngredientField]) {
+    for (const step of section.steps) {
+      for (const ingredient of step.ingredients) {
         const computedIngredientData = computeIngredientData(ingredient);
         ingredient.netWeight = computedIngredientData.netWeight;
         ingredient.cost = computedIngredientData.cost;
@@ -521,19 +511,16 @@ function computeDisplayData(
           : 0;
       }
 
-      computeStepData(step, stepIngredientField);
+      computeStepData(step);
     }
 
-    computeSectionData(section, stepsField);
+    computeSectionData(section);
   }
 
   if (isRecipe) computeRecipeData(recipe);
 }
 
-export const recipeSectionsFormInitialValues = (
-  recipe,
-  isProductionSteps = false
-) => {
+export const recipeSectionsFormInitialValues = (recipe) => {
   const values: Record<string, any> = {};
 
   if (!recipe || typeof recipe !== "object") {
@@ -561,11 +548,7 @@ export const recipeSectionsFormInitialValues = (
         : null;
   }
 
-  if (isProductionSteps) {
-    computeDisplayData(values, true, "productionSteps", "stepComponents");
-  } else {
-    computeDisplayData(values);
-  }
+  computeDisplayData(values);
 
   return values;
 };

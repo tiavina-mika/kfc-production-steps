@@ -15,7 +15,7 @@ const RecipeProductionSteps: FC<Props> = ({ recipe }) => {
   console.log(initalValues);
 
   useEffect(() => {
-    const formValues = recipeSectionsFormInitialValues(recipe);
+    const formValues = recipeSectionsFormInitialValues(recipe, true);
     setInitialValues(formValues);
   }, [recipe]);
 

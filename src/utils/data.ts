@@ -1309,9 +1309,9 @@ export const recipe = {
           name: "",
           description:
             "Mélanger le sucre glace au jus d' orange. Glacer les cakes.",
-          grossWeight: 0.177,
-          netWeight: 0.177,
-          cost: 0.63753,
+          grossWeight: 200,
+          netWeight: 200,
+          cost: 8,
           realCost: 0.63753,
           createdAt: "2023-03-20T19:39:17.877Z",
           updatedAt: "2023-03-20T19:39:17.877Z",
