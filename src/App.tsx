@@ -1,34 +1,32 @@
 import { useState } from "react";
+
 import ProductionSteps from "./components/ProductionSteps";
-import ProductionStepsForm from "./components/ProductionStepsForm";
 
 const App = () => {
-  const [openProductionStepEditForm, setOpenProductionStepEditForm] = useState<
-    boolean
-  >(false);
+  const [isEdition, setIsEdition] = useState<boolean>(false);
 
-  const toggleProductionStepEditForm = () =>
-    setOpenProductionStepEditForm(!openProductionStepEditForm);
+  const toggleIsEdition = () => setIsEdition(!isEdition);
 
   const onEditProductionSteps = () => {
-    toggleProductionStepEditForm();
+    toggleIsEdition();
   };
 
   const onSaveProductionSteps = () => {
     console.log("onSaveProductionSteps");
-    toggleProductionStepEditForm();
+    toggleIsEdition();
   };
 
   const onCancelProductionSteps = () => {
     console.log("onCancelProductionSteps");
-    toggleProductionStepEditForm();
+    toggleIsEdition();
   };
 
-  if (openProductionStepEditForm) {
+  if (isEdition) {
     return (
-      <ProductionStepsForm
+      <ProductionSteps
         onSave={onSaveProductionSteps}
         onCancel={onCancelProductionSteps}
+        isEdition
       />
     );
   }

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { Box, Button } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./Sections";
@@ -75,9 +75,17 @@ const headers = [
 ];
 
 type Props = {
-  toggleEditForm: () => void;
+  toggleEditForm?: () => void;
+  onCancel?: () => void;
+  onSave?: () => void;
+  isEdition?: boolean;
 };
-const ProductionSteps: FC<Props> = ({ toggleEditForm }) => {
+const ProductionSteps: FC<Props> = ({
+  toggleEditForm,
+  onCancel,
+  onSave,
+  isEdition = false
+}) => {
   return (
     <div>
       {/* buttons */}
@@ -85,9 +93,18 @@ const ProductionSteps: FC<Props> = ({ toggleEditForm }) => {
         className="flexRow justifyEnd"
         sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
       >
-        <Button variant="contained" color="primary" onClick={toggleEditForm}>
-          Éditer
-        </Button>
+        {isEdition ? (
+          <Stack direction="row" spacing={5}>
+            <Button onClick={onCancel}>Annuler</Button>
+            <Button onClick={onSave} variant="contained">
+              Enregistrer
+            </Button>
+          </Stack>
+        ) : (
+          <Button variant="contained" color="primary" onClick={toggleEditForm}>
+            Éditer
+          </Button>
+        )}
       </Box>
       <ProductionStepsTable>
         {/* table head */}
