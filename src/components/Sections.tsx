@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { getCellAlignment } from "../utils/utils";
+import { getCellAlignment, roundNumber } from "../utils/utils";
 import { COLORS, PRODUCTION_STEPS } from "../utils/constant";
 
 // ----------------------------------------------- //
@@ -137,13 +137,15 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>{section.name}</StyledText>
             </StyledFirstBodyColumn>
             <StyledBodyCell align="left" width={width}>
-              <StyledText>{section.inputWeight}</StyledText>
+              <StyledText>{section.grossWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
-              <StyledText>{section.foodcost}</StyledText>
+              <StyledText>
+                {section.cost && `${roundNumber(section.cost, 3)} €`}
+              </StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
@@ -152,7 +154,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
-              <StyledText>{section.outputWeight}</StyledText>
+              <StyledText>{section.netWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>

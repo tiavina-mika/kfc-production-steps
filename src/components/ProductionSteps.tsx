@@ -79,11 +79,13 @@ type Props = {
   onCancel?: () => void;
   onSave?: () => void;
   isEdition?: boolean;
+  sections?: Record<string, any>[];
 };
 const ProductionSteps: FC<Props> = ({
   toggleEditForm,
   onCancel,
   onSave,
+  sections = [],
   isEdition = false
 }) => {
   return (

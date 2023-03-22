@@ -1,40 +1,8 @@
-import { useState } from "react";
-
-import ProductionSteps from "./components/ProductionSteps";
+import RecipeProductionSteps from "./RecipeProductionSteps";
+import { recipe } from "./utils/data";
 
 const App = () => {
-  const [isProductionStepsEdition, setProductionStepsIsEdition] = useState<
-    boolean
-  >(false);
-
-  const toggleProductionStepsIsEdition = () =>
-    setProductionStepsIsEdition(!isProductionStepsEdition);
-
-  const onEditProductionSteps = () => {
-    toggleProductionStepsIsEdition();
-  };
-
-  const onSaveProductionSteps = () => {
-    console.log("onSaveProductionSteps");
-    toggleProductionStepsIsEdition();
-  };
-
-  const onCancelProductionSteps = () => {
-    console.log("onCancelProductionSteps");
-    toggleProductionStepsIsEdition();
-  };
-
-  if (isProductionStepsEdition) {
-    return (
-      <ProductionSteps
-        onSave={onSaveProductionSteps}
-        onCancel={onCancelProductionSteps}
-        isEdition
-      />
-    );
-  }
-
-  return <ProductionSteps toggleEditForm={onEditProductionSteps} />;
+  return <RecipeProductionSteps recipe={recipe} />;
 };
 
 export default App;
