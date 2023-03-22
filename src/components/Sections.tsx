@@ -125,11 +125,10 @@ const Sections: FC<Props> = ({ sections, width }) => {
           key={section.name + index}
         >
           <StyledAccordionSummary
-            expandIcon={<ExpandMoreIcon sx={{ fontSize: "1.2rem" }} />}
+            expandIcon={<ExpandMoreIcon sx={{ fontSize: "1.8rem" }} />}
           >
-            {/* <StyledRow className="flexRow"> */}
-            <StyledFirstBodyColumn>
-              <p>{section.name}</p>
+            <StyledFirstBodyColumn className="flexRow center">
+              <Typography>{section.name}</Typography>
             </StyledFirstBodyColumn>
             <StyledBodyCell align="center" width={width}>
               {section.inputWeight}
@@ -164,7 +163,6 @@ const Sections: FC<Props> = ({ sections, width }) => {
             <StyledBodyCell align="center" width={width}>
               {section.stepDurationUnit}
             </StyledBodyCell>
-            {/* </StyledRow>  */}
           </StyledAccordionSummary>
         </StyledAccordion>
       ))}
