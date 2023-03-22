@@ -11,7 +11,7 @@ import {
   BoxProps,
   Typography
 } from "@mui/material";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { getCellAlignment } from "../utils/utils";
 import { PRODUCTION_STEPS_FIRST_COL_WIDTH } from "../utils/constant";
@@ -93,20 +93,18 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
 ))({
   flexDirection: "row-reverse",
   position: "relative",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
+  // opened and closed expanded icon
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded,& .MuiAccordionSummary-expandIconWrapper": {
     position: "sticky",
     left: 50
   },
+  // row
   "& .MuiAccordionSummary-content": {
     padding: 0,
     margin: 0,
     minHeight: 60,
     borderBottom: "1px solid " + grey[300],
     marginLeft: -40
-  },
-  "&.MuiAccordionSummary-root": {
-    paddingLeft: 0
   }
 });
 
@@ -127,9 +125,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
           key={section.name + index}
         >
           <StyledAccordionSummary
-            expandIcon={
-              <ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />
-            }
+            expandIcon={<ExpandMoreIcon sx={{ fontSize: "1.2rem" }} />}
           >
             {/* <StyledRow className="flexRow"> */}
             <StyledFirstBodyColumn>
