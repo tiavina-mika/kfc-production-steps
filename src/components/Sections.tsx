@@ -95,7 +95,7 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   // opened and closed expanded icon
   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded,& .MuiAccordionSummary-expandIconWrapper": {
     position: "sticky",
-    left: 50
+    left: 46
   },
   // row
   "& .MuiAccordionSummary-content": {
