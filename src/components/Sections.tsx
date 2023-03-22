@@ -103,7 +103,7 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
     margin: 0,
     minHeight: 60,
     borderBottom: "1px solid " + grey[300],
-    marginLeft: -40,
+    marginLeft: -48,
     backgroundColor: COLORS.PRODUCTION_STEPS_BLUE
   }
 });
@@ -139,34 +139,34 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>{section.inputWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.pricePerKg}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
               <StyledText>{section.foodcost}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.transformation}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.transformationRate}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
               <StyledText>{section.outputWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.kitchenArea}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.machineType}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.machineSetting}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.stepDurationValue}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              <StyledText>{section.stepDurationUnit}</StyledText>
+              <StyledText>-</StyledText>
             </StyledBodyCell>
           </StyledAccordionSummary>
         </StyledAccordion>
