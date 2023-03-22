@@ -22,7 +22,7 @@ import { COLORS, PRODUCTION_STEPS } from "../utils/constant";
 const stickyStyle = {
   position: "sticky",
   left: 0,
-  borderRight: "1px solid " + grey[300]
+  borderRight: "1px solid #cccccc"
 };
 
 const firstColumnStyle = {
@@ -34,7 +34,7 @@ const sx = {
   firstColumn: firstColumnStyle,
   cell: {
     paddingRight: 8,
-    paddingLeft: 8
+    paddingLeft: PRODUCTION_STEPS.COL_PADDING_LEFT
   }
 };
 
@@ -102,7 +102,7 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
     padding: 0,
     margin: 0,
     minHeight: 60,
-    borderBottom: "1px solid " + grey[300],
+    borderBottom: "1px solid #cccccc",
     marginLeft: -48,
     backgroundColor: COLORS.PRODUCTION_STEPS_BLUE
   }
@@ -110,7 +110,8 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
 
 const StyledText = styled(Typography)({
   fontWeight: 600,
-  fontSize: 16
+  fontSize: 14,
+  color: COLORS.PRODUCTION_STEPS_TEXT_GREY
 });
 
 type Props = {
@@ -135,37 +136,37 @@ const Sections: FC<Props> = ({ sections, width }) => {
             <StyledFirstBodyColumn className="flexRow center">
               <StyledText>{section.name}</StyledText>
             </StyledFirstBodyColumn>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>{section.inputWeight}</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>{section.foodcost}</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>{section.outputWeight}</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="center" width={width}>
+            <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
           </StyledAccordionSummary>

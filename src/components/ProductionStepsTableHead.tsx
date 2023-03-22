@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
-import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
 
 import {
@@ -16,7 +15,7 @@ import { PRODUCTION_STEPS } from "../utils/constant";
 const stickyStyle = {
   position: "sticky",
   left: 0,
-  borderRight: "1px solid " + grey[300]
+  borderRight: "1px solid #cccccc"
 };
 
 const firstColumnStyle = {
@@ -28,7 +27,7 @@ const sx = {
   firstColumn: firstColumnStyle,
   cell: {
     paddingRight: 8,
-    paddingLeft: 8
+    paddingLeft: PRODUCTION_STEPS.COL_PADDING_LEFT
   }
 };
 
@@ -84,13 +83,13 @@ const ProductionStepsTableHead: FC<Props> = ({ headers }) => {
           isFirstColumn={index === 0}
           sx={
             index === 0
-              ? { ...firstColumnStyle }
+              ? firstColumnStyle
               : {
                   width: getProductionStepsColumnWidth(headers)
                 }
           }
-          align={index === 0 ? "left" : "center"}
-          className="flexRow center alignCenter"
+          align="left"
+          className="flexRow center"
         >
           <Typography
             sx={{
