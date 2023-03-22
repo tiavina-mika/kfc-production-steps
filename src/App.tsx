@@ -3,25 +3,28 @@ import { useState } from "react";
 import ProductionSteps from "./components/ProductionSteps";
 
 const App = () => {
-  const [isEdition, setIsEdition] = useState<boolean>(false);
+  const [isProductionStepsEdition, setProductionStepsIsEdition] = useState<
+    boolean
+  >(false);
 
-  const toggleIsEdition = () => setIsEdition(!isEdition);
+  const toggleProductionStepsIsEdition = () =>
+    setProductionStepsIsEdition(!isProductionStepsEdition);
 
   const onEditProductionSteps = () => {
-    toggleIsEdition();
+    toggleProductionStepsIsEdition();
   };
 
   const onSaveProductionSteps = () => {
     console.log("onSaveProductionSteps");
-    toggleIsEdition();
+    toggleProductionStepsIsEdition();
   };
 
   const onCancelProductionSteps = () => {
     console.log("onCancelProductionSteps");
-    toggleIsEdition();
+    toggleProductionStepsIsEdition();
   };
 
-  if (isEdition) {
+  if (isProductionStepsEdition) {
     return (
       <ProductionSteps
         onSave={onSaveProductionSteps}
