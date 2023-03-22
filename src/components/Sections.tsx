@@ -45,7 +45,7 @@ const sx = {
 const StyledFirstBodyColumn = styled((props: BoxProps) => (
   <Box {...props} sx={{ ...stickyStyle }} />
 ))({
-  paddingLeft: 50,
+  paddingLeft: 80,
   paddingRight: 8,
   backgroundColor: "#fff",
   width: PRODUCTION_STEPS_FIRST_COL_WIDTH
@@ -95,20 +95,18 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   position: "relative",
   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
     transform: "rotate(90deg)",
-    position: "absolute"
+    position: "sticky",
+    left: 50
   },
   "& .MuiAccordionSummary-content": {
     padding: 0,
     margin: 0,
     minHeight: 60,
-    borderBottom: "1px solid " + grey[300]
+    borderBottom: "1px solid " + grey[300],
+    marginLeft: -40
   },
   "&.MuiAccordionSummary-root": {
     paddingLeft: 0
-  },
-  "& .Mui-expanded": {
-    // position: 'absolute',
-    left: 0
   }
 });
 

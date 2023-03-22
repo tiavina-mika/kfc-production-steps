@@ -55,7 +55,7 @@ const StyledHeadCell = styled(Box, {
       ...defaultStyles,
       ...stickyStyle,
       zIndex: 1000,
-      paddingLeft: 50
+      paddingLeft: 80
     };
   }
 
