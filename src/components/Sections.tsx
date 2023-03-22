@@ -56,7 +56,6 @@ type StyledBodyCellProps = {
   align: "left" | "center" | "right";
   width: number;
 };
-
 const StyledBodyCell = styled(Box, {
   shouldForwardProp: (prop) => prop !== "align" && prop !== "width"
 })<StyledBodyCellProps>((props) => {
@@ -109,6 +108,11 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   }
 });
 
+const StyledText = styled(Typography)({
+  fontWeight: 600,
+  fontSize: 16
+});
+
 type Props = {
   sections: any[];
   width: number;
@@ -129,40 +133,40 @@ const Sections: FC<Props> = ({ sections, width }) => {
             expandIcon={<ExpandMoreIcon sx={{ fontSize: "1.8rem" }} />}
           >
             <StyledFirstBodyColumn className="flexRow center">
-              <Typography>{section.name}</Typography>
+              <StyledText>{section.name}</StyledText>
             </StyledFirstBodyColumn>
             <StyledBodyCell align="center" width={width}>
-              {section.inputWeight}
+              <StyledText>{section.inputWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.pricePerKg}
+              <StyledText>{section.pricePerKg}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.foodcost}
+              <StyledText>{section.foodcost}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.transformation}
+              <StyledText>{section.transformation}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.transformationRate}
+              <StyledText>{section.transformationRate}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.outputWeight}
+              <StyledText>{section.outputWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.kitchenArea}
+              <StyledText>{section.kitchenArea}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.machineType}
+              <StyledText>{section.machineType}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.machineSetting}
+              <StyledText>{section.machineSetting}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.stepDurationValue}
+              <StyledText>{section.stepDurationValue}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="center" width={width}>
-              {section.stepDurationUnit}
+              <StyledText>{section.stepDurationUnit}</StyledText>
             </StyledBodyCell>
           </StyledAccordionSummary>
         </StyledAccordion>
