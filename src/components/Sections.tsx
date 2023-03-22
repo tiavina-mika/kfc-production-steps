@@ -14,7 +14,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { getCellAlignment } from "../utils/utils";
-import { PRODUCTION_STEPS_FIRST_COL_WIDTH } from "../utils/constant";
+import { COLORS, PRODUCTION_STEPS_FIRST_COL_WIDTH } from "../utils/constant";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -47,7 +47,7 @@ const StyledFirstBodyColumn = styled((props: BoxProps) => (
 ))({
   paddingLeft: 80,
   paddingRight: 8,
-  backgroundColor: "#fff",
+  backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
   width: PRODUCTION_STEPS_FIRST_COL_WIDTH
 });
 
@@ -104,7 +104,8 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
     margin: 0,
     minHeight: 60,
     borderBottom: "1px solid " + grey[300],
-    marginLeft: -40
+    marginLeft: -40,
+    backgroundColor: COLORS.PRODUCTION_STEPS_BLUE
   }
 });
 

@@ -1,2 +1,5 @@
 export const PRODUCTION_STEPS_TABLE_WIDTH = 2600;
 export const PRODUCTION_STEPS_FIRST_COL_WIDTH = 500;
+export const COLORS = {
+  PRODUCTION_STEPS_BLUE: "#e3f2fd"
+};
