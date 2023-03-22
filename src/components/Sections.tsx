@@ -6,8 +6,8 @@ import { Accordion, AccordionProps, AccordionSummary, AccordionSummaryProps, Box
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 
 import { getCellAlignment } from "../utils/utils";
+import { PRODUCTION_STEPS_FIRST_COL_WIDTH } from "../utils/constant";
 
-const FIRST_COL_WIDTH = 300;
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
 // ----------------------------------------------- //
@@ -18,7 +18,7 @@ const stickyStyle = {
 };
 
 const firstColumnStyle = {
-  width: FIRST_COL_WIDTH,
+  width: PRODUCTION_STEPS_FIRST_COL_WIDTH,
 };
 
 const sx = {
@@ -49,7 +49,7 @@ const StyledFirstBodyColumn = styled((props: BoxProps) => (
   paddingLeft: 8,
   paddingRight: 8,
   backgroundColor: "#fff",
-  width: FIRST_COL_WIDTH,
+  width: PRODUCTION_STEPS_FIRST_COL_WIDTH,
 });
 
 // body cell
@@ -95,18 +95,24 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   />
 ))({
   flexDirection: 'row-reverse',
+  position: 'relative',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
+    position: 'absolute',
+
   },
   '& .MuiAccordionSummary-content': {
     padding: 0,
     margin: 0,
+    minHeight: 60,
+    borderBottom: "1px solid " + grey[300],
   },
   '&.MuiAccordionSummary-root': {
     paddingLeft: 0,
+    
   },
   '& .Mui-expanded': {
-    position: 'sticky',
+    // position: 'absolute',
     left: 0,
   },
 });
@@ -125,11 +131,12 @@ const Sections: FC<Props> = ({ sections, width }) => {
           defaultExpanded
           square
           disableGutters
+          key={section.name + index}
         >
           <StyledAccordionSummary
               expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
           >
-            <StyledRow className="flexRow" key={section.name + index}>
+            {/* <StyledRow className="flexRow"> */}
               <StyledFirstBodyColumn>
                 <p>{section.name}</p>
               </StyledFirstBodyColumn>
@@ -166,7 +173,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledBodyCell align="center" width={width}>
                 {section.stepDurationUnit}
               </StyledBodyCell>
-            </StyledRow> 
+            {/* </StyledRow>  */}
           </StyledAccordionSummary>
         </StyledAccordion>
       ))}

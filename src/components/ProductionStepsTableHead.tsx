@@ -8,6 +8,7 @@ import {
   getProductionStepsColumnWidth,
   getCellAlignment
 } from "../utils/utils";
+import { PRODUCTION_STEPS_FIRST_COL_WIDTH } from "../utils/constant";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -19,7 +20,7 @@ const stickyStyle = {
 };
 
 const firstColumnStyle = {
-  width: 300
+  width: PRODUCTION_STEPS_FIRST_COL_WIDTH
 };
 
 const sx = {
@@ -52,9 +53,10 @@ const StyledHeadCell = styled(Box, {
   if (props.isFirstColumn) {
     defaultStyles = {
       ...defaultStyles,
-      ...stickyStyle
+      ...stickyStyle,
+      zIndex: 1000,
+      paddingLeft: 50
     };
-    defaultStyles.zIndex = 1000;
   }
 
   if (props.align) {
@@ -80,7 +82,7 @@ const ProductionStepsTableHead: FC<Props> = ({ headers }) => {
         <StyledHeadCell
           key={header.label + index}
           isFirstColumn={index === 0}
-          style={
+          sx={
             index === 0
               ? { ...firstColumnStyle }
               : {
