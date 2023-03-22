@@ -1,4 +1,7 @@
-import { PRODUCTION_STEPS_TABLE_WIDTH } from "./constant";
+import {
+  PRODUCTION_STEPS_FIRST_COL_WIDTH,
+  PRODUCTION_STEPS_TABLE_WIDTH
+} from "./constant";
 
 export const getCellAlignment = (
   align: "left" | "center" | "right"
@@ -14,4 +17,5 @@ export const getCellAlignment = (
 };
 
 export const getProductionStepsColumnWidth = (columns) =>
-  (PRODUCTION_STEPS_TABLE_WIDTH - 300) / (columns.length - 1);
+  (PRODUCTION_STEPS_TABLE_WIDTH - PRODUCTION_STEPS_FIRST_COL_WIDTH) /
+  (columns.length - 1);

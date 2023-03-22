@@ -45,7 +45,7 @@ const sx = {
 const StyledFirstBodyColumn = styled((props: BoxProps) => (
   <Box {...props} sx={{ ...stickyStyle }} />
 ))({
-  paddingLeft: 8,
+  paddingLeft: 50,
   paddingRight: 8,
   backgroundColor: "#fff",
   width: PRODUCTION_STEPS_FIRST_COL_WIDTH
