@@ -18,19 +18,6 @@ const stickyStyle = {
   borderRight: "1px solid #cccccc"
 };
 
-const firstColumnStyle = {
-  width: PRODUCTION_STEPS.FIRST_COL_WIDTH
-};
-
-const sx = {
-  sticky: stickyStyle,
-  firstColumn: firstColumnStyle,
-  cell: {
-    paddingRight: 8,
-    paddingLeft: PRODUCTION_STEPS.COL_PADDING_LEFT
-  }
-};
-
 // ----------------------------------------------- //
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
@@ -46,7 +33,8 @@ const StyledHeadCell = styled(Box, {
     height: "100%",
     color: "#fff",
     backgroundColor: "#2196f3",
-    ...sx.cell
+    paddingRight: 16,
+    paddingLeft: 16
   };
 
   if (props.isFirstColumn) {
@@ -81,19 +69,17 @@ const ProductionStepsTableHead: FC<Props> = ({ headers }) => {
         <StyledHeadCell
           key={header.label + index}
           isFirstColumn={index === 0}
-          sx={
-            index === 0
-              ? firstColumnStyle
-              : {
-                  width: getProductionStepsColumnWidth(headers)
-                }
-          }
+          sx={{
+            width: PRODUCTION_STEPS.COL_WIDTHS[index],
+            pl: 16
+          }}
           align="left"
           className="flexRow center"
         >
           <Typography
             sx={{
-              textAlign: index === 0 ? "left" : "center",
+              textAlign: "left",
+              // textAlign: index === 0 ? "left" : "center",
               fontWeight: 500,
               fontSize: "14px",
               lineHeight: "22px"

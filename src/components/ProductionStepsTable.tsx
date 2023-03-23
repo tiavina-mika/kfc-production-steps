@@ -2,8 +2,11 @@ import React, { FC, ReactNode } from "react";
 
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
+import { sum } from "lodash";
 
 import { PRODUCTION_STEPS } from "../utils/constant";
+
+const TABLE_WIDTH = sum(PRODUCTION_STEPS.COL_WIDTHS);
 
 type Props = {
   children: ReactNode;
@@ -18,10 +21,7 @@ const ProductionStepsTable: FC<Props> = ({ children }) => {
           border: "1px solid " + grey[300]
         }}
       >
-        <Box
-          sx={{ minWidth: PRODUCTION_STEPS.TABLE_WIDTH }}
-          aria-label="recipe table"
-        >
+        <Box sx={{ minWidth: TABLE_WIDTH }} aria-label="recipe table">
           {children}
         </Box>
       </div>

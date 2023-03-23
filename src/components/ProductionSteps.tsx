@@ -5,7 +5,6 @@ import { Box, Button, Stack } from "@mui/material";
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
-import { getProductionStepsColumnWidth } from "../utils/utils";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -60,10 +59,7 @@ const ProductionSteps: FC<Props> = ({
         {/* table head */}
         <ProductionStepsTableHead headers={headers} />
         <Box className="flexColumn">
-          <Sections
-            sections={sections}
-            width={getProductionStepsColumnWidth(headers)}
-          />
+          <Sections sections={sections} />
         </Box>
       </ProductionStepsTable>
     </div>

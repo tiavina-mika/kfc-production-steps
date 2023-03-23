@@ -14,6 +14,8 @@ import {
 import { getCellAlignment, roundNumber } from "../utils/utils";
 import { COLORS, PRODUCTION_STEPS } from "../utils/constant";
 
+const widths = PRODUCTION_STEPS.COL_WIDTHS;
+
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
 // ----------------------------------------------- //
@@ -23,17 +25,9 @@ const stickyStyle = {
   borderRight: "1px solid #cccccc"
 };
 
-const firstColumnStyle = {
-  width: PRODUCTION_STEPS.FIRST_COL_WIDTH
-};
-
-const sx = {
-  sticky: stickyStyle,
-  firstColumn: firstColumnStyle,
-  cell: {
-    paddingRight: 8,
-    paddingLeft: PRODUCTION_STEPS.COL_PADDING_LEFT
-  }
+const cellsStyle = {
+  paddingRight: 16,
+  paddingLeft: 16
 };
 
 // ----------------------------------------------- //
@@ -46,7 +40,7 @@ const StyledFirstBodyColumn = styled((props: BoxProps) => (
   paddingLeft: PRODUCTION_STEPS.FIRST_COL_PADDING_LEFT,
   paddingRight: 8,
   backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
-  width: PRODUCTION_STEPS.FIRST_COL_WIDTH
+  width: widths[0]
 });
 
 // body cell
@@ -63,7 +57,7 @@ const StyledBodyCell = styled(Box, {
     width: props.width,
     alignSelf: "stretch",
     margin: 0,
-    ...sx.cell
+    ...cellsStyle
   };
 
   if (props.align) {
@@ -101,7 +95,7 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
     margin: 0,
     height: 56,
     borderBottom: "1px solid #cccccc",
-    marginLeft: -48,
+    marginLeft: -28, // important! for the summary to not take account of the expand icon space
     backgroundColor: COLORS.PRODUCTION_STEPS_BLUE
   }
 });
@@ -114,10 +108,9 @@ const StyledText = styled(Typography)({
 
 type Props = {
   sections: any[];
-  width: number;
 };
 
-const Sections: FC<Props> = ({ sections, width }) => {
+const Sections: FC<Props> = ({ sections }) => {
   return (
     <Box className="flexColumn">
       {sections.map((section, index) => (
@@ -134,39 +127,39 @@ const Sections: FC<Props> = ({ sections, width }) => {
             <StyledFirstBodyColumn className="flexRow center">
               <StyledText>{section.name}</StyledText>
             </StyledFirstBodyColumn>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[1]}>
               <StyledText>{section.inputWeight || "-"}</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[2]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[3]}>
               <StyledText>
                 {section.cost && `${roundNumber(section.cost, 3)} €`}
               </StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[4]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[5]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[6]}>
               <StyledText>{section.outputWeight || "-"}</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[7]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[8]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[9]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[10]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
-            <StyledBodyCell align="left" width={width}>
+            <StyledBodyCell align="left" width={widths[11]}>
               <StyledText>-</StyledText>
             </StyledBodyCell>
           </StyledAccordionSummary>
