@@ -12,9 +12,13 @@ import {
 } from "@mui/material";
 
 import { getCellAlignment, roundNumber } from "../utils/utils";
-import { COLORS, PRODUCTION_STEPS } from "../utils/constant";
+import {
+  COLORS,
+  PRODUCTION_STEPS_COL_WIDTHS,
+  PRODUCTION_STEPS_FIST_COL_PL
+} from "../utils/constant";
 
-const widths = PRODUCTION_STEPS.COL_WIDTHS;
+const widths = PRODUCTION_STEPS_COL_WIDTHS;
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -37,7 +41,7 @@ const cellsStyle = {
 const StyledFirstBodyColumn = styled((props: BoxProps) => (
   <Box {...props} sx={{ ...stickyStyle }} />
 ))({
-  paddingLeft: PRODUCTION_STEPS.FIRST_COL_PADDING_LEFT,
+  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
   paddingRight: 8,
   backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
   width: widths[0]

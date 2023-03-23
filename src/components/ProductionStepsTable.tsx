@@ -4,9 +4,9 @@ import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
 import { sum } from "lodash";
 
-import { PRODUCTION_STEPS } from "../utils/constant";
+import { PRODUCTION_STEPS_COL_WIDTHS } from "../utils/constant";
 
-const TABLE_WIDTH = sum(PRODUCTION_STEPS.COL_WIDTHS);
+const TABLE_WIDTH = sum(PRODUCTION_STEPS_COL_WIDTHS);
 
 type Props = {
   children: ReactNode;

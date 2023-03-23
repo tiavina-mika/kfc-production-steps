@@ -3,11 +3,11 @@ import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 
+import { getCellAlignment } from "../utils/utils";
 import {
-  getProductionStepsColumnWidth,
-  getCellAlignment
-} from "../utils/utils";
-import { PRODUCTION_STEPS } from "../utils/constant";
+  PRODUCTION_STEPS_COL_WIDTHS,
+  PRODUCTION_STEPS_FIST_COL_PL
+} from "../utils/constant";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -42,7 +42,7 @@ const StyledHeadCell = styled(Box, {
       ...defaultStyles,
       ...stickyStyle,
       zIndex: 1000,
-      paddingLeft: PRODUCTION_STEPS.FIRST_COL_PADDING_LEFT
+      paddingLeft: PRODUCTION_STEPS_FIST_COL_PL
     };
   }
 
@@ -70,7 +70,7 @@ const ProductionStepsTableHead: FC<Props> = ({ headers }) => {
           key={header.label + index}
           isFirstColumn={index === 0}
           sx={{
-            width: PRODUCTION_STEPS.COL_WIDTHS[index],
+            width: PRODUCTION_STEPS_COL_WIDTHS[index],
             pl: 16
           }}
           align="left"
