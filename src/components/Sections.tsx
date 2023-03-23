@@ -171,6 +171,11 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>-</StyledText>
             </StyledBodyCell>
           </StyledAccordionSummary>
+          {/* <AccordionDetails>
+            <Typography>
+              Production steps for section "{section.name}"
+            </Typography>
+          </AccordionDetails> */}
         </StyledAccordion>
       ))}
     </Box>
