@@ -1,10 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { Box, Button, Stack } from "@mui/material";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
+import { recipeSectionsFormInitialValues } from "../utils/recipeUtils";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -26,15 +27,22 @@ type Props = {
   onCancel?: () => void;
   onSave?: () => void;
   isEdition?: boolean;
-  sections?: Record<string, any>[];
+  recipe?: Record<string, any>;
 };
 const ProductionSteps: FC<Props> = ({
   toggleEditForm,
   onCancel,
   onSave,
-  sections = [],
+  recipe,
   isEdition = false
 }) => {
+  const [initalValues, setInitialValues] = useState(null);
+
+  useEffect(() => {
+    const formValues = recipeSectionsFormInitialValues(recipe, true);
+    setInitialValues(formValues);
+  }, [recipe]);
+
   return (
     <div>
       {/* buttons */}
@@ -59,7 +67,7 @@ const ProductionSteps: FC<Props> = ({
         {/* table head */}
         <ProductionStepsTableHead headers={headers} />
         <Box className="flexColumn">
-          <Sections sections={sections} />
+          <Sections sections={initalValues?.sections || []} />
         </Box>
       </ProductionStepsTable>
     </div>
