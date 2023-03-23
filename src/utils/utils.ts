@@ -1,4 +1,3 @@
-import { PRODUCTION_STEPS } from "./constant";
 import { getPVC } from "./recipeUtils";
 
 export const productType = [
@@ -95,9 +94,9 @@ export const getCellAlignment = (
   }
 };
 
-export const getProductionStepsColumnWidth = (columns) =>
-  (PRODUCTION_STEPS.TABLE_WIDTH - PRODUCTION_STEPS.FIRST_COL_WIDTH) /
-  (columns.length - 1);
+// export const getProductionStepsColumnWidth = (columns) =>
+//   (PRODUCTION_STEPS.TABLE_WIDTH - PRODUCTION_STEPS.FIRST_COL_WIDTH) /
+//   (columns.length - 1);
 
 export function roundNumber(number, decimal = 4) {
   if (isNaN(number)) {
