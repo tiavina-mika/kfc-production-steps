@@ -67,7 +67,7 @@ const StyledHeadCell = styled(Box, {
 
 const StyledHeadRow = styled(Box)({
   backgroundColor: "#2196f3",
-  height: 72
+  height: 60
 });
 
 type Props = {
