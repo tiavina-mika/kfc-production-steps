@@ -136,7 +136,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>{section.name}</StyledText>
             </StyledFirstBodyColumn>
             <StyledBodyCell align="left" width={width}>
-              <StyledText>{section.inputWeight}</StyledText>
+              <StyledText>{section.inputWeight || "-"}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
@@ -153,7 +153,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
-              <StyledText>{section.outputWeight}</StyledText>
+              <StyledText>{section.outputWeight || "-"}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
