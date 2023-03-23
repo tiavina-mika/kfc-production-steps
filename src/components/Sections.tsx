@@ -10,7 +10,6 @@ import {
   BoxProps,
   Typography
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { getCellAlignment, roundNumber } from "../utils/utils";
 import { COLORS, PRODUCTION_STEPS } from "../utils/constant";
@@ -100,7 +99,7 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   "& .MuiAccordionSummary-content": {
     padding: 0,
     margin: 0,
-    minHeight: 60,
+    height: 56,
     borderBottom: "1px solid #cccccc",
     marginLeft: -48,
     backgroundColor: COLORS.PRODUCTION_STEPS_BLUE
@@ -130,7 +129,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
           key={section.name + index}
         >
           <StyledAccordionSummary
-            expandIcon={<ExpandMoreIcon sx={{ fontSize: "1.8rem" }} />}
+            expandIcon={<img alt="chevron" src="/icons/chevron-down.svg" />}
           >
             <StyledFirstBodyColumn className="flexRow center">
               <StyledText>{section.name}</StyledText>
