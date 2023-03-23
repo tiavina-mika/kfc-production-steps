@@ -489,6 +489,8 @@ export function computeSectionData(section, stepsField = "steps") {
   section.grossWeight = roundNumber(sectionGrossWeight, 5);
   section.cost = sectionCost;
   section.realCost = sectionRealCost;
+  section.inputWeight = roundNumber(sectionGrossWeight * 1000, 5);
+  section.outputWeight = roundNumber(sectionNetWeight * 1000, 5);
 }
 
 /**
@@ -497,7 +499,7 @@ export function computeSectionData(section, stepsField = "steps") {
 function computeDisplayData(
   recipe,
   isRecipe = true,
-  stepsField = "steps",
+  stepsField = "steps", // "steps" (arr obj) or "productionSteps" (arr pointers)
   stepIngredientField = "ingredients"
 ) {
   for (const section of recipe.sections) {

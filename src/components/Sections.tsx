@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 
 import styled from "@emotion/styled";
-import { grey } from "@mui/material/colors";
 import {
   Accordion,
   AccordionProps,
@@ -137,7 +136,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>{section.name}</StyledText>
             </StyledFirstBodyColumn>
             <StyledBodyCell align="left" width={width}>
-              <StyledText>{section.grossWeight}</StyledText>
+              <StyledText>{section.inputWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>
@@ -154,7 +153,7 @@ const Sections: FC<Props> = ({ sections, width }) => {
               <StyledText>-</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
-              <StyledText>{section.netWeight}</StyledText>
+              <StyledText>{section.outputWeight}</StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={width}>
               <StyledText>-</StyledText>

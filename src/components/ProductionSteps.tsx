@@ -7,58 +7,6 @@ import Sections from "./Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
 import { getProductionStepsColumnWidth } from "../utils/utils";
 
-// ----------------------------------------------- //
-// --------------------- utils ------------------- //
-// ----------------------------------------------- //
-const random = (number = 1): number => Math.floor(Math.random() * 10 * number);
-
-const createData = (
-  name: string,
-  inputWeight: number,
-  pricePerKg: number,
-  foodcost: number,
-  transformation: string,
-  transformationRate: number,
-  outputWeight: number,
-  kitchenArea: string,
-  machineType: string,
-  machineSetting: string,
-  stepDurationValue: number,
-  stepDurationUnit: string
-) => {
-  return {
-    name,
-    inputWeight,
-    pricePerKg,
-    foodcost,
-    transformation,
-    transformationRate,
-    outputWeight,
-    kitchenArea,
-    machineType,
-    machineSetting,
-    stepDurationValue,
-    stepDurationUnit
-  };
-};
-
-const sections = [...Array(20)].map((_, i) => {
-  return createData(
-    "name " + i,
-    random(),
-    random(),
-    random(),
-    "transformation " + i,
-    random(),
-    random(),
-    "kitchenArea " + i,
-    "machineType " + i,
-    "machineSetting " + i,
-    random(),
-    "kg / heure"
-  );
-});
-
 const headers = [
   { label: "Section / Étape / Article" },
   { label: "Poids en entrée (g)" },
