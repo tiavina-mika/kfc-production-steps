@@ -1,11 +1,13 @@
 import React, { FC, useEffect, useState } from "react";
 
 import { Box, Button, Stack } from "@mui/material";
+import { Formik, Form } from "formik";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
 import { recipeSectionsFormInitialValues } from "../utils/recipeUtils";
+import { RecipeSchema } from "../utils/validators";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -36,12 +38,16 @@ const ProductionSteps: FC<Props> = ({
   recipe,
   isEdition = false
 }) => {
-  const [initalValues, setInitialValues] = useState(null);
+  const [initialValues, setInitialValues] = useState(null);
 
   useEffect(() => {
     const formValues = recipeSectionsFormInitialValues(recipe, true);
     setInitialValues(formValues);
   }, [recipe]);
+
+  const _onSubmit = (values) => {
+    console.log("values", values);
+  };
 
   return (
     <div>
@@ -67,10 +73,30 @@ const ProductionSteps: FC<Props> = ({
         {/* table head */}
         <ProductionStepsTableHead headers={headers} />
         <Box className="flexColumn">
-          <Sections
-            sections={initalValues?.sections || []}
-            isEdition={isEdition}
-          />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={RecipeSchema}
+            onSubmit={_onSubmit}
+            validateOnChange={false}
+            enableReinitialize
+          >
+            {({
+              values,
+              errors,
+              setFieldValue,
+              setFieldError,
+              setFieldTouched,
+              submitForm,
+              validateForm
+            }) => {
+              return (
+                <Sections
+                  sections={values?.sections || []}
+                  isEdition={isEdition}
+                />
+              );
+            }}
+          </Formik>
         </Box>
       </ProductionStepsTable>
     </div>
