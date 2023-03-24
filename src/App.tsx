@@ -1,8 +1,8 @@
-import RecipeProductionSteps from "./RecipeProductionSteps";
+import Recipe from "./Recipe";
 import { recipe } from "./utils/data";
 
 const App = () => {
-  return <RecipeProductionSteps recipe={recipe} />;
+  return <Recipe recipe={recipe} />;
 };
 
 export default App;
