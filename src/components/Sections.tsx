@@ -19,6 +19,7 @@ import {
 } from "../utils/constant";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
+export const COMPONENT_NAME = "SECTIONS";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -110,16 +111,42 @@ const StyledText = styled(Typography)({
   color: COLORS.PRODUCTION_STEPS_TEXT_GREY
 });
 
+type IHoveredRow = {
+  component: string;
+  index: number;
+  parentIndex?: number;
+};
 type Props = {
   sections: any[];
   isEdition: boolean;
+  onRowHover: (
+    component: string,
+    index: number,
+    parendIndex?: number | null
+  ) => void;
+  onRowBlur: () => void;
+  hoveredRow: IHoveredRow;
 };
 
-const Sections: FC<Props> = ({ sections, isEdition }) => {
+const Sections: FC<Props> = ({
+  sections,
+  isEdition,
+  onRowHover,
+  onRowBlur,
+  hoveredRow
+}) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
   // alway has a default section, see: getDefaultSection()
   if (!isEdition && !(sections.length && sections[0].id)) return;
+
+  const _isHover = (index: number): boolean => {
+    return (
+      hoveredRow &&
+      COMPONENT_NAME === hoveredRow.component &&
+      hoveredRow.index === index
+    );
+  };
 
   return (
     <Box className="flexColumn">
@@ -133,6 +160,8 @@ const Sections: FC<Props> = ({ sections, isEdition }) => {
         >
           <StyledAccordionSummary
             expandIcon={<img alt="chevron" src="/icons/chevron-down.svg" />}
+            onMouseEnter={() => onRowHover(COMPONENT_NAME, index)}
+            onMouseLeave={onRowBlur}
           >
             <StyledFirstBodyColumn className="flexRow center">
               <StyledText>{section.name || "-"}</StyledText>

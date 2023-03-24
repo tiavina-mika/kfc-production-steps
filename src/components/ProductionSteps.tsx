@@ -39,7 +39,7 @@ const ProductionSteps: FC<Props> = ({
   isEdition = false
 }) => {
   const [initialValues, setInitialValues] = useState(null);
-  const [rowHover, setRowHover] = useState(null);
+  const [hoveredRow, setHoveredRow] = useState(null);
   const [fieldFocused, setFieldFocused] = useState<boolean>(false);
 
   useEffect(() => {
@@ -47,9 +47,14 @@ const ProductionSteps: FC<Props> = ({
     setInitialValues(formValues);
   }, [recipe]);
 
+  const _onRowBlur = () => {
+    if (fieldFocused) return;
+    setHoveredRow(null);
+  };
+
   const _onRowHover = (component, index, parentIndex = null) => {
     if (fieldFocused) return;
-    setRowHover({ component, index, parentIndex });
+    setHoveredRow({ component, index, parentIndex });
   };
 
   const _onSubmit = (values) => {
@@ -100,6 +105,9 @@ const ProductionSteps: FC<Props> = ({
                 <Sections
                   sections={values?.sections || []}
                   isEdition={isEdition}
+                  onRowBlur={_onRowBlur}
+                  onRowHover={_onRowHover}
+                  hoveredRow={hoveredRow}
                 />
               );
             }}
