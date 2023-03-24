@@ -112,9 +112,14 @@ const StyledText = styled(Typography)({
 
 type Props = {
   sections: any[];
+  isEdition: boolean;
 };
 
-const Sections: FC<Props> = ({ sections }) => {
+const Sections: FC<Props> = ({ sections, isEdition }) => {
+  // do not display sections row in preview if it's empty
+  // dsiplay an empty row if sections is empty in edition mode
+  if (!isEdition && !sections[0].id) return;
+
   return (
     <Box className="flexColumn">
       {sections.map((section, index) => (
@@ -129,7 +134,7 @@ const Sections: FC<Props> = ({ sections }) => {
             expandIcon={<img alt="chevron" src="/icons/chevron-down.svg" />}
           >
             <StyledFirstBodyColumn className="flexRow center">
-              <StyledText>{section.name}</StyledText>
+              <StyledText>{section.name || "-"}</StyledText>
             </StyledFirstBodyColumn>
             <StyledBodyCell align="left" width={widths[1]}>
               <StyledText>{section.inputWeight || "-"}</StyledText>
@@ -139,7 +144,7 @@ const Sections: FC<Props> = ({ sections }) => {
             </StyledBodyCell>
             <StyledBodyCell align="left" width={widths[3]}>
               <StyledText>
-                {section.cost && `${roundNumber(section.cost, 3)} €`}
+                {section.cost ? `${roundNumber(section.cost, 3)} €` : "_"}
               </StyledText>
             </StyledBodyCell>
             <StyledBodyCell align="left" width={widths[4]}>

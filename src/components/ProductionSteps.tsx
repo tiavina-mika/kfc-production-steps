@@ -67,7 +67,10 @@ const ProductionSteps: FC<Props> = ({
         {/* table head */}
         <ProductionStepsTableHead headers={headers} />
         <Box className="flexColumn">
-          <Sections sections={initalValues?.sections || []} />
+          <Sections
+            sections={initalValues?.sections || []}
+            isEdition={isEdition}
+          />
         </Box>
       </ProductionStepsTable>
     </div>
