@@ -5,7 +5,7 @@ import ProductionSteps from "./components/ProductionSteps";
 type Props = {
   recipe: Record<string, any>;
 };
-const RecipeProductionSteps: FC<Props> = ({ recipe }) => {
+const Recipe: FC<Props> = ({ recipe }) => {
   const [isProductionStepsEdition, setProductionStepsIsEdition] = useState<
     boolean
   >(false);
@@ -44,4 +44,4 @@ const RecipeProductionSteps: FC<Props> = ({ recipe }) => {
   );
 };
 
-export default RecipeProductionSteps;
+export default Recipe;
