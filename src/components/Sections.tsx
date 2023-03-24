@@ -119,7 +119,7 @@ const Sections: FC<Props> = ({ sections, isEdition }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
   // alway has a default section, see: getDefaultSection()
-  if (!isEdition && !sections[0].id) return;
+  if (!isEdition && !(sections.length && sections[0].id)) return;
 
   return (
     <Box className="flexColumn">
