@@ -7,7 +7,7 @@ import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
 import { recipeSectionsFormInitialValues } from "../utils/recipeUtils";
-import { RecipeSchema } from "../utils/validators";
+import { RecipeProductionStepsSchema } from "../utils/validators";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -39,11 +39,18 @@ const ProductionSteps: FC<Props> = ({
   isEdition = false
 }) => {
   const [initialValues, setInitialValues] = useState(null);
+  const [rowHover, setRowHover] = useState(null);
+  const [fieldFocused, setFieldFocused] = useState<boolean>(false);
 
   useEffect(() => {
     const formValues = recipeSectionsFormInitialValues(recipe, true);
     setInitialValues(formValues);
   }, [recipe]);
+
+  const _onRowHover = (component, index, parentIndex = null) => {
+    if (fieldFocused) return;
+    setRowHover({ component, index, parentIndex });
+  };
 
   const _onSubmit = (values) => {
     console.log("values", values);
@@ -75,7 +82,7 @@ const ProductionSteps: FC<Props> = ({
         <Box className="flexColumn">
           <Formik
             initialValues={initialValues}
-            validationSchema={RecipeSchema}
+            validationSchema={RecipeProductionStepsSchema}
             onSubmit={_onSubmit}
             validateOnChange={false}
             enableReinitialize

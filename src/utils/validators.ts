@@ -1,13 +1,13 @@
 import * as Yup from "yup";
 
-export const RecipeSchema = Yup.object().shape({
+export const RecipeProductionStepsSchema = Yup.object().shape({
   sections: Yup.array().of(
     Yup.object().shape({
       name: Yup.string().required("Obligatoire"),
-      steps: Yup.array().of(
+      productionSteps: Yup.array().of(
         Yup.object().shape({
           description: Yup.string().required("Obligatoire"),
-          ingredients: Yup.array().of(
+          stepComponents: Yup.array().of(
             Yup.object().shape({
               supplierItem: Yup.mixed().notOneOf(
                 [null, undefined],
