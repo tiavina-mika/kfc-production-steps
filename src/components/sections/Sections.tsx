@@ -11,12 +11,12 @@ import {
   Typography
 } from "@mui/material";
 
-import { getCellAlignment, roundNumber } from "../utils/utils";
+import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
   PRODUCTION_STEPS_FIST_COL_PL
-} from "../utils/constant";
+} from "../../utils/constant";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";

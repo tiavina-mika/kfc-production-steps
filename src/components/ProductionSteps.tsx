@@ -4,7 +4,7 @@ import { Box, Button, Stack } from "@mui/material";
 import { Formik, Form } from "formik";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
-import Sections from "./Sections";
+import Sections from "./sections/Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
 import { recipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
