@@ -95,11 +95,10 @@ type Props = {
   onKeyUp: (event: any, setFieldTouched: any) => void;
 };
 
-const EditableSection: FC<Props> = ({
+const FutureEditableSection: FC<Props> = ({
   sections,
   section,
   index,
-  // for style
   isHover,
   isDeleteHover,
   genericSections,
@@ -109,9 +108,40 @@ const EditableSection: FC<Props> = ({
   onFieldBlur,
   onKeyUp
 }) => {
+  // const [currentGenericSection, setCurrentGenericSection] = useState<Record<
+  //   string,
+  //   any
+  // > | null>(null);
+  // const [currentSection, setCurrentSection] = useState<Record<
+  //   string,
+  //   any
+  // > | null>(null);
+  // const [openChangedModal, setOpenChangedModal] = useState<boolean>(false);
+  // const [currentSectionIndex, setCurrentSectionIndex] = useState<number | null>(
+  //   null
+  // );
   const [changed, setChanged] = useState<number>(0);
+  // may be section or step
+  // const [currentPart, setCurrentPart] = useState<Record<string, any> | null>(
+  //   null
+  // );
 
   const _stopPropagation = (event) => event && event.stopPropagation();
+
+  // const _onKeyDown = (e, section, isGrossWeight = false) => {
+  //   if (section.parentId) {
+  //     setCurrentGenericSection(
+  //       parseSectionToObject([
+  //         genericSections.find((elm) => elm.id === section.parentId)
+  //       ])[0]
+  //     );
+  //     setCurrentSection(section);
+  //     setOpenChangedModal(true);
+  //   } else if (isGrossWeight && section.preventGrossWeightChange) {
+  //     setCurrentPart(section);
+  //     // setOpenGrossWeightChangeModal(true)
+  //   }
+  // };
 
   const _onGenericSectionChange = (event, formValue, sectionIndex, reason) => {
     if (!event) return;
@@ -130,6 +160,18 @@ const EditableSection: FC<Props> = ({
     const newSections = [].concat(sections);
     newSections[sectionIndex].name = value;
 
+    // if (newSections[sectionIndex].parentId) {
+    //   setCurrentGenericSection(
+    //     parseSectionToObject([
+    //       genericSections.find(
+    //         (elm) => elm.id === newSections[sectionIndex].parentId
+    //       )
+    //     ])[0]
+    //   );
+    //   setCurrentSection(newSections[sectionIndex]);
+    //   setOpenChangedModal(true);
+    // }
+
     if (reason === "selectOption" && section) {
       newSections[sectionIndex] =
         parseSectionToObject([section])[0] || getDefaultSection();
@@ -147,6 +189,7 @@ const EditableSection: FC<Props> = ({
     setFieldValue("sections", newSections);
 
     if (reason === "selectOption" && section) {
+      // setCurrentSectionIndex(sectionIndex);
       setChanged(changed + 1);
       onClearFocus();
     }
@@ -193,6 +236,7 @@ const EditableSection: FC<Props> = ({
                 onFocus={onFieldFocus}
                 onBlur={onFieldBlur}
                 onKeyUp={onKeyUp as any}
+                onKeyDown={(e) => _onKeyDown(e, section)}
                 variant="standard"
               />
             )}
@@ -202,6 +246,7 @@ const EditableSection: FC<Props> = ({
             render={(message) => (
               <StyledErrorMessage>{message}</StyledErrorMessage>
             )}
+            // render={msg => <div className={classes.errorSection}>{msg}</div>}
           />
         </Stack>
       </StyledFirstBodyColumn>
@@ -244,4 +289,4 @@ const EditableSection: FC<Props> = ({
   );
 };
 
-export default EditableSection;
+export default FutureEditableSection;

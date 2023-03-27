@@ -18,6 +18,7 @@ import {
   PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
 import SectionPreview from "./SectionPreview";
+import EditableSection from "./EditableSection";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -132,6 +133,12 @@ type Props = {
   onFieldFocus: () => void;
   onFieldBlur: () => void;
   onKeyUp: (event: any, setFieldTouched: any) => void;
+  onDeleteHover: (
+    component: string,
+    index: number,
+    parendIndex?: number | null
+  ) => void;
+  deleteHover: Record<string, any>;
 };
 
 const Sections: FC<Props> = ({
@@ -144,7 +151,9 @@ const Sections: FC<Props> = ({
   onClearFocus,
   onFieldFocus,
   onFieldBlur,
-  onKeyUp
+  onKeyUp,
+  onDeleteHover,
+  deleteHover
 }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
@@ -156,6 +165,14 @@ const Sections: FC<Props> = ({
       hoveredRow &&
       COMPONENT_NAME === hoveredRow.component &&
       hoveredRow.index === index
+    );
+  };
+
+  const _isDeleteHover = (index: number): boolean => {
+    return (
+      deleteHover &&
+      COMPONENT_NAME === deleteHover.component &&
+      deleteHover.index === index
     );
   };
 
@@ -174,7 +191,23 @@ const Sections: FC<Props> = ({
             onMouseEnter={() => onRowHover(COMPONENT_NAME, index)}
             onMouseLeave={onRowBlur}
           >
-            <SectionPreview section={section} />
+            {isEdition ? (
+              <EditableSection
+                sections={sections}
+                section={section}
+                index={index}
+                isHover={_isHover(index)}
+                isDeleteHover={_isDeleteHover(index)}
+                genericSections={genericSections}
+                setFieldValue={setFieldValue}
+                onClearFocus={onClearFocus}
+                onFieldFocus={onFieldFocus}
+                onFieldBlur={onFieldBlur}
+                onKeyUp={onKeyUp}
+              />
+            ) : (
+              <SectionPreview section={section} />
+            )}
           </StyledAccordionSummary>
         </StyledAccordion>
       ))}

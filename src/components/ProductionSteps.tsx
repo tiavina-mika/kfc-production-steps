@@ -43,6 +43,9 @@ const ProductionSteps: FC<Props> = ({
   const [initialValues, setInitialValues] = useState(null);
   const [hoveredRow, setHoveredRow] = useState(null);
   const [fieldFocused, setFieldFocused] = useState<boolean>(false);
+  const [deleteHover, setDeleteHover] = useState<Record<string, any> | null>(
+    null
+  );
 
   useEffect(() => {
     const formValues = recipeSectionsFormInitialValues(recipe, true);
@@ -67,8 +70,17 @@ const ProductionSteps: FC<Props> = ({
     setFieldFocused(false);
     setFieldTouched(event.target.name);
   };
+
   const _onKeyUp = (event, setFieldTouched) =>
     setFieldTouched(event.target.name);
+
+  const _onDeleteHover = (
+    component: string,
+    index: number,
+    parentIndex = null
+  ) => {
+    setDeleteHover({ component, index, parentIndex });
+  };
 
   const _onSubmit = (values) => {
     console.log("values", values);
@@ -126,6 +138,8 @@ const ProductionSteps: FC<Props> = ({
                   onFieldFocus={_onFieldFocus}
                   onFieldBlur={_onFieldBlur}
                   onKeyUp={_onKeyUp}
+                  onDeleteHover={_onDeleteHover}
+                  deleteHover={deleteHover}
                 />
               );
             }}
