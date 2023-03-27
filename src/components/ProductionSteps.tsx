@@ -136,7 +136,7 @@ const ProductionSteps: FC<Props> = ({
                   genericSections={genericSections}
                   onClearFocus={_onClearFocus}
                   onFieldFocus={_onFieldFocus}
-                  onFieldBlur={_onFieldBlur}
+                  onFieldBlur={(e) => _onFieldBlur(e, setFieldTouched)}
                   onKeyUp={_onKeyUp}
                   onDeleteHover={_onDeleteHover}
                   deleteHover={deleteHover}

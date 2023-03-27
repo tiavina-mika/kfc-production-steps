@@ -6,74 +6,19 @@ import {
   AccordionProps,
   AccordionSummary,
   AccordionSummaryProps,
-  Box,
-  BoxProps,
-  Typography
+  Box
 } from "@mui/material";
 
-import { getCellAlignment, roundNumber } from "../../utils/utils";
-import {
-  COLORS,
-  PRODUCTION_STEPS_COL_WIDTHS,
-  PRODUCTION_STEPS_FIST_COL_PL
-} from "../../utils/constant";
+import { COLORS } from "../../utils/constant";
 import SectionPreview from "./SectionPreview";
 import EditableSection from "./EditableSection";
-import { FormikErrors } from "formik";
 
-const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
-
-// ----------------------------------------------- //
-// -------------------- styles ------------------- //
-// ----------------------------------------------- //
-const stickyStyle = {
-  position: "sticky",
-  left: 0,
-  borderRight: "1px solid #cccccc"
-};
-
-const cellsStyle = {
-  paddingRight: 16,
-  paddingLeft: 16
-};
 
 // ----------------------------------------------- //
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
 // -------------- Table -------------- //
-const StyledFirstBodyColumn = styled((props: BoxProps) => (
-  <Box {...props} sx={{ ...stickyStyle }} />
-))({
-  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
-  paddingRight: 8,
-  backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
-  width: widths[0]
-});
-
-// body cell
-type StyledBodyCellProps = {
-  align: "left" | "center" | "right";
-  width: number;
-};
-const StyledBodyCell = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "align" && prop !== "width"
-})<StyledBodyCellProps>((props) => {
-  let defaultStyles: Record<string, any> = {
-    display: "flex",
-    alignItems: "center",
-    width: props.width,
-    alignSelf: "stretch",
-    margin: 0,
-    ...cellsStyle
-  };
-
-  if (props.align) {
-    defaultStyles.justifyContent = getCellAlignment(props.align);
-  }
-
-  return defaultStyles;
-});
 
 // -------------- Accordion -------------- //
 const StyledAccordion = styled((props: AccordionProps) => (
@@ -108,12 +53,6 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   }
 });
 
-const StyledText = styled(Typography)({
-  fontWeight: 600,
-  fontSize: 14,
-  color: COLORS.PRODUCTION_STEPS_TEXT_GREY
-});
-
 type IHoveredRow = {
   component: string;
   index: number;
@@ -132,7 +71,7 @@ type Props = {
   genericSections?: Record<string, any>[];
   onClearFocus: () => void;
   onFieldFocus: () => void;
-  onFieldBlur: () => void;
+  onFieldBlur: any;
   onKeyUp: (event: any, setFieldTouched: any) => void;
   onDeleteHover: (
     component: string,
@@ -140,11 +79,7 @@ type Props = {
     parendIndex?: number | null
   ) => void;
   deleteHover: Record<string, any>;
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined
-  ) => Promise<FormikErrors<Values>> | Promise<void>;
+  setFieldValue: any;
 };
 
 const Sections: FC<Props> = ({

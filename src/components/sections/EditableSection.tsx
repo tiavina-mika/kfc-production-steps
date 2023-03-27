@@ -81,6 +81,34 @@ const StyledText = styled(Typography)({
   color: COLORS.PRODUCTION_STEPS_TEXT_GREY
 });
 
+const StyledAutocomplete = styled(Autocomplete)({
+  "& .MuiAutocomplete-inputRoot": {
+    width: 512,
+    height: 30,
+    background: "#fff",
+    borderRadius: 4
+  }
+});
+
+const StyledAutocompleteTextField = styled(TextField)({
+  "& .MuiAutocomplete-inputRoot.MuiInputBase-root": {
+    "&:before": {
+      borderBottom: "none",
+      "&:hover": {
+        borderBottom: "none"
+      }
+    },
+    "& .MuiAutocomplete-input": {
+      padding: 4
+    }
+  },
+  "& .MuiInput-input": {
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#414141"
+  }
+});
+
 type Props = {
   sections: Record<string, any>[];
   section: Record<string, any>;
@@ -96,7 +124,7 @@ type Props = {
     field: string,
     value: any,
     shouldValidate?: boolean | undefined
-  ) => Promise<FormikErrors<Values>> | Promise<void>;
+  ) => Promise<FormikErrors<any>> | Promise<void>;
 };
 
 const EditableSection: FC<Props> = ({
@@ -158,13 +186,26 @@ const EditableSection: FC<Props> = ({
       _stopPropagation(event);
     }
   };
+
+  const getOptionLabel = (option: string | Record<string, any>) => {
+    if (typeof option === "string") {
+      return option;
+    }
+
+    if (option.get) {
+      return option.get("name");
+    }
+
+    return option.name;
+  };
+
   return (
     <
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
     >
       <StyledFirstBodyColumn className="flexRow center">
-        <Stack direction="column">
-          <Autocomplete
+        <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
+          <StyledAutocomplete
             freeSolo
             disableClearable
             // className={classes.autocompleteContainer}
@@ -173,13 +214,7 @@ const EditableSection: FC<Props> = ({
                 ? section.name
                 : section.name.get("name")
             }
-            getOptionLabel={(option) => {
-              return typeof option === "string"
-                ? option
-                : option.get
-                ? option.get("name")
-                : option.name;
-            }}
+            getOptionLabel={getOptionLabel}
             options={genericSections}
             onChange={(event, newInputValue, reason) => {
               _onGenericSectionChange(event, newInputValue, index, reason);
@@ -193,7 +228,7 @@ const EditableSection: FC<Props> = ({
               );
             }}
             renderInput={(params) => (
-              <TextField
+              <StyledAutocompleteTextField
                 {...params}
                 name={`sections[${index}].name`}
                 onClick={_stopPropagation}
@@ -202,6 +237,7 @@ const EditableSection: FC<Props> = ({
                 onBlur={onFieldBlur}
                 onKeyUp={onKeyUp as any}
                 variant="standard"
+                fullWidth
               />
             )}
           />
