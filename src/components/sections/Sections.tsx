@@ -127,6 +127,11 @@ type Props = {
   ) => void;
   onRowBlur: () => void;
   hoveredRow: IHoveredRow;
+  genericSections?: Record<string, any>[];
+  onClearFocus: () => void;
+  onFieldFocus: () => void;
+  onFieldBlur: () => void;
+  onKeyUp: (event: any, setFieldTouched: any) => void;
 };
 
 const Sections: FC<Props> = ({
@@ -134,7 +139,12 @@ const Sections: FC<Props> = ({
   isEdition,
   onRowHover,
   onRowBlur,
-  hoveredRow
+  hoveredRow,
+  genericSections,
+  onClearFocus,
+  onFieldFocus,
+  onFieldBlur,
+  onKeyUp
 }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode

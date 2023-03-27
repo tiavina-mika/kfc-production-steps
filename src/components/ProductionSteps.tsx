@@ -30,12 +30,14 @@ type Props = {
   onSave?: () => void;
   isEdition?: boolean;
   recipe?: Record<string, any>;
+  genericSections?: Record<string, any>[];
 };
 const ProductionSteps: FC<Props> = ({
   toggleEditForm,
   onCancel,
   onSave,
   recipe,
+  genericSections,
   isEdition = false
 }) => {
   const [initialValues, setInitialValues] = useState(null);
@@ -56,6 +58,17 @@ const ProductionSteps: FC<Props> = ({
     if (fieldFocused) return;
     setHoveredRow({ component, index, parentIndex });
   };
+
+  const _onClearFocus = () => setFieldFocused(false);
+
+  const _onFieldFocus = () => setFieldFocused(true);
+
+  const _onFieldBlur = (event, setFieldTouched) => {
+    setFieldFocused(false);
+    setFieldTouched(event.target.name);
+  };
+  const _onKeyUp = (event, setFieldTouched) =>
+    setFieldTouched(event.target.name);
 
   const _onSubmit = (values) => {
     console.log("values", values);
@@ -108,6 +121,11 @@ const ProductionSteps: FC<Props> = ({
                   onRowBlur={_onRowBlur}
                   onRowHover={_onRowHover}
                   hoveredRow={hoveredRow}
+                  genericSections={genericSections}
+                  onClearFocus={_onClearFocus}
+                  onFieldFocus={_onFieldFocus}
+                  onFieldBlur={_onFieldBlur}
+                  onKeyUp={_onKeyUp}
                 />
               );
             }}

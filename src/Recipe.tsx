@@ -4,8 +4,9 @@ import ProductionSteps from "./components/ProductionSteps";
 
 type Props = {
   recipe: Record<string, any>;
+  genericSections: Record<string, any>[];
 };
-const Recipe: FC<Props> = ({ recipe }) => {
+const Recipe: FC<Props> = ({ recipe, genericSections }) => {
   const [isProductionStepsEdition, setProductionStepsIsEdition] = useState<
     boolean
   >(false);
@@ -35,6 +36,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
         onCancel={onCancelProductionSteps}
         isEdition
         recipe={recipe}
+        genericSections={genericSections}
       />
     );
   }
