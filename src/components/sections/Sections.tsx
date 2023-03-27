@@ -17,6 +17,7 @@ import {
   PRODUCTION_STEPS_COL_WIDTHS,
   PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
+import SectionPreview from "./SectionPreview";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -163,50 +164,8 @@ const Sections: FC<Props> = ({
             onMouseEnter={() => onRowHover(COMPONENT_NAME, index)}
             onMouseLeave={onRowBlur}
           >
-            <StyledFirstBodyColumn className="flexRow center">
-              <StyledText>{section.name || "-"}</StyledText>
-            </StyledFirstBodyColumn>
-            <StyledBodyCell align="left" width={widths[1]}>
-              <StyledText>{section.inputWeight || "-"}</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[2]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[3]}>
-              <StyledText>
-                {section.cost ? `${roundNumber(section.cost, 3)} €` : "_"}
-              </StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[4]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[5]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[6]}>
-              <StyledText>{section.outputWeight || "-"}</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[7]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[8]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[9]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[10]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
-            <StyledBodyCell align="left" width={widths[11]}>
-              <StyledText>-</StyledText>
-            </StyledBodyCell>
+            <SectionPreview section={section} />
           </StyledAccordionSummary>
-          {/* <AccordionDetails>
-            <Typography>
-              Production steps for section "{section.name}"
-            </Typography>
-          </AccordionDetails> */}
         </StyledAccordion>
       ))}
     </Box>
