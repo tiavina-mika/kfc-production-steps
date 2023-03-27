@@ -19,6 +19,7 @@ import {
 } from "../../utils/constant";
 import SectionPreview from "./SectionPreview";
 import EditableSection from "./EditableSection";
+import { FormikErrors } from "formik";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -139,6 +140,11 @@ type Props = {
     parendIndex?: number | null
   ) => void;
   deleteHover: Record<string, any>;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<Values>> | Promise<void>;
 };
 
 const Sections: FC<Props> = ({
@@ -153,7 +159,8 @@ const Sections: FC<Props> = ({
   onFieldBlur,
   onKeyUp,
   onDeleteHover,
-  deleteHover
+  deleteHover,
+  setFieldValue
 }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode

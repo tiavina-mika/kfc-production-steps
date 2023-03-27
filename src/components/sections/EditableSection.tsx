@@ -18,7 +18,7 @@ import {
 } from "../../utils/constant";
 import { parseSectionToObject } from "../../utils/recipeUtils";
 import { getDefaultSection } from "../../utils/recipeUtils";
-import { ErrorMessage } from "formik";
+import { ErrorMessage, FormikErrors } from "formik";
 import { StyledErrorMessage } from "../StyledSectionComponents";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
@@ -88,11 +88,15 @@ type Props = {
   isHover: boolean;
   isDeleteHover: boolean;
   genericSections?: Record<string, any>[];
-  setFieldValue: any;
   onClearFocus: () => void;
   onFieldFocus: () => void;
   onFieldBlur: () => void;
   onKeyUp: (event: any, setFieldTouched: any) => void;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<Values>> | Promise<void>;
 };
 
 const EditableSection: FC<Props> = ({
@@ -155,8 +159,8 @@ const EditableSection: FC<Props> = ({
     }
   };
   return (
-    <div
-    // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
+    <
+      // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
     >
       <StyledFirstBodyColumn className="flexRow center">
         <Stack direction="column">
@@ -170,7 +174,11 @@ const EditableSection: FC<Props> = ({
                 : section.name.get("name")
             }
             getOptionLabel={(option) => {
-              return typeof option === "string" ? option : option.get("name");
+              return typeof option === "string"
+                ? option
+                : option.get
+                ? option.get("name")
+                : option.name;
             }}
             options={genericSections}
             onChange={(event, newInputValue, reason) => {
@@ -240,7 +248,7 @@ const EditableSection: FC<Props> = ({
       <StyledBodyCell align="left" width={widths[11]}>
         <StyledText>-</StyledText>
       </StyledBodyCell>
-    </div>
+    </>
   );
 };
 

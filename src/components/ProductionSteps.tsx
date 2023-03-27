@@ -140,6 +140,7 @@ const ProductionSteps: FC<Props> = ({
                   onKeyUp={_onKeyUp}
                   onDeleteHover={_onDeleteHover}
                   deleteHover={deleteHover}
+                  setFieldValue={setFieldValue}
                 />
               );
             }}
