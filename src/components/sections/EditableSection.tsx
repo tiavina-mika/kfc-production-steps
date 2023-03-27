@@ -200,7 +200,11 @@ const EditableSection: FC<Props> = ({
   };
 
   return (
-    <
+    <Box
+      sx={{
+        display: "flex"
+      }}
+      onClick={_stopPropagation}
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
     >
       <StyledFirstBodyColumn className="flexRow center">
@@ -232,7 +236,6 @@ const EditableSection: FC<Props> = ({
                 {...params}
                 name={`sections[${index}].name`}
                 onClick={_stopPropagation}
-                // className={classes.sectionNameWhiteInput}
                 onFocus={onFieldFocus}
                 onBlur={onFieldBlur}
                 onKeyUp={onKeyUp as any}
@@ -284,7 +287,7 @@ const EditableSection: FC<Props> = ({
       <StyledBodyCell align="left" width={widths[11]}>
         <StyledText>-</StyledText>
       </StyledBodyCell>
-    </>
+    </Box>
   );
 };
 

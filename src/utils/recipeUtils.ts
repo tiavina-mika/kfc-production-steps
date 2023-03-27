@@ -571,3 +571,47 @@ export const recipeSectionsFormInitialValues = (
 
   return values;
 };
+
+/**
+ * Here we assume that a computed data can change only if numbered values changes in an ingredient.
+ * If ingredientIndex is null, it means it's a new or a removed ingredient
+ */
+export const computeProductionStepsRecipeOnFieldChange = (
+  recipe,
+  sectionIndex = null,
+  stepIndex = null,
+  stepComponentIndex = null
+) => {
+  if (sectionIndex !== null) {
+    // to avoid 0
+    const section = recipe.sections[sectionIndex];
+
+    if (stepIndex !== null) {
+      const step = section.prodcutioinSteps[stepIndex];
+
+      if (stepComponentIndex !== null) {
+        const stepComponent = step.stepComponents[stepComponentIndex];
+        const {
+          cost,
+          realCost,
+          grossWeight,
+          netWeight,
+          transformRate,
+          cookingModeLabel
+        }: Record<string, any> = computeIngredientData(stepComponent);
+        stepComponent.grossWeight = grossWeight;
+        stepComponent.netWeight = netWeight;
+        stepComponent.cost = cost;
+        stepComponent.realCost = realCost;
+        stepComponent.transformRate = transformRate;
+        stepComponent.cookingModeLabel = cookingModeLabel;
+      }
+
+      computeStepData(step, "stepComponents");
+    }
+
+    computeSectionData(section, "productionSteps");
+  }
+
+  computeRecipeData(recipe);
+};

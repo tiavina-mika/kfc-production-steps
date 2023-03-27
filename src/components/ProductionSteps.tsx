@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { Box, Button, Stack } from "@mui/material";
 import { Formik, Form } from "formik";
@@ -6,7 +6,10 @@ import { Formik, Form } from "formik";
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./sections/Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
-import { recipeSectionsFormInitialValues } from "../utils/recipeUtils";
+import {
+  computeProductionStepsRecipeOnFieldChange,
+  recipeSectionsFormInitialValues
+} from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
 import { cloneDeep } from "lodash";
 
@@ -73,8 +76,10 @@ const ProductionSteps: FC<Props> = ({
     setFieldTouched(event.target.name);
   };
 
-  const _onKeyUp = (event, setFieldTouched) =>
+  const _onKeyUp = (event, setFieldTouched) => {
+    if (!setFieldTouched) return;
     setFieldTouched(event.target.name);
+  };
 
   const _onDeleteHover = (
     component: string,
@@ -137,6 +142,9 @@ const ProductionSteps: FC<Props> = ({
               submitForm,
               validateForm
             }) => {
+              // const previousProps = usePrevious({ values })
+
+              // _checkChanges(values, setFieldValue)
               return (
                 <Sections
                   sections={values?.sections || []}
