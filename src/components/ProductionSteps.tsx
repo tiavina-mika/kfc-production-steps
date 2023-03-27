@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 
 import { Box, Button, Stack } from "@mui/material";
 import { Formik, Form } from "formik";
@@ -8,6 +8,7 @@ import Sections from "./sections/Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
 import { recipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
+import { cloneDeep } from "lodash";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -40,6 +41,7 @@ const ProductionSteps: FC<Props> = ({
   genericSections,
   isEdition = false
 }) => {
+  const formRef = useRef();
   const [initialValues, setInitialValues] = useState(null);
   const [hoveredRow, setHoveredRow] = useState(null);
   const [fieldFocused, setFieldFocused] = useState<boolean>(false);
@@ -82,8 +84,16 @@ const ProductionSteps: FC<Props> = ({
     setDeleteHover({ component, index, parentIndex });
   };
 
+  const handleSubmit = () => {
+    console.log("handleSubmit");
+
+    if (!formRef.current) return;
+    (formRef.current as any).handleSubmit();
+  };
+
   const _onSubmit = (values) => {
     console.log("values", values);
+    // onSave(cloneDeep(values), recipe, "6" === recipe.status).then(onStopEdit)
   };
 
   return (
@@ -96,7 +106,7 @@ const ProductionSteps: FC<Props> = ({
         {isEdition ? (
           <Stack direction="row" spacing={5}>
             <Button onClick={onCancel}>Annuler</Button>
-            <Button onClick={onSave} variant="contained">
+            <Button onClick={handleSubmit} variant="contained">
               Enregistrer
             </Button>
           </Stack>
@@ -111,6 +121,7 @@ const ProductionSteps: FC<Props> = ({
         <ProductionStepsTableHead headers={headers} />
         <Box className="flexColumn">
           <Formik
+            innerRef={formRef}
             initialValues={initialValues}
             validationSchema={RecipeProductionStepsSchema}
             onSubmit={_onSubmit}

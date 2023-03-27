@@ -13,7 +13,7 @@ type Props = {
 };
 const ProductionStepsTable: FC<Props> = ({ children }) => {
   return (
-    <Box sx={{ mt: 10 }}>
+    <Box sx={{ mt: 10, overflowX: "scroll" }}>
       <div
         style={{
           maxWidth: "100vw",
