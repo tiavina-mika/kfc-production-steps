@@ -81,7 +81,7 @@ const StyledBodyCell = styled(Box, {
 const StyledText = styled(Typography)({
   fontWeight: 500,
   fontSize: 14,
-  color: "#9B9B9B"
+  color: COLORS.PRODUCTION_STEPS_DISABLE_TEXT
 });
 
 const StyledAutocomplete = styled(Autocomplete)({
