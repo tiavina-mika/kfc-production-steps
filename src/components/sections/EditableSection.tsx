@@ -79,9 +79,9 @@ const StyledBodyCell = styled(Box, {
 });
 
 const StyledText = styled(Typography)({
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: 14,
-  color: COLORS.PRODUCTION_STEPS_TEXT_GREY
+  color: "#9B9B9B"
 });
 
 const StyledAutocomplete = styled(Autocomplete)({
