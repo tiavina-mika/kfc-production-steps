@@ -16,7 +16,10 @@ import {
   PRODUCTION_STEPS_COL_WIDTHS,
   PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
-import { parseSectionToObject } from "../../utils/recipeUtils";
+import {
+  computeSectionData,
+  parseSectionToObject
+} from "../../utils/recipeUtils";
 import { getDefaultSection } from "../../utils/recipeUtils";
 import { ErrorMessage, FormikErrors } from "formik";
 import { StyledErrorMessage } from "../StyledSectionComponents";
@@ -159,12 +162,16 @@ const EditableSection: FC<Props> = ({
     const section = genericSections.find(
       (section) => (section.get ? section.get("name") : section.name) === value
     );
+
+    if (section) {
+      computeSectionData(section, "productionSteps");
+    }
+
     const newSections = [].concat(sections);
     newSections[sectionIndex].name = value;
 
     if (reason === "selectOption" && section) {
-      newSections[sectionIndex] =
-        parseSectionToObject([section])[0] || getDefaultSection();
+      newSections[sectionIndex] = section;
       newSections[sectionIndex].error = false;
       newSections[sectionIndex].id = null;
       newSections[sectionIndex].parentId = section.id;
@@ -182,6 +189,7 @@ const EditableSection: FC<Props> = ({
       setChanged(changed + 1);
       onClearFocus();
     }
+
     if (event.target) {
       _stopPropagation(event);
     }

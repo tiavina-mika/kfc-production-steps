@@ -11,7 +11,6 @@ import {
   recipeSectionsFormInitialValues
 } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
-import { cloneDeep } from "lodash";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -90,8 +89,6 @@ const ProductionSteps: FC<Props> = ({
   };
 
   const handleSubmit = () => {
-    console.log("handleSubmit");
-
     if (!formRef.current) return;
     (formRef.current as any).handleSubmit();
   };
@@ -142,6 +139,7 @@ const ProductionSteps: FC<Props> = ({
               submitForm,
               validateForm
             }) => {
+              // console.log('formik values', values)
               // const previousProps = usePrevious({ values })
 
               // _checkChanges(values, setFieldValue)
@@ -156,7 +154,7 @@ const ProductionSteps: FC<Props> = ({
                   onClearFocus={_onClearFocus}
                   onFieldFocus={_onFieldFocus}
                   onFieldBlur={(e) => _onFieldBlur(e, setFieldTouched)}
-                  onKeyUp={_onKeyUp}
+                  onKeyUp={(e) => _onKeyUp(e, setFieldTouched)}
                   onDeleteHover={_onDeleteHover}
                   deleteHover={deleteHover}
                   setFieldValue={setFieldValue}
