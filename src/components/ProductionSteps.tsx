@@ -139,10 +139,6 @@ const ProductionSteps: FC<Props> = ({
               submitForm,
               validateForm
             }) => {
-              // console.log('formik values', values)
-              // const previousProps = usePrevious({ values })
-
-              // _checkChanges(values, setFieldValue)
               return (
                 <Sections
                   sections={values?.sections || []}

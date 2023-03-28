@@ -78,10 +78,24 @@ const StyledBodyCell = styled(Box, {
   return defaultStyles;
 });
 
-const StyledText = styled(Typography)({
-  fontWeight: 500,
-  fontSize: 14,
-  color: COLORS.PRODUCTION_STEPS_DISABLE_TEXT
+type StyledTextProps = {
+  disabled?: boolean;
+};
+const StyledText = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "disabled"
+})<StyledTextProps>(({ disabled = true }) => {
+  let defaultStyles: Record<string, any> = {
+    fontWeight: 600,
+    fontSize: 14
+  };
+
+  if (disabled) {
+    defaultStyles.color = COLORS.PRODUCTION_STEPS_DISABLE_TEXT;
+  } else {
+    defaultStyles.color = COLORS.PRODUCTION_STEPS_TEXT_GREY;
+  }
+
+  return defaultStyles;
 });
 
 const StyledAutocomplete = styled(Autocomplete)({
@@ -163,9 +177,11 @@ const EditableSection: FC<Props> = ({
       (section) => (section.get ? section.get("name") : section.name) === value
     );
 
-    if (section) {
-      computeSectionData(section, "productionSteps");
-    }
+    // if (section) {
+    //   computeSectionData(section, "productionSteps");
+    // }
+    console.log("section", section);
+    console.log("sections", sections);
 
     const newSections = [].concat(sections);
     newSections[sectionIndex].name = value;
@@ -216,49 +232,53 @@ const EditableSection: FC<Props> = ({
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
     >
       <StyledFirstBodyColumn className="flexRow center">
-        <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
-          <StyledAutocomplete
-            freeSolo
-            disableClearable
-            // className={classes.autocompleteContainer}
-            inputValue={
-              typeof section.name === "string"
-                ? section.name
-                : section.name.get("name")
-            }
-            getOptionLabel={getOptionLabel}
-            options={genericSections}
-            onChange={(event, newInputValue, reason) => {
-              _onGenericSectionChange(event, newInputValue, index, reason);
-            }}
-            onInputChange={(event, newInputValue) => {
-              _onGenericSectionChange(
-                event,
-                newInputValue,
-                index,
-                "input-change"
-              );
-            }}
-            renderInput={(params) => (
-              <StyledAutocompleteTextField
-                {...params}
-                name={`sections[${index}].name`}
-                onClick={_stopPropagation}
-                onFocus={onFieldFocus}
-                onBlur={onFieldBlur}
-                onKeyUp={onKeyUp as any}
-                variant="standard"
-                fullWidth
-              />
-            )}
-          />
-          <ErrorMessage
-            name={`sections[${index}].name`}
-            render={(message) => (
-              <StyledErrorMessage>{message}</StyledErrorMessage>
-            )}
-          />
-        </Stack>
+        {isHover ? (
+          <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
+            <StyledAutocomplete
+              freeSolo
+              disableClearable
+              // className={classes.autocompleteContainer}
+              inputValue={
+                typeof section.name === "string"
+                  ? section.name
+                  : section.name.get("name")
+              }
+              getOptionLabel={getOptionLabel}
+              options={genericSections}
+              onChange={(event, newInputValue, reason) => {
+                _onGenericSectionChange(event, newInputValue, index, reason);
+              }}
+              onInputChange={(event, newInputValue) => {
+                _onGenericSectionChange(
+                  event,
+                  newInputValue,
+                  index,
+                  "input-change"
+                );
+              }}
+              renderInput={(params) => (
+                <StyledAutocompleteTextField
+                  {...params}
+                  name={`sections[${index}].name`}
+                  onClick={_stopPropagation}
+                  onFocus={onFieldFocus}
+                  onBlur={onFieldBlur}
+                  onKeyUp={onKeyUp as any}
+                  variant="standard"
+                  fullWidth
+                />
+              )}
+            />
+            <ErrorMessage
+              name={`sections[${index}].name`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          </Stack>
+        ) : (
+          <StyledText disabled={false}>{section.name}</StyledText>
+        )}
       </StyledFirstBodyColumn>
       <StyledBodyCell align="left" width={widths[1]}>
         <StyledText>{section.inputWeight || "-"}</StyledText>
