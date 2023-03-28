@@ -177,11 +177,9 @@ const EditableSection: FC<Props> = ({
       (section) => (section.get ? section.get("name") : section.name) === value
     );
 
-    // if (section) {
-    //   computeSectionData(section, "productionSteps");
-    // }
-    console.log("section", section);
-    console.log("sections", sections);
+    if (section) {
+      computeSectionData(section, "productionSteps");
+    }
 
     const newSections = [].concat(sections);
     newSections[sectionIndex].name = value;
