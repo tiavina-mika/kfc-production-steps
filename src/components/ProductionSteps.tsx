@@ -11,6 +11,7 @@ import {
   recipeSectionsFormInitialValues
 } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
+import { cloneDeep } from "lodash";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -45,6 +46,11 @@ const ProductionSteps: FC<Props> = ({
 }) => {
   const formRef = useRef();
   const [initialValues, setInitialValues] = useState(null);
+  /*
+   * this will not be changed,
+   * unlike the initial values that changed every input of the form change
+   */
+  const [defaultValues, setDefaultValues] = useState(null);
   const [hoveredRow, setHoveredRow] = useState(null);
   const [fieldFocused, setFieldFocused] = useState<boolean>(false);
   const [deleteHover, setDeleteHover] = useState<Record<string, any> | null>(
@@ -54,6 +60,7 @@ const ProductionSteps: FC<Props> = ({
   useEffect(() => {
     const formValues = recipeSectionsFormInitialValues(recipe, true);
     setInitialValues(formValues);
+    setDefaultValues(cloneDeep(formValues));
   }, [recipe]);
 
   const _onRowBlur = () => {
@@ -93,6 +100,11 @@ const ProductionSteps: FC<Props> = ({
     (formRef.current as any).handleSubmit();
   };
 
+  const handleCancel = () => {
+    setInitialValues(defaultValues);
+    onCancel();
+  };
+
   const _onSubmit = (values) => {
     console.log("values", values);
     // onSave(cloneDeep(values), recipe, "6" === recipe.status).then(onStopEdit)
@@ -107,7 +119,7 @@ const ProductionSteps: FC<Props> = ({
       >
         {isEdition ? (
           <Stack direction="row" spacing={5}>
-            <Button onClick={onCancel}>Annuler</Button>
+            <Button onClick={handleCancel}>Annuler</Button>
             <Button onClick={handleSubmit} variant="contained">
               Enregistrer
             </Button>
