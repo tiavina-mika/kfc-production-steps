@@ -224,7 +224,7 @@ const EditableSection: FC<Props> = ({
   return (
     <Box
       sx={{
-        display: "flex",
+        display: "flex"
       }}
       onClick={_stopPropagation}
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
