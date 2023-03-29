@@ -126,7 +126,7 @@ const Sections: FC<Props> = ({
           defaultExpanded
           square
           disableGutters
-          key={section.name + index}
+          key={index}
         >
           <StyledAccordionSummary
             expandIcon={<img alt="chevron" src="/icons/chevron-down.svg" />}

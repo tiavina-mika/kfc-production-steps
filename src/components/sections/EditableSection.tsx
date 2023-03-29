@@ -1,10 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 
 import styled from "@emotion/styled";
 import {
   Autocomplete,
   Box,
   BoxProps,
+  Grid,
   Stack,
   TextField,
   Typography
@@ -98,25 +99,29 @@ const StyledText = styled(Box, {
   return defaultStyles;
 });
 
-const StyledAutocomplete = styled(Autocomplete)({
-  "& .MuiAutocomplete-inputRoot": {
-    width: 512,
-    height: 30,
-    background: "#fff",
-    borderRadius: 4
-  }
-});
+// const StyledAutocomplete = styled(Autocomplete)({
+//   "& .MuiAutocomplete-inputRoot": {
+//     width: 512,
+//     height: 30,
+//     background: "#fff",
+//     borderRadius: 4
+//   }
+// });
 
-const StyledAutocompleteTextField = styled(TextField)({
-  "& .MuiAutocomplete-inputRoot.MuiInputBase-root": {
-    "&:before": {
+const StyledTextField = styled(TextField)({
+  width: 512,
+  height: 30,
+  background: "#fff",
+  borderRadius: 4,
+  "& .MuiInputBase-root": {
+    "&:before, :after": {
       borderBottom: "none",
       "&:hover": {
         borderBottom: "none"
       }
     },
-    "& .MuiAutocomplete-input": {
-      padding: 4
+    "& .MuiInputBase-input": {
+      paddingLeft: 7
     }
   },
   "& .MuiInput-input": {
@@ -162,52 +167,58 @@ const EditableSection: FC<Props> = ({
 
   const _stopPropagation = (event) => event && event.stopPropagation();
 
-  const _onGenericSectionChange = (event, formValue, sectionIndex, reason) => {
-    if (!event) return;
-    let value = formValue;
-    if (reason === "selectOption") {
-      if (value.get) {
-        value = value.get("name");
-      } else {
-        value = value.name;
+  const _onGenericSectionChange = useCallback(
+    (event, formValue, sectionIndex, reason) => {
+      if (!event) return;
+
+      let value = formValue;
+      if (reason === "selectOption") {
+        if (value.get) {
+          value = value.get("name");
+        } else {
+          value = value.name;
+        }
       }
-    }
 
-    const section = genericSections.find(
-      (section) => (section.get ? section.get("name") : section.name) === value
-    );
+      const section = genericSections.find(
+        (section) =>
+          (section.get ? section.get("name") : section.name) === value
+      );
 
-    if (section) {
-      computeSectionData(section, "productionSteps");
-    }
+      if (section) {
+        computeSectionData(section, "productionSteps");
+      }
 
-    const newSections = [].concat(sections);
-    newSections[sectionIndex].name = value;
+      const newSections = [...sections];
 
-    if (reason === "selectOption" && section) {
-      newSections[sectionIndex] = section;
-      newSections[sectionIndex].error = false;
-      newSections[sectionIndex].id = null;
-      newSections[sectionIndex].parentId = section.id;
-      newSections[sectionIndex].parentPercent = 100;
-    }
+      newSections[sectionIndex].name = value;
 
-    if (section && !newSections[sectionIndex].parentId) {
-      newSections[sectionIndex].parentId = null;
-      newSections[sectionIndex].parentPercent = 0;
-    }
+      if (reason === "selectOption" && section) {
+        newSections[sectionIndex] = section;
+        newSections[sectionIndex].error = false;
+        newSections[sectionIndex].id = null;
+        newSections[sectionIndex].parentId = section.id;
+        newSections[sectionIndex].parentPercent = 100;
+      }
 
-    setFieldValue("sections", newSections);
+      if (section && !newSections[sectionIndex].parentId) {
+        newSections[sectionIndex].parentId = null;
+        newSections[sectionIndex].parentPercent = 0;
+      }
 
-    if (reason === "selectOption" && section) {
-      setChanged(changed + 1);
-      onClearFocus();
-    }
+      setFieldValue("sections", newSections);
 
-    if (event.target) {
-      _stopPropagation(event);
-    }
-  };
+      if (reason === "selectOption" && section) {
+        setChanged(changed + 1);
+        onClearFocus();
+      }
+
+      if (event.target) {
+        _stopPropagation(event);
+      }
+    },
+    [sections, setFieldValue, changed, genericSections, onClearFocus]
+  );
 
   const getOptionLabel = (option: string | Record<string, any>) => {
     if (typeof option === "string") {
@@ -222,9 +233,9 @@ const EditableSection: FC<Props> = ({
   };
 
   return (
-    <Box
+    <Grid
       sx={{
-        display: "flex",
+        display: "flex"
       }}
       onClick={_stopPropagation}
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
@@ -232,43 +243,27 @@ const EditableSection: FC<Props> = ({
       <StyledFirstBodyColumn className="flexRow center">
         {isHover ? (
           <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
-            <StyledAutocomplete
-              freeSolo
-              disableClearable
-              selectOnFocus
-              clearOnBlur
-              handleHomeEndKeys
-              // className={classes.autocompleteContainer}
-              inputValue={
+            <StyledTextField
+              name={`sections[${index}].name`}
+              value={
                 typeof section.name === "string"
                   ? section.name
                   : section.name.get("name")
               }
-              getOptionLabel={getOptionLabel}
-              options={genericSections}
-              onChange={(event, newInputValue, reason) => {
-                _onGenericSectionChange(event, newInputValue, index, reason);
-              }}
-              onInputChange={(event, newInputValue) => {
+              onClick={_stopPropagation}
+              onFocus={onFieldFocus}
+              onBlur={onFieldBlur}
+              onKeyUp={onKeyUp as any}
+              variant="standard"
+              fullWidth
+              onChange={(event) => {
                 _onGenericSectionChange(
                   event,
-                  newInputValue,
+                  event.target.value,
                   index,
                   "input-change"
                 );
               }}
-              renderInput={(params) => (
-                <StyledAutocompleteTextField
-                  {...params}
-                  name={`sections[${index}].name`}
-                  onClick={_stopPropagation}
-                  onFocus={onFieldFocus}
-                  onBlur={onFieldBlur}
-                  onKeyUp={onKeyUp as any}
-                  variant="standard"
-                  fullWidth
-                />
-              )}
             />
             <ErrorMessage
               name={`sections[${index}].name`}
@@ -316,7 +311,7 @@ const EditableSection: FC<Props> = ({
       <StyledBodyCell align="left" width={widths[11]}>
         <StyledText>-</StyledText>
       </StyledBodyCell>
-    </Box>
+    </Grid>
   );
 };
 

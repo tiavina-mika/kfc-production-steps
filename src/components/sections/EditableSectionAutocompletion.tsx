@@ -1,14 +1,7 @@
 import React, { FC, useState } from "react";
 
 import styled from "@emotion/styled";
-import {
-  Autocomplete,
-  Box,
-  BoxProps,
-  Stack,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Autocomplete, Box, BoxProps, Stack, TextField } from "@mui/material";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
@@ -16,11 +9,7 @@ import {
   PRODUCTION_STEPS_COL_WIDTHS,
   PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
-import {
-  computeSectionData,
-  parseSectionToObject
-} from "../../utils/recipeUtils";
-import { getDefaultSection } from "../../utils/recipeUtils";
+import { computeSectionData } from "../../utils/recipeUtils";
 import { ErrorMessage, FormikErrors } from "formik";
 import { StyledErrorMessage } from "../StyledSectionComponents";
 
@@ -144,7 +133,7 @@ type Props = {
   ) => Promise<FormikErrors<any>> | Promise<void>;
 };
 
-const EditableSection: FC<Props> = ({
+const EditableSectionAutocompletion: FC<Props> = ({
   sections,
   section,
   index,
@@ -320,4 +309,4 @@ const EditableSection: FC<Props> = ({
   );
 };
 
-export default EditableSection;
+export default EditableSectionAutocompletion;
