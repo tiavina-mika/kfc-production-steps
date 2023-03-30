@@ -1,15 +1,12 @@
-import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 
 import { Box, Button, Stack } from "@mui/material";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./sections/Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
-import {
-  computeProductionStepsRecipeOnFieldChange,
-  recipeSectionsFormInitialValues
-} from "../utils/recipeUtils";
+import { getRecipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
 import { cloneDeep } from "lodash";
 
@@ -58,7 +55,7 @@ const ProductionSteps: FC<Props> = ({
   );
 
   useEffect(() => {
-    const formValues = recipeSectionsFormInitialValues(recipe, true);
+    const formValues = getRecipeSectionsFormInitialValues(recipe, true);
     setInitialValues(formValues);
     setDefaultValues(cloneDeep(formValues));
   }, [recipe]);

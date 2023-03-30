@@ -532,7 +532,7 @@ function computeDisplayData(
   if (isRecipe) computeRecipeData(recipe);
 }
 
-export const recipeSectionsFormInitialValues = (
+export const getRecipeSectionsFormInitialValues = (
   recipe,
   isProductionSteps = false
 ) => {
