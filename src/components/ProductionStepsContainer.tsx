@@ -1,11 +1,28 @@
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import { Box } from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
 import { COLORS } from "../utils/constant";
 import PageHeader from "./headers/PageHeader";
 
-const ProductionStepsEditionPage = ({ children, title, onCancel, onSave }) => {
+type Props = {
+  children: ReactNode;
+  title?: string;
+  onCancel?: () => void;
+  onSave?: () => void;
+  withTitle?: boolean;
+};
+const ProductionStepsContainer: FC<Props> = ({
+  children,
+  title,
+  onCancel,
+  onSave,
+  withTitle = true
+}) => {
+  if (!withTitle) {
+    return <>{children}</>;
+  }
+
   return (
     <Box
       sx={{ minHeight: "100vh", position: "relative" }}
@@ -32,4 +49,4 @@ const ProductionStepsEditionPage = ({ children, title, onCancel, onSave }) => {
   );
 };
 
-export default ProductionStepsEditionPage;
+export default ProductionStepsContainer;

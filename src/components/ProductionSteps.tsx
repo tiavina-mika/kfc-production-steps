@@ -9,7 +9,7 @@ import ProductionStepsTable from "./ProductionStepsTable";
 import { getRecipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
 import { cloneDeep } from "lodash";
-import ProductionStepsEditionPage from "./ProductionStepsEditionPage";
+import ProductionStepsContainer from "./ProductionStepsContainer";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -108,74 +108,74 @@ const ProductionSteps: FC<Props> = ({
     // onSave(cloneDeep(values), recipe, "6" === recipe.status).then(onStopEdit)
   };
 
-  const component = (
-    <div>
-      {/* buttons */}
-      {!isEdition && (
-        <Box
-          className="flexRow justifyEnd"
-          sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
-        >
-          <Button variant="contained" color="primary" onClick={toggleEditForm}>
-            Éditer
-          </Button>
-        </Box>
-      )}
-      {/* table */}
-      <ProductionStepsTable sx={{ mt: isEdition ? 0 : 10 }}>
-        {/* table head */}
-        <ProductionStepsTableHead headers={headers} />
-        <Box className="flexColumn">
-          <Formik
-            innerRef={formRef}
-            initialValues={initialValues}
-            validationSchema={RecipeProductionStepsSchema}
-            onSubmit={_onSubmit}
-            validateOnChange={false}
-            enableReinitialize
-          >
-            {({
-              values,
-              errors,
-              setFieldValue,
-              setFieldError,
-              setFieldTouched,
-              submitForm,
-              validateForm
-            }) => {
-              return (
-                <Sections
-                  sections={values?.sections || []}
-                  isEdition={isEdition}
-                  onRowBlur={_onRowBlur}
-                  onRowHover={_onRowHover}
-                  hoveredRow={hoveredRow}
-                  genericSections={genericSections}
-                  onClearFocus={_onClearFocus}
-                  onFieldFocus={_onFieldFocus}
-                  onFieldBlur={(e) => _onFieldBlur(e, setFieldTouched)}
-                  onKeyUp={(e) => _onKeyUp(e, setFieldTouched)}
-                  onDeleteHover={_onDeleteHover}
-                  deleteHover={deleteHover}
-                  setFieldValue={setFieldValue}
-                />
-              );
-            }}
-          </Formik>
-        </Box>
-      </ProductionStepsTable>
-    </div>
-  );
-  return isEdition ? (
-    <ProductionStepsEditionPage
+  return (
+    <ProductionStepsContainer
       title={recipe?.commercialName}
       onSave={handleSubmit}
       onCancel={handleCancel}
+      withTitle={isEdition}
     >
-      {component}
-    </ProductionStepsEditionPage>
-  ) : (
-    component
+      <div>
+        {/* buttons */}
+        {!isEdition && (
+          <Box
+            className="flexRow justifyEnd"
+            sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleEditForm}
+            >
+              Éditer
+            </Button>
+          </Box>
+        )}
+        {/* table */}
+        <ProductionStepsTable sx={{ mt: isEdition ? 0 : 10 }}>
+          {/* table head */}
+          <ProductionStepsTableHead headers={headers} />
+          <Box className="flexColumn">
+            <Formik
+              innerRef={formRef}
+              initialValues={initialValues}
+              validationSchema={RecipeProductionStepsSchema}
+              onSubmit={_onSubmit}
+              validateOnChange={false}
+              enableReinitialize
+            >
+              {({
+                values,
+                errors,
+                setFieldValue,
+                setFieldError,
+                setFieldTouched,
+                submitForm,
+                validateForm
+              }) => {
+                return (
+                  <Sections
+                    sections={values?.sections || []}
+                    isEdition={isEdition}
+                    onRowBlur={_onRowBlur}
+                    onRowHover={_onRowHover}
+                    hoveredRow={hoveredRow}
+                    genericSections={genericSections}
+                    onClearFocus={_onClearFocus}
+                    onFieldFocus={_onFieldFocus}
+                    onFieldBlur={(e) => _onFieldBlur(e, setFieldTouched)}
+                    onKeyUp={(e) => _onKeyUp(e, setFieldTouched)}
+                    onDeleteHover={_onDeleteHover}
+                    deleteHover={deleteHover}
+                    setFieldValue={setFieldValue}
+                  />
+                );
+              }}
+            </Formik>
+          </Box>
+        </ProductionStepsTable>
+      </div>
+    </ProductionStepsContainer>
   );
 };
 
