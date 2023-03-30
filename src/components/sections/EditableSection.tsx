@@ -1,15 +1,8 @@
 import React, { FC, useCallback, useState } from "react";
 
 import styled from "@emotion/styled";
-import {
-  Autocomplete,
-  Box,
-  BoxProps,
-  Grid,
-  Stack,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Box, BoxProps, Grid, Stack, TextField } from "@mui/material";
+import { ErrorMessage, FormikErrors } from "formik";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
@@ -17,12 +10,7 @@ import {
   PRODUCTION_STEPS_COL_WIDTHS,
   PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
-import {
-  computeSectionData,
-  parseSectionToObject
-} from "../../utils/recipeUtils";
-import { getDefaultSection } from "../../utils/recipeUtils";
-import { ErrorMessage, FormikErrors } from "formik";
+import { computeSectionData } from "../../utils/recipeUtils";
 import { StyledErrorMessage } from "../StyledSectionComponents";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;

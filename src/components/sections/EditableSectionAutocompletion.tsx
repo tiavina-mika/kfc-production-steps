@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 
 import styled from "@emotion/styled";
 import { Autocomplete, Box, BoxProps, Stack, TextField } from "@mui/material";
+import { ErrorMessage, FormikErrors } from "formik";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
@@ -10,7 +11,6 @@ import {
   PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
 import { computeSectionData } from "../../utils/recipeUtils";
-import { ErrorMessage, FormikErrors } from "formik";
 import { StyledErrorMessage } from "../StyledSectionComponents";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;

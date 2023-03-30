@@ -2,13 +2,13 @@ import React, { FC, useEffect, useRef, useState } from "react";
 
 import { Box, Button } from "@mui/material";
 import { Formik } from "formik";
+import { cloneDeep } from "lodash";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
 import Sections from "./sections/Sections";
 import ProductionStepsTable from "./ProductionStepsTable";
 import { getRecipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
-import { cloneDeep } from "lodash";
 import ProductionStepsContainer from "./ProductionStepsContainer";
 
 const headers = [
