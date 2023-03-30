@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 
 import styled from "@emotion/styled";
-import { Box, BoxProps, Grid, Stack, TextField } from "@mui/material";
+import { Box, BoxProps, Stack, TextField } from "@mui/material";
 import { ErrorMessage, FormikErrors } from "formik";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
@@ -208,20 +208,8 @@ const EditableSection: FC<Props> = ({
     [sections, setFieldValue, changed, genericSections, onClearFocus]
   );
 
-  const getOptionLabel = (option: string | Record<string, any>) => {
-    if (typeof option === "string") {
-      return option;
-    }
-
-    if (option.get) {
-      return option.get("name");
-    }
-
-    return option.name;
-  };
-
   return (
-    <Grid
+    <Box
       sx={{
         display: "flex"
       }}
@@ -299,7 +287,7 @@ const EditableSection: FC<Props> = ({
       <StyledBodyCell align="left" width={widths[11]}>
         <StyledText>-</StyledText>
       </StyledBodyCell>
-    </Grid>
+    </Box>
   );
 };
 
