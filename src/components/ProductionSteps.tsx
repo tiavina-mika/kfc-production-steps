@@ -127,7 +127,7 @@ const ProductionSteps: FC<Props> = ({
         </Button>
         {/* )} */}
       </Box>
-      <ProductionStepsTable>
+      <ProductionStepsTable sx={{ mt: isEdition ? 0 : 10 }}>
         {/* table head */}
         <ProductionStepsTableHead headers={headers} />
         <Box className="flexColumn">

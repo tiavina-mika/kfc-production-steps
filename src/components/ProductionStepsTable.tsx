@@ -1,19 +1,22 @@
 import React, { FC, ReactNode } from "react";
 
 import { grey } from "@mui/material/colors";
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { sum } from "lodash";
 
 import { PRODUCTION_STEPS_COL_WIDTHS } from "../utils/constant";
+import { Theme } from "@emotion/react";
 
 const TABLE_WIDTH = sum(PRODUCTION_STEPS_COL_WIDTHS);
 
 type Props = {
   children: ReactNode;
+  sx?: SxProps<Theme>;
 };
-const ProductionStepsTable: FC<Props> = ({ children }) => {
+const ProductionStepsTable: FC<Props> = ({ children, sx }) => {
   return (
-    <Box sx={{ mt: 10, overflowX: "scroll" }}>
+    <Box sx={{ overflowX: "scroll", ...sx }}>
+      {/* <Box sx={{ mt: 10, overflowX: "scroll" }}> */}
       <div
         style={{
           maxWidth: "100vw",
