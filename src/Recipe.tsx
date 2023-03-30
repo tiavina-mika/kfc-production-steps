@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 
 import ProductionSteps from "./components/ProductionSteps";
-import ProductionStepsEditionPage from "./components/ProductionStepsEditionPage";
 
 type Props = {
   recipe: Record<string, any>;
@@ -19,8 +18,8 @@ const Recipe: FC<Props> = ({ recipe, genericSections }) => {
     toggleProductionStepsIsEdition();
   };
 
-  const onSaveProductionSteps = () => {
-    console.log("onSaveProductionSteps");
+  const onSaveProductionSteps = (values) => {
+    console.log("onSaveProductionSteps values", values);
     toggleProductionStepsIsEdition();
   };
 
@@ -32,19 +31,13 @@ const Recipe: FC<Props> = ({ recipe, genericSections }) => {
   // just simulate the existing recipe code
   if (isProductionStepsEdition) {
     return (
-      <ProductionStepsEditionPage
-        title={recipe?.commercialName}
+      <ProductionSteps
         onSave={onSaveProductionSteps}
         onCancel={onCancelProductionSteps}
-      >
-        <ProductionSteps
-          onSave={onSaveProductionSteps}
-          onCancel={onCancelProductionSteps}
-          isEdition
-          recipe={recipe}
-          genericSections={genericSections}
-        />
-      </ProductionStepsEditionPage>
+        isEdition
+        recipe={recipe}
+        genericSections={genericSections}
+      />
     );
   }
 

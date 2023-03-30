@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Formik } from "formik";
 
 import ProductionStepsTableHead from "./ProductionStepsTableHead";
@@ -9,6 +9,7 @@ import ProductionStepsTable from "./ProductionStepsTable";
 import { getRecipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
 import { cloneDeep } from "lodash";
+import ProductionStepsEditionPage from "./ProductionStepsEditionPage";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -28,7 +29,7 @@ const headers = [
 type Props = {
   toggleEditForm?: () => void;
   onCancel?: () => void;
-  onSave?: () => void;
+  onSave?: (values: Record<string, any>) => void;
   isEdition?: boolean;
   recipe?: Record<string, any>;
   genericSections?: Record<string, any>[];
@@ -99,34 +100,28 @@ const ProductionSteps: FC<Props> = ({
 
   const handleCancel = () => {
     setInitialValues(defaultValues);
-    onCancel();
+    onCancel?.();
   };
 
   const _onSubmit = (values) => {
-    console.log("values", values);
+    onSave(values);
     // onSave(cloneDeep(values), recipe, "6" === recipe.status).then(onStopEdit)
   };
 
-  return (
+  const component = (
     <div>
       {/* buttons */}
-      <Box
-        className="flexRow justifyEnd"
-        sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
-      >
-        {/* {isEdition ? (
-          <Stack direction="row" spacing={5}>
-            <Button onClick={handleCancel}>Annuler</Button>
-            <Button onClick={handleSubmit} variant="contained">
-              Enregistrer
-            </Button>
-          </Stack>
-        ) : ( */}
-        <Button variant="contained" color="primary" onClick={toggleEditForm}>
-          Éditer
-        </Button>
-        {/* )} */}
-      </Box>
+      {!isEdition && (
+        <Box
+          className="flexRow justifyEnd"
+          sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
+        >
+          <Button variant="contained" color="primary" onClick={toggleEditForm}>
+            Éditer
+          </Button>
+        </Box>
+      )}
+      {/* table */}
       <ProductionStepsTable sx={{ mt: isEdition ? 0 : 10 }}>
         {/* table head */}
         <ProductionStepsTableHead headers={headers} />
@@ -170,6 +165,17 @@ const ProductionSteps: FC<Props> = ({
         </Box>
       </ProductionStepsTable>
     </div>
+  );
+  return isEdition ? (
+    <ProductionStepsEditionPage
+      title={recipe?.commercialName}
+      onSave={handleSubmit}
+      onCancel={handleCancel}
+    >
+      {component}
+    </ProductionStepsEditionPage>
+  ) : (
+    component
   );
 };
 
