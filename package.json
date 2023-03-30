@@ -4,6 +4,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "5.11.11",
     "@mui/material": "latest",
+    "@mui/styles": "5.11.13",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "formik": "2.2.9",

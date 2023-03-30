@@ -114,18 +114,18 @@ const ProductionSteps: FC<Props> = ({
         className="flexRow justifyEnd"
         sx={{ py: 3, pr: 4, position: "fixed", top: 0, right: 0 }}
       >
-        {isEdition ? (
+        {/* {isEdition ? (
           <Stack direction="row" spacing={5}>
             <Button onClick={handleCancel}>Annuler</Button>
             <Button onClick={handleSubmit} variant="contained">
               Enregistrer
             </Button>
           </Stack>
-        ) : (
-          <Button variant="contained" color="primary" onClick={toggleEditForm}>
-            Éditer
-          </Button>
-        )}
+        ) : ( */}
+        <Button variant="contained" color="primary" onClick={toggleEditForm}>
+          Éditer
+        </Button>
+        {/* )} */}
       </Box>
       <ProductionStepsTable>
         {/* table head */}

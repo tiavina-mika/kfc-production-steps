@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 
 import ProductionSteps from "./components/ProductionSteps";
+import ProductionStepsEditionPage from "./components/ProductionStepsEditionPage";
 
 type Props = {
   recipe: Record<string, any>;
@@ -31,13 +32,19 @@ const Recipe: FC<Props> = ({ recipe, genericSections }) => {
   // just simulate the existing recipe code
   if (isProductionStepsEdition) {
     return (
-      <ProductionSteps
+      <ProductionStepsEditionPage
+        title={recipe?.commercialName}
         onSave={onSaveProductionSteps}
         onCancel={onCancelProductionSteps}
-        isEdition
-        recipe={recipe}
-        genericSections={genericSections}
-      />
+      >
+        <ProductionSteps
+          onSave={onSaveProductionSteps}
+          onCancel={onCancelProductionSteps}
+          isEdition
+          recipe={recipe}
+          genericSections={genericSections}
+        />
+      </ProductionStepsEditionPage>
     );
   }
 
