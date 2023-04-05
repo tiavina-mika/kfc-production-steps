@@ -136,6 +136,7 @@ type Props = {
     shouldValidate?: boolean | undefined
   ) => Promise<FormikErrors<any>> | Promise<void>;
   hasError: (index: number) => boolean;
+  onDeleteBlur: () => void;
 };
 
 const EditableSection: FC<Props> = ({
