@@ -237,11 +237,13 @@ const EditableSection: FC<Props> = ({
       <StyledFirstBodyColumn className="flexRow center">
         {isHover ? (
           <>
+            {/* add button */}
             <Button
               onClick={(e) => _addSection(index, e)}
               className="flexCenter"
               sx={{ position: "absolute", left: -8 }}
             >
+              {/* need to use directly the svg element because of an error in codesandbox importation */}
               <svg
                 width="14"
                 height="14"
@@ -255,6 +257,7 @@ const EditableSection: FC<Props> = ({
                 />
               </svg>
             </Button>
+            {/* input */}
             <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
               <StyledTextField
                 name={`sections[${index}].name`}
