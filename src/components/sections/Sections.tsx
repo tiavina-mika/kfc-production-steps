@@ -79,7 +79,9 @@ type Props = {
     parendIndex?: number | null
   ) => void;
   deleteHover: Record<string, any>;
+  errors: Record<string, any>;
   setFieldValue: any;
+  onDeleteBlur: () => void;
 };
 
 const Sections: FC<Props> = ({
@@ -95,7 +97,9 @@ const Sections: FC<Props> = ({
   onKeyUp,
   onDeleteHover,
   deleteHover,
-  setFieldValue
+  setFieldValue,
+  errors,
+  onDeleteBlur
 }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
@@ -117,6 +121,11 @@ const Sections: FC<Props> = ({
       deleteHover.index === index
     );
   };
+
+  const _hasError = (index: number): boolean =>
+    errors.sections &&
+    errors.sections[index] &&
+    (errors.sections[index].name || errors.sections[index].parentPercent);
 
   return (
     <Box className="flexColumn">
@@ -146,6 +155,8 @@ const Sections: FC<Props> = ({
                 onFieldFocus={onFieldFocus}
                 onFieldBlur={onFieldBlur}
                 onKeyUp={onKeyUp}
+                onDeleteBlur={onDeleteBlur}
+                hasError={_hasError}
               />
             ) : (
               <SectionPreview section={section} />

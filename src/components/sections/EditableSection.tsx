@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 
 import styled from "@emotion/styled";
-import { Box, BoxProps, Stack, TextField } from "@mui/material";
+import { Box, BoxProps, Button, Stack, TextField } from "@mui/material";
 import { ErrorMessage, FormikErrors } from "formik";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
@@ -10,7 +10,7 @@ import {
   PRODUCTION_STEPS_COL_WIDTHS,
   PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
-import { computeSectionData } from "../../utils/recipeUtils";
+import { computeSectionData, getDefaultSection } from "../../utils/recipeUtils";
 import { StyledErrorMessage } from "../StyledSectionComponents";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
@@ -135,6 +135,7 @@ type Props = {
     value: any,
     shouldValidate?: boolean | undefined
   ) => Promise<FormikErrors<any>> | Promise<void>;
+  hasError: (index: number) => boolean;
 };
 
 const EditableSection: FC<Props> = ({
@@ -149,7 +150,9 @@ const EditableSection: FC<Props> = ({
   onClearFocus,
   onFieldFocus,
   onFieldBlur,
-  onKeyUp
+  onKeyUp,
+  hasError,
+  onDeleteBlur
 }) => {
   const [changed, setChanged] = useState<number>(0);
 
@@ -208,6 +211,21 @@ const EditableSection: FC<Props> = ({
     [sections, setFieldValue, changed, genericSections, onClearFocus]
   );
 
+  const _addSection = (index, event = null) => {
+    const newSections = [...sections];
+    newSections.splice(index + 1, 0, getDefaultSection());
+
+    // update section with computed production steps and step components data
+    const newSection = newSections[newSections.length - 1];
+    if (newSection) {
+      computeSectionData(newSection, "productionSteps");
+    }
+
+    onDeleteBlur();
+    setFieldValue("sections", newSections);
+    _stopPropagation(event);
+  };
+
   return (
     <Box
       sx={{
@@ -218,36 +236,63 @@ const EditableSection: FC<Props> = ({
     >
       <StyledFirstBodyColumn className="flexRow center">
         {isHover ? (
-          <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
-            <StyledTextField
-              name={`sections[${index}].name`}
-              value={
-                typeof section.name === "string"
-                  ? section.name
-                  : section.name.get("name")
-              }
-              onClick={_stopPropagation}
-              onFocus={onFieldFocus}
-              onBlur={onFieldBlur}
-              onKeyUp={onKeyUp as any}
-              variant="standard"
-              fullWidth
-              onChange={(event) => {
-                _onGenericSectionChange(
-                  event,
-                  event.target.value,
-                  index,
-                  "input-change"
-                );
-              }}
-            />
-            <ErrorMessage
-              name={`sections[${index}].name`}
-              render={(message) => (
-                <StyledErrorMessage>{message}</StyledErrorMessage>
-              )}
-            />
-          </Stack>
+          <>
+            <Button
+              onClick={(e) => _addSection(index, e)}
+              className="flexCenter"
+              sx={{ position: "absolute", left: -8 }}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 8H8V13C8 13.55 7.55 14 7 14C6.45 14 6 13.55 6 13V8H1C0.45 8 0 7.55 0 7C0 6.45 0.45 6 1 6H6V1C6 0.45 6.45 0 7 0C7.55 0 8 0.45 8 1V6H13C13.55 6 14 6.45 14 7C14 7.55 13.55 8 13 8Z"
+                  fill="#2196F3"
+                />
+              </svg>
+            </Button>
+            <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
+              <StyledTextField
+                name={`sections[${index}].name`}
+                value={
+                  typeof section.name === "string"
+                    ? section.name
+                    : section.name.get("name")
+                }
+                onClick={_stopPropagation}
+                onFocus={onFieldFocus}
+                onBlur={onFieldBlur}
+                onKeyUp={onKeyUp as any}
+                variant="standard"
+                fullWidth
+                onChange={(event) => {
+                  _onGenericSectionChange(
+                    event,
+                    event.target.value,
+                    index,
+                    "input-change"
+                  );
+                }}
+              />
+              <ErrorMessage
+                name={`sections[${index}].name`}
+                render={(message) => (
+                  <StyledErrorMessage>{message}</StyledErrorMessage>
+                )}
+              />
+            </Stack>
+          </>
+        ) : hasError(index) ? (
+          <ErrorMessage
+            name={`sections[${index}].name`}
+            render={(message) => (
+              <StyledErrorMessage>{message}</StyledErrorMessage>
+            )}
+          />
         ) : (
           <StyledText disabled={false}>{section.name}</StyledText>
         )}

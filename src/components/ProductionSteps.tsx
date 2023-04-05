@@ -93,6 +93,8 @@ const ProductionSteps: FC<Props> = ({
     setDeleteHover({ component, index, parentIndex });
   };
 
+  const _onDeleteBlur = () => setDeleteHover(null);
+
   const handleSubmit = () => {
     if (!formRef.current) return;
     (formRef.current as any).handleSubmit();
@@ -168,6 +170,8 @@ const ProductionSteps: FC<Props> = ({
                     onDeleteHover={_onDeleteHover}
                     deleteHover={deleteHover}
                     setFieldValue={setFieldValue}
+                    onDeleteBlur={_onDeleteBlur}
+                    errors={errors}
                   />
                 );
               }}
