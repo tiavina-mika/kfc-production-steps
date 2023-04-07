@@ -13,6 +13,7 @@ export const PRODUCTION_STEPS_COL_WIDTHS = [
   177
 ];
 export const PRODUCTION_STEPS_FIST_COL_PL = 80;
+// export const PRODUCTION_STEPS_STEPS_FIST_COL_PL = 80;
 
 export const COLORS = {
   PRODUCTION_STEPS_BLUE: "#E3F2FD",

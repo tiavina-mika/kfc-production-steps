@@ -1,17 +1,16 @@
 import React, { FC, useCallback, useState } from "react";
 
 import styled from "@emotion/styled";
-import { Box, BoxProps, Button, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack, TextField } from "@mui/material";
 import { ErrorMessage, FormikErrors } from "formik";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
-  PRODUCTION_STEPS_FIST_COL_PL
 } from "../../utils/constant";
 import { computeSectionData, getDefaultSection } from "../../utils/recipeUtils";
-import { StyledErrorMessage } from "../StyledSectionComponents";
+import { StyledErrorMessage, StyledSectionFirstBodyColumn } from "../StyledSectionComponents";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -19,12 +18,6 @@ export const COMPONENT_NAME = "SECTIONS";
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
 // ----------------------------------------------- //
-const stickyStyle = {
-  position: "sticky",
-  left: 0,
-  borderRight: "1px solid #cccccc"
-};
-
 const cellsStyle = {
   paddingRight: 16,
   paddingLeft: 16
@@ -34,15 +27,6 @@ const cellsStyle = {
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
 // -------------- Table -------------- //
-const StyledFirstBodyColumn = styled((props: BoxProps) => (
-  <Box {...props} sx={{ ...stickyStyle }} />
-))({
-  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
-  paddingRight: 8,
-  backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
-  width: widths[0]
-});
-
 // body cell
 type StyledBodyCellProps = {
   align: "left" | "center" | "right";
@@ -235,7 +219,7 @@ const EditableSection: FC<Props> = ({
       onClick={_stopPropagation}
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
     >
-      <StyledFirstBodyColumn className="flexRow center">
+      <StyledSectionFirstBodyColumn className="flexRow center">
         {isHover ? (
           <>
             {/* add button */}
@@ -300,7 +284,7 @@ const EditableSection: FC<Props> = ({
         ) : (
           <StyledText disabled={false}>{section.name}</StyledText>
         )}
-      </StyledFirstBodyColumn>
+      </StyledSectionFirstBodyColumn>
       <StyledBodyCell align="left" width={widths[1]}>
         <StyledText>{section.inputWeight || "-"}</StyledText>
       </StyledBodyCell>
