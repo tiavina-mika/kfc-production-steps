@@ -61,7 +61,7 @@ const StepPreview: FC<Props> = ({ step }) => {
     <>
       <StyledStepFirstBodyColumn className="flexRow center">
         <Stack spacing={1}>
-          <StyledText>{step.name}</StyledText>
+          {step.nam && <StyledText>{step.name}</StyledText>}
           <Typography>{step.description}</Typography>
         </Stack>
       </StyledStepFirstBodyColumn>

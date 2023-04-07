@@ -38,6 +38,6 @@ export const StyledStepFirstBodyColumn = styled((props: BoxProps) => (
   paddingRight: 8,
   backgroundColor: COLORS.PRODUCTION_STEPS_GREY,
   width: widths[0],
-  paddingTop: 8,
+  paddingTop: 16,
   paddingBottom: 17
 });

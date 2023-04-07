@@ -114,7 +114,7 @@ const EditableStep: FC<Props> = ({
     >
       <StyledStepFirstBodyColumn className="flexRow center">
         <Stack spacing={1}>
-          <StyledText disabled={false}>{step.name}</StyledText>
+          {step.name && <StyledText disabled={false}>{step.name}</StyledText>}
           <Typography>{step.description}</Typography>
         </Stack>
       </StyledStepFirstBodyColumn>
