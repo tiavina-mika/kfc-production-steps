@@ -37,7 +37,9 @@ const StyledFirstBodyColumn = styled((props: BoxProps) => (
   paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
   paddingRight: 8,
   backgroundColor: COLORS.PRODUCTION_STEPS_GREY,
-  width: widths[0]
+  width: widths[0],
+  paddingTop: 8,
+  paddingBottom: 17
 });
 
 // body cell

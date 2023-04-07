@@ -44,8 +44,9 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   },
   // row
   "& .MuiAccordionSummary-content": {
-    paddingTop: 2,
-    paddingBottom: 12,
+    // paddingTop: 2,
+    // paddingBottom: 12,
+    padding: 0,
     margin: 0,
     // height: 56,
     borderBottom: "1px solid #cccccc",
@@ -105,10 +106,8 @@ const Steps: FC<Props> = ({
   // do not display steps row in preview if it's empty
   // dsiplay an empty row if steps is empty in edition mode
   // alway has a default section, see: getDefaultSection()
-  console.log("steps", steps);
 
   // if (!isEdition && !(steps.length && steps[0].id)) return;
-  console.log("steps 2", steps);
 
   // const _isHover = (index: number): boolean => {
   //   return (
