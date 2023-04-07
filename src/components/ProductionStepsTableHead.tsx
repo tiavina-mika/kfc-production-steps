@@ -6,7 +6,8 @@ import { Box } from "@mui/material";
 import { getCellAlignment } from "../utils/utils";
 import {
   PRODUCTION_STEPS_COL_WIDTHS,
-  PRODUCTION_STEPS_FIST_COL_PL
+  PRODUCTION_STEPS_SPACINGS
+  // PRODUCTION_STEPS_FIST_COL_PL
 } from "../utils/constant";
 
 // ----------------------------------------------- //
@@ -42,7 +43,7 @@ const StyledHeadCell = styled(Box, {
       ...defaultStyles,
       ...stickyStyle,
       zIndex: 1000,
-      paddingLeft: PRODUCTION_STEPS_FIST_COL_PL
+      paddingLeft: PRODUCTION_STEPS_SPACINGS.SECTION_FIRST_COL_PL
     };
   }
 

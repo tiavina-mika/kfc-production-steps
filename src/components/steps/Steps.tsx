@@ -9,7 +9,7 @@ import {
   Box
 } from "@mui/material";
 
-import { COLORS } from "../../utils/constant";
+import { COLORS, PRODUCTION_STEPS_SPACINGS } from "../../utils/constant";
 import StepPreview from "./StepPreview";
 import EditableStep from "./EditableStep";
 
@@ -40,7 +40,9 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   // opened and closed expanded icon
   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded,& .MuiAccordionSummary-expandIconWrapper": {
     position: "sticky",
-    left: 46
+    left:
+      PRODUCTION_STEPS_SPACINGS.ACCORDION_EXPANDED_ICON_LEFT +
+      PRODUCTION_STEPS_SPACINGS.STEP_FIRST_COL_PL_DIFF
   },
   // row
   "& .MuiAccordionSummary-content": {
@@ -48,7 +50,6 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
     // paddingBottom: 12,
     padding: 0,
     margin: 0,
-    // height: 56,
     borderBottom: "1px solid #cccccc",
     marginLeft: -28, // important! for the summary to not take account of the expand icon space
     backgroundColor: COLORS.PRODUCTION_STEPS_GREY

@@ -6,7 +6,7 @@ import { Box, BoxProps } from "@mui/material";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
-  PRODUCTION_STEPS_FIST_COL_PL
+  PRODUCTION_STEPS_SPACINGS
 } from "../utils/constant";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
@@ -25,7 +25,7 @@ export const StyledErrorMessage = styled("div")({
 export const StyledSectionFirstBodyColumn = styled((props: BoxProps) => (
   <Box {...props} sx={{ ...stickyStyle }} />
 ))({
-  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
+  paddingLeft: PRODUCTION_STEPS_SPACINGS.SECTION_FIRST_COL_PL,
   paddingRight: 8,
   backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
   width: widths[0]
@@ -34,7 +34,7 @@ export const StyledSectionFirstBodyColumn = styled((props: BoxProps) => (
 export const StyledStepFirstBodyColumn = styled((props: BoxProps) => (
   <Box {...props} sx={{ ...stickyStyle }} />
 ))({
-  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
+  paddingLeft: PRODUCTION_STEPS_SPACINGS.STEP_FIRST_COL_PL,
   paddingRight: 8,
   backgroundColor: COLORS.PRODUCTION_STEPS_GREY,
   width: widths[0],
