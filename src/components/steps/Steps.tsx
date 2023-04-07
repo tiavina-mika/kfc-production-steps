@@ -32,9 +32,15 @@ const StyledAccordion = styled((props: AccordionProps) => (
   }
 });
 
-const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
-  <AccordionSummary {...props} />
-))({
+type StyledAccordionSummaryProps = {
+  expandedIconLeftStep?: number;
+};
+const StyledAccordionSummary = styled(
+  (props: AccordionSummaryProps) => <AccordionSummary {...props} />,
+  {
+    shouldForwardProp: (prop) => prop !== "expandedIconLeftStep"
+  }
+)<StyledAccordionSummaryProps>(({ expandedIconLeftStep = 0 }) => ({
   flexDirection: "row-reverse",
   position: "relative",
   // opened and closed expanded icon
@@ -42,7 +48,8 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
     position: "sticky",
     left:
       PRODUCTION_STEPS_SPACINGS.ACCORDION_EXPANDED_ICON_LEFT +
-      PRODUCTION_STEPS_SPACINGS.STEP_FIRST_COL_PL_DIFF
+      PRODUCTION_STEPS_SPACINGS.STEP_FIRST_COL_PL_DIFF +
+      expandedIconLeftStep
   },
   // row
   "& .MuiAccordionSummary-content": {
@@ -52,7 +59,7 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
     marginLeft: -28, // important! for the summary to not take account of the expand icon space
     backgroundColor: COLORS.PRODUCTION_STEPS_GREY
   }
-});
+}));
 
 // type IHoveredRow = {
 //   component: string;
