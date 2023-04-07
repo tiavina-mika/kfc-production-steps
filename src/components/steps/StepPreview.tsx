@@ -1,14 +1,11 @@
 import React, { FC } from "react";
 
 import styled from "@emotion/styled";
-import { Box, BoxProps, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
-import {
-  COLORS,
-  PRODUCTION_STEPS_COL_WIDTHS,
-  PRODUCTION_STEPS_FIST_COL_PL
-} from "../../utils/constant";
+import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
+import { StyledStepFirstBodyColumn } from "../StyledSectionComponents";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -16,12 +13,6 @@ export const COMPONENT_NAME = "SECTIONS";
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
 // ----------------------------------------------- //
-const stickyStyle = {
-  position: "sticky",
-  left: 0,
-  borderRight: "1px solid #cccccc"
-};
-
 const cellsStyle = {
   paddingRight: 16,
   paddingLeft: 16
@@ -31,17 +22,6 @@ const cellsStyle = {
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
 // -------------- Table -------------- //
-const StyledFirstBodyColumn = styled((props: BoxProps) => (
-  <Box {...props} sx={{ ...stickyStyle }} />
-))({
-  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
-  paddingRight: 8,
-  backgroundColor: COLORS.PRODUCTION_STEPS_GREY,
-  width: widths[0],
-  paddingTop: 8,
-  paddingBottom: 17
-});
-
 // body cell
 type StyledBodyCellProps = {
   align: "left" | "center" | "right";
@@ -79,12 +59,12 @@ type Props = {
 const StepPreview: FC<Props> = ({ step }) => {
   return (
     <>
-      <StyledFirstBodyColumn className="flexRow center">
+      <StyledStepFirstBodyColumn className="flexRow center">
         <Stack spacing={1}>
           <StyledText>{step.name}</StyledText>
           <Typography>{step.description}</Typography>
         </Stack>
-      </StyledFirstBodyColumn>
+      </StyledStepFirstBodyColumn>
       <StyledBodyCell align="left" width={widths[1]}>
         <StyledText>{step.inputWeight || "-"}</StyledText>
       </StyledBodyCell>

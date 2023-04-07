@@ -30,3 +30,14 @@ export const StyledSectionFirstBodyColumn = styled((props: BoxProps) => (
   backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
   width: widths[0]
 });
+
+export const StyledStepFirstBodyColumn = styled((props: BoxProps) => (
+  <Box {...props} sx={{ ...stickyStyle }} />
+))({
+  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
+  paddingRight: 8,
+  backgroundColor: COLORS.PRODUCTION_STEPS_GREY,
+  width: widths[0],
+  paddingTop: 8,
+  paddingBottom: 17
+});
