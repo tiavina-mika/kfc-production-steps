@@ -4,8 +4,12 @@ import styled from "@emotion/styled";
 import { Box, Stack, Typography } from "@mui/material";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
-import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
-import { StyledStepFirstBodyColumn } from "../StyledSectionComponents";
+import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
+import {
+  StyledStepFirstBodyColumn,
+  StyledStepText
+} from "../StyledSectionComponents";
+import StepNameDescription from "./StepNameDescription";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -46,59 +50,55 @@ const StyledBodyCell = styled(Box, {
   return defaultStyles;
 });
 
-const StyledText = styled(Typography)({
-  fontWeight: 600,
-  fontSize: 14,
-  color: COLORS.PRODUCTION_STEPS_TEXT_GREY
-});
-
 type Props = {
   step: Record<string, any>;
+  index: number;
 };
 
-const StepPreview: FC<Props> = ({ step }) => {
+const StepPreview: FC<Props> = ({ step, index }) => {
   return (
     <>
       <StyledStepFirstBodyColumn className="flexRow center">
-        <Stack spacing={1}>
-          {step.nam && <StyledText>{step.name}</StyledText>}
-          <Typography>{step.description}</Typography>
-        </Stack>
+        <StepNameDescription
+          name={step.name}
+          description={step.description}
+          index={index}
+        />
       </StyledStepFirstBodyColumn>
       <StyledBodyCell align="left" width={widths[1]}>
-        <StyledText>{step.inputWeight || "-"}</StyledText>
+        <StyledStepText>{step.inputWeight || "-"}</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[2]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[3]}>
-        <StyledText>
+        <StyledStepText>
           {step.cost ? `${roundNumber(step.cost, 3)} €` : "_"}
-        </StyledText>
+        </StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[4]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[5]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[6]}>
-        <StyledText>{step.outputWeight || "-"}</StyledText>
+        <StyledStepText>{step.outputWeight || "-"}</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[7]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[8]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[9]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[10]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[11]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
     </>
   );

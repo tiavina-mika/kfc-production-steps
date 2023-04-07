@@ -150,6 +150,7 @@ const Steps: FC<Props> = ({
               <EditableStep
                 // steps={steps}
                 step={step}
+                index={index}
                 // index={index}
                 // isHover={_isHover(index)}
                 // isDeleteHover={_isDeleteHover(index)}
@@ -163,7 +164,7 @@ const Steps: FC<Props> = ({
                 // hasError={_hasError}
               />
             ) : (
-              <StepPreview step={step} />
+              <StepPreview step={step} index={index} />
             )}
           </StyledAccordionSummary>
         </StyledAccordion>

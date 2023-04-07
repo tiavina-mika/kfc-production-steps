@@ -1,11 +1,15 @@
 import React, { FC } from "react";
 
 import styled from "@emotion/styled";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
-import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
-import { StyledStepFirstBodyColumn } from "../StyledSectionComponents";
+import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
+import {
+  StyledStepFirstBodyColumn,
+  StyledStepText
+} from "../StyledSectionComponents";
+import StepNameDescription from "./StepNameDescription";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -46,28 +50,9 @@ const StyledBodyCell = styled(Box, {
   return defaultStyles;
 });
 
-type StyledTextProps = {
-  disabled?: boolean;
-};
-const StyledText = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "disabled"
-})<StyledTextProps>(({ disabled = true }) => {
-  let defaultStyles: Record<string, any> = {
-    fontWeight: 600,
-    fontSize: 14
-  };
-
-  if (disabled) {
-    defaultStyles.color = COLORS.PRODUCTION_STEPS_DISABLE_TEXT;
-  } else {
-    defaultStyles.color = COLORS.PRODUCTION_STEPS_TEXT_GREY;
-  }
-
-  return defaultStyles;
-});
-
 type Props = {
   step: Record<string, any>;
+  index: number;
   // steps: Record<string, any>[];
   // index: number;
   // isHover: boolean;
@@ -87,7 +72,8 @@ type Props = {
 };
 
 const EditableStep: FC<Props> = ({
-  step
+  step,
+  index
   // steps,
   // index,
   // for style
@@ -113,45 +99,46 @@ const EditableStep: FC<Props> = ({
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(step.parentId)?classes.sectionInherited:""}`}
     >
       <StyledStepFirstBodyColumn className="flexRow center">
-        <Stack spacing={1}>
-          {step.name && <StyledText disabled={false}>{step.name}</StyledText>}
-          <Typography>{step.description}</Typography>
-        </Stack>
+        <StepNameDescription
+          name={step.name}
+          description={step.description}
+          index={index}
+        />
       </StyledStepFirstBodyColumn>
       <StyledBodyCell align="left" width={widths[1]}>
-        <StyledText>{step.inputWeight || "-"}</StyledText>
+        <StyledStepText>{step.inputWeight || "-"}</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[2]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[3]}>
-        <StyledText>
+        <StyledStepText>
           {step.cost ? `${roundNumber(step.cost, 3)} €` : "_"}
-        </StyledText>
+        </StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[4]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[5]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[6]}>
-        <StyledText>{step.outputWeight || "-"}</StyledText>
+        <StyledStepText>{step.outputWeight || "-"}</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[7]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[8]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[9]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[10]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
       <StyledBodyCell align="left" width={widths[11]}>
-        <StyledText>-</StyledText>
+        <StyledStepText>-</StyledStepText>
       </StyledBodyCell>
     </Box>
   );

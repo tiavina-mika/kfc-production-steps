@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import { red } from "@mui/material/colors";
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, Typography } from "@mui/material";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
@@ -40,4 +40,24 @@ export const StyledStepFirstBodyColumn = styled((props: BoxProps) => (
   width: widths[0],
   paddingTop: 16,
   paddingBottom: 17
+});
+
+type StyledTextProps = {
+  disabled?: boolean;
+};
+export const StyledStepText = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "disabled"
+})<StyledTextProps>(({ disabled = true }) => {
+  let defaultStyles: Record<string, any> = {
+    fontWeight: 600,
+    fontSize: 14
+  };
+
+  if (disabled) {
+    defaultStyles.color = COLORS.PRODUCTION_STEPS_DISABLE_TEXT;
+  } else {
+    defaultStyles.color = COLORS.PRODUCTION_STEPS_TEXT_GREY;
+  }
+
+  return defaultStyles;
 });
