@@ -47,10 +47,11 @@ type StyledTextProps = {
 };
 export const StyledStepText = styled(Box, {
   shouldForwardProp: (prop) => prop !== "disabled"
-})<StyledTextProps>(({ disabled = true }) => {
+})<StyledTextProps>(({ disabled = false }) => {
   let defaultStyles: Record<string, any> = {
     fontWeight: 600,
-    fontSize: 14
+    fontSize: 14,
+    lineHeight: 1.5
   };
 
   if (disabled) {
