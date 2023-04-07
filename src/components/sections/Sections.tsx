@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import styled from "@emotion/styled";
 import {
   Accordion,
+  AccordionDetails,
   AccordionProps,
   AccordionSummary,
   AccordionSummaryProps,
@@ -12,6 +13,7 @@ import {
 import { COLORS } from "../../utils/constant";
 import SectionPreview from "./SectionPreview";
 import EditableSection from "./EditableSection";
+import Steps from "../steps/Steps";
 
 export const COMPONENT_NAME = "SECTIONS";
 
@@ -162,6 +164,9 @@ const Sections: FC<Props> = ({
               <SectionPreview section={section} />
             )}
           </StyledAccordionSummary>
+          <AccordionDetails sx={{ p: 0 }}>
+            <Steps steps={section.productionSteps} isEdition={isEdition} />
+          </AccordionDetails>
         </StyledAccordion>
       ))}
     </Box>

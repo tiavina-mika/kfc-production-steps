@@ -441,7 +441,7 @@ export function computeRecipeData(recipe) {
     : null;
 }
 
-export function computeStepData(step, ingredientsField = "ingredients") {
+export const computeStepData = (step, ingredientsField = "ingredients") => {
   const { stepCost, stepRealCost, stepNetWeight, stepGrossWeight } = step[
     ingredientsField
   ].reduce(
@@ -460,6 +460,8 @@ export function computeStepData(step, ingredientsField = "ingredients") {
   step.grossWeight = roundNumber(stepGrossWeight, 5);
   step.cost = stepCost;
   step.realCost = stepRealCost;
+  step.inputWeight = roundNumber(stepGrossWeight * 1000, 5);
+  step.outputWeight = roundNumber(stepNetWeight * 1000, 5);
 }
 
 export function computeSectionData(section, stepsField = "steps") {
