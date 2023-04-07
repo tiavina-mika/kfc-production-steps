@@ -46,8 +46,6 @@ const StyledAccordionSummary = styled((props: AccordionSummaryProps) => (
   },
   // row
   "& .MuiAccordionSummary-content": {
-    // paddingTop: 2,
-    // paddingBottom: 12,
     padding: 0,
     margin: 0,
     borderBottom: "1px solid #cccccc",

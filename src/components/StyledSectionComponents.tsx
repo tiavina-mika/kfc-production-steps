@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import { red } from "@mui/material/colors";
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
