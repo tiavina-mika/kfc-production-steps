@@ -12,6 +12,7 @@ import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
   computeProductionStepsRecipeOnFieldChange,
+  computeSectionData,
   getDefaultSection,
   parseSectionToObject
 } from "../../utils/recipeUtils";
@@ -122,7 +123,6 @@ type Props = {
   hasError: (index: number) => boolean;
   onDeleteBlur: () => void;
   formValues: Record<string, any>;
-  computationHandler: any;
 };
 
 const EditableSection: FC<Props> = ({
@@ -140,7 +140,6 @@ const EditableSection: FC<Props> = ({
   onKeyUp,
   hasError,
   onDeleteBlur,
-  computationHandler,
   formValues
 }) => {
   const [changed, setChanged] = useState(0);
@@ -162,16 +161,8 @@ const EditableSection: FC<Props> = ({
     const section = genericSections.find(
       (section) => (section.get ? section.get("name") : section.name) === value
     );
-    // console.log('section 0: ', section.toJSON());
-
-    // // update section with computed production steps and step components data
-    // if (section) {
-    //   computeSectionData(section.toJSON(), "productionSteps")
-    // }
-    // console.log('section 1: ', section.toJSON());
 
     const newSections = [...sections];
-    // console.log('newSections: ', newSections);
 
     newSections[sectionIndex].name = value;
 
@@ -180,40 +171,16 @@ const EditableSection: FC<Props> = ({
         parseSectionToObject([section])[0] || getDefaultSection();
       newSections[sectionIndex] = newSection;
 
-      // console.log('newSection: ', newSection);
-
       newSections[sectionIndex].error = false;
       newSections[sectionIndex].id = null;
       newSections[sectionIndex].parentId = section.id;
       newSections[sectionIndex].parentPercent = 100;
-      // setFieldValue("sections", newSections)
-      // newSection.productionSteps.forEach((step, stepIndex) => {
-      //   step.stepComponents.forEach((ingredient, ingredientIndex) => {
-      //     // console.log('newSection ingredient: ', { stepIndex, ingredientIndex, ingredient, });
-      //       newSections[sectionIndex].productionSteps[stepIndex].stepComponents[ingredientIndex] = ingredient
-      //       setFieldValue("sections", newSections)
-      //       console.log('_onGenericSectionChange: ', { sectionIndex, stepIndex, ingredientIndex, supplierItemId: ingredient.supplierItem.id, sections: newSections });
-
-      //       computationHandler(sectionIndex, stepIndex, ingredientIndex, ingredient.supplierItem.id)
-      //   })
-      // })
-      // console.log('newSections: ', newSections);
 
       // setFieldValue(`sections[${sectionIndex}]`, newSections[sectionIndex])
       formValues.sections = newSections;
 
       newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
-        // console.log('step: ', step);
-        // const stepGrossWeight = step.grossWeight ? step.grossWeight : getStepGrossWeight(step)
-        // step.grossWeight =  stepGrossWeight * proportion
-        // setFieldTouched(`sections[${index}].steps[${stepIndex}].grossWeight`)
-
         step.stepComponents.forEach((ingredient, ingredientIndex) => {
-          // console.log('ingredient: ', ingredient);
-          // computationHandler(sectionIndex, stepIndex, ingredientIndex)
-          // const newValues = { ...formValues, sections: newSections }
-          // formValues.sections = newSections
-          // setFieldValue(`sections[${index}]`, newSections)
           computeProductionStepsRecipeOnFieldChange(
             formValues,
             sectionIndex,
@@ -224,12 +191,14 @@ const EditableSection: FC<Props> = ({
       });
     }
 
+    if (reason === "input-change" && section) {
+      setFieldValue("sections", newSections);
+    }
+
     if (section && !newSections[sectionIndex].parentId) {
       newSections[sectionIndex].parentId = null;
       newSections[sectionIndex].parentPercent = 0;
     }
-
-    // setFieldValue("sections", newSections)
 
     if (reason === "selectOption" && section) {
       setChanged(changed + 1);
@@ -247,9 +216,9 @@ const EditableSection: FC<Props> = ({
 
     // update section with computed production steps and step components data
     const newSection = newSections[newSections.length - 1];
-    // if (newSection) {
-    //   computeSectionData(newSection, "productionSteps")
-    // }
+    if (newSection) {
+      computeSectionData(newSection, "productionSteps");
+    }
 
     onDeleteBlur();
     setFieldValue("sections", newSections);
@@ -284,6 +253,7 @@ const EditableSection: FC<Props> = ({
               className="flexCenter"
               sx={{ position: "absolute", left: -8 }}
             >
+              {/* for unkown reason, codesandbox can not import it with img element */}
               <svg
                 width="14"
                 height="14"
@@ -302,7 +272,7 @@ const EditableSection: FC<Props> = ({
                 freeSolo
                 disableClearable
                 selectOnFocus
-                clearOnBlur
+                // clearOnBlur
                 handleHomeEndKeys
                 // className={classes.autocompleteContainer}
                 inputValue={
