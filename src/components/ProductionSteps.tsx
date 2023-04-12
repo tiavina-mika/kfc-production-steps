@@ -172,6 +172,7 @@ const ProductionSteps: FC<Props> = ({
                     setFieldValue={setFieldValue}
                     onDeleteBlur={_onDeleteBlur}
                     errors={errors}
+                    formValues={values}
                   />
                 );
               }}

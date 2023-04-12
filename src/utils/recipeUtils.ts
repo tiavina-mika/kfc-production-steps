@@ -462,7 +462,7 @@ export const computeStepData = (step, ingredientsField = "ingredients") => {
   step.realCost = stepRealCost;
   step.inputWeight = roundNumber(stepGrossWeight * 1000, 5);
   step.outputWeight = roundNumber(stepNetWeight * 1000, 5);
-}
+};
 
 export function computeSectionData(section, stepsField = "steps") {
   const {
@@ -589,7 +589,7 @@ export const computeProductionStepsRecipeOnFieldChange = (
     const section = recipe.sections[sectionIndex];
 
     if (stepIndex !== null) {
-      const step = section.prodcutioinSteps[stepIndex];
+      const step = section.productionSteps[stepIndex];
 
       if (stepComponentIndex !== null) {
         const stepComponent = step.stepComponents[stepComponentIndex];

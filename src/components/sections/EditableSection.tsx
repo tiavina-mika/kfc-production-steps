@@ -1,16 +1,20 @@
 import React, { FC, useCallback, useState } from "react";
 
 import styled from "@emotion/styled";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, Stack, TextField } from "@mui/material";
 import { ErrorMessage, FormikErrors } from "formik";
 
+import {
+  StyledErrorMessage,
+  StyledSectionFirstBodyColumn
+} from "../StyledSectionComponents";
+import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
-  COLORS,
-  PRODUCTION_STEPS_COL_WIDTHS,
-} from "../../utils/constant";
-import { computeSectionData, getDefaultSection } from "../../utils/recipeUtils";
-import { StyledErrorMessage, StyledSectionFirstBodyColumn } from "../StyledSectionComponents";
+  computeProductionStepsRecipeOnFieldChange,
+  getDefaultSection,
+  parseSectionToObject
+} from "../../utils/recipeUtils";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -71,29 +75,25 @@ const StyledText = styled(Box, {
   return defaultStyles;
 });
 
-// const StyledAutocomplete = styled(Autocomplete)({
-//   "& .MuiAutocomplete-inputRoot": {
-//     width: 512,
-//     height: 30,
-//     background: "#fff",
-//     borderRadius: 4
-//   }
-// });
+const StyledAutocomplete = styled(Autocomplete)({
+  "& .MuiAutocomplete-inputRoot": {
+    width: 512,
+    height: 30,
+    background: "#fff",
+    borderRadius: 4
+  }
+});
 
-const StyledTextField = styled(TextField)({
-  width: 512,
-  height: 30,
-  background: "#fff",
-  borderRadius: 4,
-  "& .MuiInputBase-root": {
-    "&:before, :after": {
+const StyledAutocompleteTextField = styled(TextField)({
+  "& .MuiAutocomplete-inputRoot.MuiInputBase-root": {
+    "&:before": {
       borderBottom: "none",
       "&:hover": {
         borderBottom: "none"
       }
     },
-    "& .MuiInputBase-input": {
-      paddingLeft: 7
+    "& .MuiAutocomplete-input": {
+      padding: 4
     }
   },
   "& .MuiInput-input": {
@@ -121,6 +121,8 @@ type Props = {
   ) => Promise<FormikErrors<any>> | Promise<void>;
   hasError: (index: number) => boolean;
   onDeleteBlur: () => void;
+  formValues: Record<string, any>;
+  computationHandler: any;
 };
 
 const EditableSection: FC<Props> = ({
@@ -137,64 +139,107 @@ const EditableSection: FC<Props> = ({
   onFieldBlur,
   onKeyUp,
   hasError,
-  onDeleteBlur
+  onDeleteBlur,
+  computationHandler,
+  formValues
 }) => {
-  const [changed, setChanged] = useState<number>(0);
+  const [changed, setChanged] = useState(0);
 
   const _stopPropagation = (event) => event && event.stopPropagation();
 
-  const _onGenericSectionChange = useCallback(
-    (event, formValue, sectionIndex, reason) => {
-      if (!event) return;
+  const _onGenericSectionChange = (event, formValue, sectionIndex, reason) => {
+    if (!event) return;
 
-      let value = formValue;
-      if (reason === "selectOption") {
-        if (value.get) {
-          value = value.get("name");
-        } else {
-          value = value.name;
-        }
+    let value = formValue;
+    if (reason === "selectOption") {
+      if (value.get) {
+        value = value.get("name");
+      } else {
+        value = value.name;
       }
+    }
 
-      const section = genericSections.find(
-        (section) =>
-          (section.get ? section.get("name") : section.name) === value
-      );
+    const section = genericSections.find(
+      (section) => (section.get ? section.get("name") : section.name) === value
+    );
+    // console.log('section 0: ', section.toJSON());
 
-      if (section) {
-        computeSectionData(section, "productionSteps");
-      }
+    // // update section with computed production steps and step components data
+    // if (section) {
+    //   computeSectionData(section.toJSON(), "productionSteps")
+    // }
+    // console.log('section 1: ', section.toJSON());
 
-      const newSections = [...sections];
+    const newSections = [...sections];
+    // console.log('newSections: ', newSections);
 
-      newSections[sectionIndex].name = value;
+    newSections[sectionIndex].name = value;
 
-      if (reason === "selectOption" && section) {
-        newSections[sectionIndex] = section;
-        newSections[sectionIndex].error = false;
-        newSections[sectionIndex].id = null;
-        newSections[sectionIndex].parentId = section.id;
-        newSections[sectionIndex].parentPercent = 100;
-      }
+    if (reason === "selectOption" && section) {
+      const newSection =
+        parseSectionToObject([section])[0] || getDefaultSection();
+      newSections[sectionIndex] = newSection;
 
-      if (section && !newSections[sectionIndex].parentId) {
-        newSections[sectionIndex].parentId = null;
-        newSections[sectionIndex].parentPercent = 0;
-      }
+      // console.log('newSection: ', newSection);
 
-      setFieldValue("sections", newSections);
+      newSections[sectionIndex].error = false;
+      newSections[sectionIndex].id = null;
+      newSections[sectionIndex].parentId = section.id;
+      newSections[sectionIndex].parentPercent = 100;
+      // setFieldValue("sections", newSections)
+      // newSection.productionSteps.forEach((step, stepIndex) => {
+      //   step.stepComponents.forEach((ingredient, ingredientIndex) => {
+      //     // console.log('newSection ingredient: ', { stepIndex, ingredientIndex, ingredient, });
+      //       newSections[sectionIndex].productionSteps[stepIndex].stepComponents[ingredientIndex] = ingredient
+      //       setFieldValue("sections", newSections)
+      //       console.log('_onGenericSectionChange: ', { sectionIndex, stepIndex, ingredientIndex, supplierItemId: ingredient.supplierItem.id, sections: newSections });
 
-      if (reason === "selectOption" && section) {
-        setChanged(changed + 1);
-        onClearFocus();
-      }
+      //       computationHandler(sectionIndex, stepIndex, ingredientIndex, ingredient.supplierItem.id)
+      //   })
+      // })
+      // console.log('newSections: ', newSections);
 
-      if (event.target) {
-        _stopPropagation(event);
-      }
-    },
-    [sections, setFieldValue, changed, genericSections, onClearFocus]
-  );
+      // setFieldValue(`sections[${sectionIndex}]`, newSections[sectionIndex])
+      formValues.sections = newSections;
+
+      newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
+        // console.log('step: ', step);
+        // const stepGrossWeight = step.grossWeight ? step.grossWeight : getStepGrossWeight(step)
+        // step.grossWeight =  stepGrossWeight * proportion
+        // setFieldTouched(`sections[${index}].steps[${stepIndex}].grossWeight`)
+
+        step.stepComponents.forEach((ingredient, ingredientIndex) => {
+          // console.log('ingredient: ', ingredient);
+          // computationHandler(sectionIndex, stepIndex, ingredientIndex)
+          // const newValues = { ...formValues, sections: newSections }
+          // formValues.sections = newSections
+          // setFieldValue(`sections[${index}]`, newSections)
+          computeProductionStepsRecipeOnFieldChange(
+            formValues,
+            sectionIndex,
+            stepIndex,
+            ingredientIndex
+          );
+        });
+      });
+    }
+
+    if (section && !newSections[sectionIndex].parentId) {
+      newSections[sectionIndex].parentId = null;
+      newSections[sectionIndex].parentPercent = 0;
+    }
+
+    // setFieldValue("sections", newSections)
+
+    if (reason === "selectOption" && section) {
+      setChanged(changed + 1);
+      onClearFocus();
+    }
+
+    if (event.target) {
+      _stopPropagation(event);
+    }
+  };
 
   const _addSection = (index, event = null) => {
     const newSections = [...sections];
@@ -202,13 +247,25 @@ const EditableSection: FC<Props> = ({
 
     // update section with computed production steps and step components data
     const newSection = newSections[newSections.length - 1];
-    if (newSection) {
-      computeSectionData(newSection, "productionSteps");
-    }
+    // if (newSection) {
+    //   computeSectionData(newSection, "productionSteps")
+    // }
 
     onDeleteBlur();
     setFieldValue("sections", newSections);
     _stopPropagation(event);
+  };
+
+  const getOptionLabel = (option) => {
+    if (typeof option === "string") {
+      return option;
+    }
+
+    if (option.get) {
+      return option.get("name");
+    }
+
+    return option.name;
   };
 
   return (
@@ -222,13 +279,11 @@ const EditableSection: FC<Props> = ({
       <StyledSectionFirstBodyColumn className="flexRow center">
         {isHover ? (
           <>
-            {/* add button */}
             <Button
               onClick={(e) => _addSection(index, e)}
               className="flexCenter"
               sx={{ position: "absolute", left: -8 }}
             >
-              {/* need to use directly the svg element because of an error in codesandbox importation */}
               <svg
                 width="14"
                 height="14"
@@ -242,29 +297,44 @@ const EditableSection: FC<Props> = ({
                 />
               </svg>
             </Button>
-            {/* input */}
             <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
-              <StyledTextField
-                name={`sections[${index}].name`}
-                value={
+              <StyledAutocomplete
+                freeSolo
+                disableClearable
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                // className={classes.autocompleteContainer}
+                inputValue={
                   typeof section.name === "string"
                     ? section.name
-                    : section.name.get("name")
+                    : section.get("name")
                 }
-                onClick={_stopPropagation}
-                onFocus={onFieldFocus}
-                onBlur={onFieldBlur}
-                onKeyUp={onKeyUp as any}
-                variant="standard"
-                fullWidth
-                onChange={(event) => {
+                getOptionLabel={getOptionLabel}
+                options={genericSections}
+                onChange={(event, newInputValue, reason) => {
+                  _onGenericSectionChange(event, newInputValue, index, reason);
+                }}
+                onInputChange={(event, newInputValue) => {
                   _onGenericSectionChange(
                     event,
-                    event.target.value,
+                    newInputValue,
                     index,
                     "input-change"
                   );
                 }}
+                renderInput={(params) => (
+                  <StyledAutocompleteTextField
+                    {...params}
+                    name={`sections[${index}].name`}
+                    onClick={_stopPropagation}
+                    onFocus={onFieldFocus}
+                    onBlur={onFieldBlur}
+                    onKeyUp={onKeyUp}
+                    variant="standard"
+                    fullWidth
+                  />
+                )}
               />
               <ErrorMessage
                 name={`sections[${index}].name`}

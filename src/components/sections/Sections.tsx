@@ -14,6 +14,7 @@ import { COLORS, PRODUCTION_STEPS_SPACINGS } from "../../utils/constant";
 import SectionPreview from "./SectionPreview";
 import EditableSection from "./EditableSection";
 import Steps from "../steps/Steps";
+import { computeProductionStepsRecipeOnFieldChange } from "../../utils/recipeUtils";
 
 export const COMPONENT_NAME = "SECTIONS";
 
@@ -84,6 +85,7 @@ type Props = {
   errors: Record<string, any>;
   setFieldValue: any;
   onDeleteBlur: () => void;
+  formValues: Record<string, any>;
 };
 
 const Sections: FC<Props> = ({
@@ -101,12 +103,32 @@ const Sections: FC<Props> = ({
   deleteHover,
   setFieldValue,
   errors,
-  onDeleteBlur
+  onDeleteBlur,
+  formValues
 }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
   // alway has a default section, see: getDefaultSection()
   if (!isEdition && !(sections.length && sections[0].id)) return;
+
+  /** Calculation stuff will go here */
+  const _handleComputation = (
+    values,
+    setFieldValue,
+    sectionIndex = null,
+    stepIndex = null,
+    ingredientIndex = null
+  ) => {
+    computeProductionStepsRecipeOnFieldChange(
+      values,
+      sectionIndex,
+      stepIndex,
+      ingredientIndex
+    );
+    for (const key of ["sections", "cost", "netWeight", "asp"]) {
+      setFieldValue(key, values[key]);
+    }
+  };
 
   const _isHover = (index: number): boolean => {
     return (
@@ -159,6 +181,20 @@ const Sections: FC<Props> = ({
                 onKeyUp={onKeyUp}
                 onDeleteBlur={onDeleteBlur}
                 hasError={_hasError}
+                computationHandler={(
+                  sectionIndex,
+                  stepIndex,
+                  ingredientIndex
+                ) =>
+                  _handleComputation(
+                    formValues,
+                    setFieldValue,
+                    sectionIndex,
+                    stepIndex,
+                    ingredientIndex
+                  )
+                }
+                formValues={formValues}
               />
             ) : (
               <SectionPreview section={section} />
