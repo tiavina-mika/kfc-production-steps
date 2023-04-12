@@ -1,17 +1,21 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 
 import styled from "@emotion/styled";
-import { Autocomplete, Box, BoxProps, Stack, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, Stack, TextField } from "@mui/material";
 import { ErrorMessage, FormikErrors } from "formik";
 
+import {
+  StyledErrorMessage,
+  StyledSectionFirstBodyColumn
+} from "../StyledSectionComponents";
+import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import {
-  COLORS,
-  PRODUCTION_STEPS_COL_WIDTHS,
-  PRODUCTION_STEPS_FIST_COL_PL
-} from "../../utils/constant";
-import { computeSectionData } from "../../utils/recipeUtils";
-import { StyledErrorMessage } from "../StyledSectionComponents";
+  computeProductionStepsRecipeOnFieldChange,
+  computeSectionData,
+  getDefaultSection,
+  parseSectionToObject
+} from "../../utils/recipeUtils";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
@@ -19,12 +23,6 @@ export const COMPONENT_NAME = "SECTIONS";
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
 // ----------------------------------------------- //
-const stickyStyle = {
-  position: "sticky",
-  left: 0,
-  borderRight: "1px solid #cccccc"
-};
-
 const cellsStyle = {
   paddingRight: 16,
   paddingLeft: 16
@@ -34,15 +32,6 @@ const cellsStyle = {
 // -------------- styled components -------------- //
 // ----------------------------------------------- //
 // -------------- Table -------------- //
-const StyledFirstBodyColumn = styled((props: BoxProps) => (
-  <Box {...props} sx={{ ...stickyStyle }} />
-))({
-  paddingLeft: PRODUCTION_STEPS_FIST_COL_PL,
-  paddingRight: 8,
-  backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
-  width: widths[0]
-});
-
 // body cell
 type StyledBodyCellProps = {
   align: "left" | "center" | "right";
@@ -131,9 +120,12 @@ type Props = {
     value: any,
     shouldValidate?: boolean | undefined
   ) => Promise<FormikErrors<any>> | Promise<void>;
+  hasError: (index: number) => boolean;
+  onDeleteBlur: () => void;
+  formValues: Record<string, any>;
 };
 
-const EditableSectionAutocompletion: FC<Props> = ({
+const EditableSection: FC<Props> = ({
   sections,
   section,
   index,
@@ -145,14 +137,18 @@ const EditableSectionAutocompletion: FC<Props> = ({
   onClearFocus,
   onFieldFocus,
   onFieldBlur,
-  onKeyUp
+  onKeyUp,
+  hasError,
+  onDeleteBlur,
+  formValues
 }) => {
-  const [changed, setChanged] = useState<number>(0);
+  const [changed, setChanged] = useState(0);
 
   const _stopPropagation = (event) => event && event.stopPropagation();
 
   const _onGenericSectionChange = (event, formValue, sectionIndex, reason) => {
     if (!event) return;
+
     let value = formValue;
     if (reason === "selectOption") {
       if (value.get) {
@@ -166,27 +162,43 @@ const EditableSectionAutocompletion: FC<Props> = ({
       (section) => (section.get ? section.get("name") : section.name) === value
     );
 
-    if (section) {
-      computeSectionData(section, "productionSteps");
-    }
+    const newSections = [...sections];
 
-    const newSections = [].concat(sections);
     newSections[sectionIndex].name = value;
 
     if (reason === "selectOption" && section) {
-      newSections[sectionIndex] = section;
+      const newSection =
+        parseSectionToObject([section])[0] || getDefaultSection();
+      newSections[sectionIndex] = newSection;
+
       newSections[sectionIndex].error = false;
       newSections[sectionIndex].id = null;
       newSections[sectionIndex].parentId = section.id;
       newSections[sectionIndex].parentPercent = 100;
+
+      // setFieldValue(`sections[${sectionIndex}]`, newSections[sectionIndex])
+      formValues.sections = newSections;
+
+      newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
+        step.stepComponents.forEach((ingredient, ingredientIndex) => {
+          computeProductionStepsRecipeOnFieldChange(
+            formValues,
+            sectionIndex,
+            stepIndex,
+            ingredientIndex
+          );
+        });
+      });
+    }
+
+    if (reason === "input-change" && section) {
+      setFieldValue("sections", newSections);
     }
 
     if (section && !newSections[sectionIndex].parentId) {
       newSections[sectionIndex].parentId = null;
       newSections[sectionIndex].parentPercent = 0;
     }
-
-    setFieldValue("sections", newSections);
 
     if (reason === "selectOption" && section) {
       setChanged(changed + 1);
@@ -198,7 +210,22 @@ const EditableSectionAutocompletion: FC<Props> = ({
     }
   };
 
-  const getOptionLabel = (option: string | Record<string, any>) => {
+  const _addSection = (index, event = null) => {
+    const newSections = [...sections];
+    newSections.splice(index + 1, 0, getDefaultSection());
+
+    // update section with computed production steps and step components data
+    const newSection = newSections[newSections.length - 1];
+    if (newSection) {
+      computeSectionData(newSection, "productionSteps");
+    }
+
+    onDeleteBlur();
+    setFieldValue("sections", newSections);
+    _stopPropagation(event);
+  };
+
+  const getOptionLabel = (option) => {
     if (typeof option === "string") {
       return option;
     }
@@ -218,58 +245,84 @@ const EditableSectionAutocompletion: FC<Props> = ({
       onClick={_stopPropagation}
       // className={`${isHover ? classes.editHover : ""} ${error || isDeleteHover ? classes.sectionLineError : ""} ${(section.parentId)?classes.sectionInherited:""}`}
     >
-      <StyledFirstBodyColumn className="flexRow center">
+      <StyledSectionFirstBodyColumn className="flexRow center">
         {isHover ? (
-          <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
-            <StyledAutocomplete
-              freeSolo
-              disableClearable
-              selectOnFocus
-              clearOnBlur
-              handleHomeEndKeys
-              // className={classes.autocompleteContainer}
-              inputValue={
-                typeof section.name === "string"
-                  ? section.name
-                  : section.name.get("name")
-              }
-              getOptionLabel={getOptionLabel}
-              options={genericSections}
-              onChange={(event, newInputValue, reason) => {
-                _onGenericSectionChange(event, newInputValue, index, reason);
-              }}
-              onInputChange={(event, newInputValue) => {
-                _onGenericSectionChange(
-                  event,
-                  newInputValue,
-                  index,
-                  "input-change"
-                );
-              }}
-              renderInput={(params) => (
-                <StyledAutocompleteTextField
-                  {...params}
-                  name={`sections[${index}].name`}
-                  onClick={_stopPropagation}
-                  onFocus={onFieldFocus}
-                  onBlur={onFieldBlur}
-                  onKeyUp={onKeyUp as any}
-                  variant="standard"
-                  fullWidth
+          <>
+            <Button
+              onClick={(e) => _addSection(index, e)}
+              className="flexCenter"
+              sx={{ position: "absolute", left: -8 }}
+            >
+              {/* for unkown reason, codesandbox can not import it with img element */}
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 8H8V13C8 13.55 7.55 14 7 14C6.45 14 6 13.55 6 13V8H1C0.45 8 0 7.55 0 7C0 6.45 0.45 6 1 6H6V1C6 0.45 6.45 0 7 0C7.55 0 8 0.45 8 1V6H13C13.55 6 14 6.45 14 7C14 7.55 13.55 8 13 8Z"
+                  fill="#2196F3"
                 />
-              )}
-            />
-            <ErrorMessage
-              name={`sections[${index}].name`}
-              render={(message) => (
-                <StyledErrorMessage>{message}</StyledErrorMessage>
-              )}
-            />
-          </Stack>
+              </svg>
+            </Button>
+            <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
+              <StyledAutocomplete
+                freeSolo
+                disableClearable
+                selectOnFocus
+                handleHomeEndKeys
+                inputValue={
+                  typeof section.name === "string"
+                    ? section.name
+                    : section.get("name")
+                }
+                getOptionLabel={getOptionLabel}
+                options={genericSections}
+                onChange={(event, newInputValue, reason) => {
+                  _onGenericSectionChange(event, newInputValue, index, reason);
+                }}
+                onInputChange={(event, newInputValue) => {
+                  _onGenericSectionChange(
+                    event,
+                    newInputValue,
+                    index,
+                    "input-change"
+                  );
+                }}
+                renderInput={(params) => (
+                  <StyledAutocompleteTextField
+                    {...params}
+                    name={`sections[${index}].name`}
+                    onClick={_stopPropagation}
+                    onFocus={onFieldFocus}
+                    onBlur={onFieldBlur}
+                    onKeyUp={onKeyUp}
+                    variant="standard"
+                    fullWidth
+                  />
+                )}
+              />
+              <ErrorMessage
+                name={`sections[${index}].name`}
+                render={(message) => (
+                  <StyledErrorMessage>{message}</StyledErrorMessage>
+                )}
+              />
+            </Stack>
+          </>
+        ) : hasError(index) ? (
+          <ErrorMessage
+            name={`sections[${index}].name`}
+            render={(message) => (
+              <StyledErrorMessage>{message}</StyledErrorMessage>
+            )}
+          />
         ) : (
           <StyledText disabled={false}>{section.name}</StyledText>
         )}
-      </StyledFirstBodyColumn>
+      </StyledSectionFirstBodyColumn>
       <StyledBodyCell align="left" width={widths[1]}>
         <StyledText>{section.inputWeight || "-"}</StyledText>
       </StyledBodyCell>
@@ -309,4 +362,4 @@ const EditableSectionAutocompletion: FC<Props> = ({
   );
 };
 
-export default EditableSectionAutocompletion;
+export default EditableSection;

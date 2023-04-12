@@ -272,9 +272,7 @@ const EditableSection: FC<Props> = ({
                 freeSolo
                 disableClearable
                 selectOnFocus
-                // clearOnBlur
                 handleHomeEndKeys
-                // className={classes.autocompleteContainer}
                 inputValue={
                   typeof section.name === "string"
                     ? section.name
