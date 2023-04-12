@@ -6,7 +6,12 @@ import { ErrorMessage, FormikErrors } from "formik";
 
 import { getCellAlignment, roundNumber } from "../../utils/utils";
 import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
-import { computeSectionData, getDefaultSection } from "../../utils/recipeUtils";
+import {
+  computeProductionStepsRecipeOnFieldChange,
+  computeSectionData,
+  getDefaultSection,
+  parseSectionToObject
+} from "../../utils/recipeUtils";
 import {
   StyledErrorMessage,
   StyledSectionFirstBodyColumn
@@ -121,6 +126,7 @@ type Props = {
   ) => Promise<FormikErrors<any>> | Promise<void>;
   hasError: (index: number) => boolean;
   onDeleteBlur: () => void;
+  formValues: Record<string, any>;
 };
 
 const EditableSection: FC<Props> = ({
@@ -137,64 +143,75 @@ const EditableSection: FC<Props> = ({
   onFieldBlur,
   onKeyUp,
   hasError,
-  onDeleteBlur
+  onDeleteBlur,
+  formValues
 }) => {
   const [changed, setChanged] = useState<number>(0);
 
   const _stopPropagation = (event) => event && event.stopPropagation();
 
-  const _onGenericSectionChange = useCallback(
-    (event, formValue, sectionIndex, reason) => {
-      if (!event) return;
+  const _onGenericSectionChange = (event, formValue, sectionIndex, reason) => {
+    if (!event) return;
 
-      let value = formValue;
-      if (reason === "selectOption") {
-        if (value.get) {
-          value = value.get("name");
-        } else {
-          value = value.name;
-        }
+    let value = formValue;
+    if (reason === "selectOption") {
+      if (value.get) {
+        value = value.get("name");
+      } else {
+        value = value.name;
       }
+    }
 
-      const section = genericSections.find(
-        (section) =>
-          (section.get ? section.get("name") : section.name) === value
-      );
+    const section = genericSections.find(
+      (section) => (section.get ? section.get("name") : section.name) === value
+    );
 
-      if (section) {
-        computeSectionData(section, "productionSteps");
-      }
+    const newSections = [...sections];
 
-      const newSections = [...sections];
+    newSections[sectionIndex].name = value;
 
-      newSections[sectionIndex].name = value;
+    if (reason === "selectOption" && section) {
+      const newSection =
+        parseSectionToObject([section])[0] || getDefaultSection();
+      newSections[sectionIndex] = newSection;
 
-      if (reason === "selectOption" && section) {
-        newSections[sectionIndex] = section;
-        newSections[sectionIndex].error = false;
-        newSections[sectionIndex].id = null;
-        newSections[sectionIndex].parentId = section.id;
-        newSections[sectionIndex].parentPercent = 100;
-      }
+      newSections[sectionIndex].error = false;
+      newSections[sectionIndex].id = null;
+      newSections[sectionIndex].parentId = section.id;
+      newSections[sectionIndex].parentPercent = 100;
 
-      if (section && !newSections[sectionIndex].parentId) {
-        newSections[sectionIndex].parentId = null;
-        newSections[sectionIndex].parentPercent = 0;
-      }
+      formValues.sections = newSections;
 
+      newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
+        step.stepComponents.forEach((ingredient, ingredientIndex) => {
+          computeProductionStepsRecipeOnFieldChange(
+            formValues,
+            sectionIndex,
+            stepIndex,
+            ingredientIndex
+          );
+        });
+      });
+    }
+
+    if (reason === "input-change" && section) {
       setFieldValue("sections", newSections);
+    }
 
-      if (reason === "selectOption" && section) {
-        setChanged(changed + 1);
-        onClearFocus();
-      }
+    if (section && !newSections[sectionIndex].parentId) {
+      newSections[sectionIndex].parentId = null;
+      newSections[sectionIndex].parentPercent = 0;
+    }
 
-      if (event.target) {
-        _stopPropagation(event);
-      }
-    },
-    [sections, setFieldValue, changed, genericSections, onClearFocus]
-  );
+    if (reason === "selectOption" && section) {
+      setChanged(changed + 1);
+      onClearFocus();
+    }
+
+    if (event.target) {
+      _stopPropagation(event);
+    }
+  };
 
   const _addSection = (index, event = null) => {
     const newSections = [...sections];

@@ -38,7 +38,7 @@ const StepPreview: FC<Props> = ({ step, index }) => {
         </StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[4]}>
-        <StyledStepText>-</StyledStepText>
+        <StyledStepText>{step.transformation || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[5]}>
         <StyledStepText>-</StyledStepText>
@@ -47,19 +47,19 @@ const StepPreview: FC<Props> = ({ step, index }) => {
         <StyledStepText>{step.outputWeight || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[7]}>
-        <StyledStepText>-</StyledStepText>
+        <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[8]}>
-        <StyledStepText>-</StyledStepText>
+        <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[9]}>
-        <StyledStepText>-</StyledStepText>
+        <StyledStepText>{step.machineSetting || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[10]}>
-        <StyledStepText>-</StyledStepText>
+        <StyledStepText>{step.stepDuration || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[11]}>
-        <StyledStepText>-</StyledStepText>
+        <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
       </StyledStepBodyCell>
     </>
   );

@@ -315,6 +315,32 @@ export const parseStepsToObject = (steps, percent = false) => {
   });
 };
 
+export const parseProductionStepsToObject = (steps, percent = false) => {
+  return steps.map((step) => {
+    return {
+      objectId: step.objectId,
+      name: step.name || "",
+      index: step.index || uuidv4(),
+      description: step.description || "",
+      stepComponents: step.stepComponents
+        ? parseIngredientsListToObject(step.stepComponents, percent)
+        : [getDefaultIngredients()],
+      error: step.description && step.description !== "" ? false : true,
+      grossWeight:
+        false !== percent
+          ? step.grossWeight || 0
+          : ((step.grossWeight || 0) * (percent as any)) / 100,
+      preventGrossWeightChange: true,
+      kitchenArea: step.kitchenArea,
+      transformation: step.transformation || "",
+      machineType: step.machineType,
+      machineSetting: step.machineSetting || "",
+      stepDuration: step.stepDuration || 0,
+      stepDurationUnit: step.stepDurationUnit || ""
+    };
+  });
+};
+
 export function computeIngredientData(ingredient) {
   let result = { netWeight: 0, cost: 0 };
 
@@ -387,7 +413,7 @@ export const parseSectionToObject = (sections, percent = false) => {
       reusable: false,
       steps: section.steps ? parseStepsToObject(section.steps, percent) : [],
       productionSteps: section.productionSteps
-        ? parseStepsToObject(section.productionSteps, percent)
+        ? parseProductionStepsToObject(section.productionSteps, percent)
         : [],
       error: section.name && section.name !== "" ? false : true,
       parentId: section.parentId ? section.parentId : null,

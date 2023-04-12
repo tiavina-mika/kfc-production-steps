@@ -85,6 +85,7 @@ type Props = {
   setFieldValue: any;
   onDeleteBlur: () => void;
   formValues: Record<string, any>;
+  setValues: any;
 };
 
 const Sections: FC<Props> = ({
@@ -103,7 +104,8 @@ const Sections: FC<Props> = ({
   setFieldValue,
   errors,
   onDeleteBlur,
-  formValues
+  formValues,
+  setValues
 }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
@@ -162,6 +164,7 @@ const Sections: FC<Props> = ({
                 onDeleteBlur={onDeleteBlur}
                 hasError={_hasError}
                 formValues={formValues}
+                setValues={setValues}
               />
             ) : (
               <SectionPreview section={section} />

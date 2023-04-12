@@ -153,7 +153,8 @@ const ProductionSteps: FC<Props> = ({
                 setFieldError,
                 setFieldTouched,
                 submitForm,
-                validateForm
+                validateForm,
+                setValues
               }) => {
                 return (
                   <Sections
@@ -173,6 +174,7 @@ const ProductionSteps: FC<Props> = ({
                     onDeleteBlur={_onDeleteBlur}
                     errors={errors}
                     formValues={values}
+                    setValues={setValues}
                   />
                 );
               }}

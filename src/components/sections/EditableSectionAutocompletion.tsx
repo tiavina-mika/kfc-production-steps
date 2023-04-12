@@ -123,6 +123,7 @@ type Props = {
   hasError: (index: number) => boolean;
   onDeleteBlur: () => void;
   formValues: Record<string, any>;
+  setValues: any;
 };
 
 const EditableSection: FC<Props> = ({
@@ -140,7 +141,8 @@ const EditableSection: FC<Props> = ({
   onKeyUp,
   hasError,
   onDeleteBlur,
-  formValues
+  formValues,
+  setValues
 }) => {
   const [changed, setChanged] = useState(0);
 
@@ -176,19 +178,21 @@ const EditableSection: FC<Props> = ({
       newSections[sectionIndex].parentId = section.id;
       newSections[sectionIndex].parentPercent = 100;
 
-      // setFieldValue(`sections[${sectionIndex}]`, newSections[sectionIndex])
-      formValues.sections = newSections;
+      const newFormValues = { ...formValues };
+      newFormValues.sections = newSections;
 
       newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
-        step.stepComponents.forEach((ingredient, ingredientIndex) => {
+        step.stepComponents.forEach((_, ingredientIndex) => {
           computeProductionStepsRecipeOnFieldChange(
-            formValues,
+            newFormValues,
             sectionIndex,
             stepIndex,
             ingredientIndex
           );
         });
       });
+
+      setValues(newFormValues);
     }
 
     if (reason === "input-change" && section) {
