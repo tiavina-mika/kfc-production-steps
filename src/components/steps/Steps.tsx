@@ -13,7 +13,7 @@ import { COLORS, PRODUCTION_STEPS_SPACINGS } from "../../utils/constant";
 import StepPreview from "./StepPreview";
 import EditableStep from "./EditableStep";
 
-export const COMPONENT_NAME = "SECTIONS";
+export const COMPONENT_NAME = "STEPS";
 
 // ----------------------------------------------- //
 // -------------- styled components -------------- //

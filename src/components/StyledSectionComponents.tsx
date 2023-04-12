@@ -8,6 +8,7 @@ import {
   PRODUCTION_STEPS_COL_WIDTHS,
   PRODUCTION_STEPS_SPACINGS
 } from "../utils/constant";
+import { getCellAlignment } from "../utils/utils";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 
@@ -67,6 +68,34 @@ export const StyledStepText = styled(Box, {
     defaultStyles.color = COLORS.PRODUCTION_STEPS_DISABLE_TEXT;
   } else {
     defaultStyles.color = COLORS.PRODUCTION_STEPS_TEXT_GREY;
+  }
+
+  return defaultStyles;
+});
+
+const stepBodyCellsStyle = {
+  paddingRight: 16,
+  paddingLeft: 16
+};
+
+type StyledStepBodyCellProps = {
+  align: "left" | "center" | "right";
+  width: number;
+};
+export const StyledStepBodyCell = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "align" && prop !== "width"
+})<StyledStepBodyCellProps>((props) => {
+  let defaultStyles: Record<string, any> = {
+    display: "flex",
+    alignItems: "center",
+    width: props.width,
+    alignSelf: "stretch",
+    margin: 0,
+    ...stepBodyCellsStyle
+  };
+
+  if (props.align) {
+    defaultStyles.justifyContent = getCellAlignment(props.align);
   }
 
   return defaultStyles;
