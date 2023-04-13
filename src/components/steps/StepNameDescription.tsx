@@ -19,7 +19,7 @@ const StepNameDescription: FC<Props> = ({ name, description, index }) => {
     <Stack spacing={1}>
       <Stack direction="row" spacing={1}>
         <StyledStepText>{index + 1}.</StyledStepText>
-        <StyledStepText>{name}</StyledStepText>
+        <StyledStepText>{name || "-"}</StyledStepText>
       </Stack>
       <StyledDescription>{description}</StyledDescription>
     </Stack>
