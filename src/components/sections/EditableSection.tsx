@@ -76,15 +76,6 @@ const StyledText = styled(Box, {
   return defaultStyles;
 });
 
-// const StyledAutocomplete = styled(Autocomplete)({
-//   "& .MuiAutocomplete-inputRoot": {
-//     width: 512,
-//     height: 30,
-//     background: "#fff",
-//     borderRadius: 4
-//   }
-// });
-
 const StyledTextField = styled(TextField)({
   width: 512,
   height: 30,
