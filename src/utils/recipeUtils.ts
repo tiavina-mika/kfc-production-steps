@@ -227,7 +227,9 @@ export function parseCookingModesToObject(cookingModes) {
   return cookingModes.map((cookingMode) => {
     return {
       cookingMode: {
-        id: cookingMode.cookingMode.get ? cookingMode.cookingMode.id: cookingMode.cookingMode.objectId,
+        id: cookingMode.cookingMode.get
+          ? cookingMode.cookingMode.id
+          : cookingMode.cookingMode.objectId,
         name: cookingMode.cookingMode.name || ""
       },
       transformRate:
@@ -267,43 +269,55 @@ export function parseSupplierItemToObject(ingredient) {
   };
 }
 
-export function parseIngredientsListToObject(ingredients = [], percent = false) {
-  return ingredients.map(ingredient => {
-      // --------- cooking mode --------- //
-      let cookingMode = null
-      if (ingredient.cookingMode) {
-          cookingMode = ingredient.cookingMode.get ? ingredient.cookingMode.id : ingredient.cookingMode.objectId
-      }
+export function parseIngredientsListToObject(
+  ingredients = [],
+  percent = false
+) {
+  return ingredients.map((ingredient) => {
+    // --------- cooking mode --------- //
+    let cookingMode = null;
+    if (ingredient.cookingMode) {
+      cookingMode = ingredient.cookingMode.get
+        ? ingredient.cookingMode.id
+        : ingredient.cookingMode.objectId;
+    }
 
-      // --------- complexity --------- //
-      let complexity = 0
-      if (ingredient.supplierItem) {
-          if (ingredient.supplierItem.get && ingredient.supplierItem.get("commercialName")) {
-              complexity = ingredient.supplierItem.get("commercialName").get("complexity")
-          } else {
-              const commercialName = ingredient.supplierItem.commercialName
-              complexity = commercialName.get ? commercialName.get("complexity") : commercialName.complexity
-          }
+    // --------- complexity --------- //
+    let complexity = 0;
+    if (ingredient.supplierItem) {
+      if (
+        ingredient.supplierItem.get &&
+        ingredient.supplierItem.get("commercialName")
+      ) {
+        complexity = ingredient.supplierItem
+          .get("commercialName")
+          .get("complexity");
+      } else {
+        const commercialName = ingredient.supplierItem.commercialName;
+        complexity = commercialName.get
+          ? commercialName.get("complexity")
+          : commercialName.complexity;
       }
+    }
 
-      return {
-          index: uuidv4(),
-          grossWeight: ((false !== percent) ? (parseFloat(ingredient.grossWeight) * (percent as any) / 100) : parseFloat(ingredient.grossWeight)) || 0,
-          cookingMode,
-          supplierItem: ingredient.supplierItem ? parseSupplierItemToObject(ingredient.supplierItem) : null,
-          complexity,
-          error: ingredient.supplierItem
-                  ?
-                      (ingredient.grossWeight && ingredient.grossWeight !== 0
-                          ?
-                              false
-                          :
-                              true
-                      )
-                  :
-                  ((percent as any) !== 0)
-      }
-  })
+    return {
+      index: uuidv4(),
+      grossWeight:
+        (false !== percent
+          ? (parseFloat(ingredient.grossWeight) * (percent as any)) / 100
+          : parseFloat(ingredient.grossWeight)) || 0,
+      cookingMode,
+      supplierItem: ingredient.supplierItem
+        ? parseSupplierItemToObject(ingredient.supplierItem)
+        : null,
+      complexity,
+      error: ingredient.supplierItem
+        ? ingredient.grossWeight && ingredient.grossWeight !== 0
+          ? false
+          : true
+        : (percent as any) !== 0
+    };
+  });
 }
 
 export const parseStepsToObject = (steps, percent = false) => {
@@ -392,16 +406,6 @@ export function computeIngredientData(ingredient) {
       ? ingredient.supplierItem.pricePerKg
       : ingredient.supplierItem.pricePerKg;
 
-      console.log('ingredient weight', {
-        netWeight: roundNumber(
-          parseFloat(ingredient.grossWeight) * (transformRate / 100),
-          5
-        ) || 0,
-        grossWeight: ingredient.grossWeight
-          ? roundNumber(parseFloat((ingredient as any).grossWeight), 5)
-          : 0,
-          transformRate
-      })
     result = {
       grossWeight: ingredient.grossWeight
         ? roundNumber(parseFloat((ingredient as any).grossWeight), 5)
@@ -496,14 +500,6 @@ export const computeStepData = (step, ingredientsField = "ingredients") => {
     ingredientsField
   ].reduce(
     (acc, ingredient) => {
-      console.log('step weight', {
-        netWeight: ingredient.netWeight,
-        stepNetWeight: acc.stepNetWeight,
-        grossWeight: ingredient.grossWeight,
-        stepGrossWeight: acc.stepGrossWeight,
-      })
-
-      // console.log('ingredient new', acc.stepNetWeight)
       acc.stepCost += ingredient.cost || 0;
       acc.stepRealCost += ingredient.realCost || 0;
       acc.stepNetWeight += ingredient.netWeight || 0;
@@ -535,7 +531,6 @@ export function computeSectionData(section, stepsField = "steps") {
       acc.sectionNetWeight += step.netWeight || 0;
       acc.sectionGrossWeight += step.grossWeight || 0;
 
-  
       return acc;
     },
     {
