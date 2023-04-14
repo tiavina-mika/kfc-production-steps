@@ -7,6 +7,7 @@ import StepPreview from "./StepPreview";
 type Props = {
   step: Record<string, any>;
   index: number;
+  isEdition?: boolean;
   // steps: Record<string, any>[];
   // index: number;
   // isHover: boolean;
@@ -27,7 +28,8 @@ type Props = {
 
 const EditableStep: FC<Props> = ({
   step,
-  index
+  index,
+  isEdition,
   // steps,
   // index,
   // for style
@@ -51,7 +53,7 @@ const EditableStep: FC<Props> = ({
       }}
       onClick={_stopPropagation}
     >
-      <StepPreview step={step} index={index} />
+      <StepPreview step={step} index={index} isEdition={isEdition} />
     </Box>
   );
 };

@@ -14,15 +14,16 @@ const widths = PRODUCTION_STEPS_COL_WIDTHS;
 type Props = {
   step: Record<string, any>;
   index: number;
+  isEdition?: boolean;
 };
 
-const StepPreview: FC<Props> = ({ step, index }) => {
+const StepPreview: FC<Props> = ({ step, index, isEdition }) => {
   return (
     <>
       <StyledStepFirstBodyColumn className="flexRow center">
         <StepNameDescription
           name={step.name}
-          description={step.description}
+          description={isEdition && step.error ? "Instructions :" : step.description}
           index={index}
         />
       </StyledStepFirstBodyColumn>

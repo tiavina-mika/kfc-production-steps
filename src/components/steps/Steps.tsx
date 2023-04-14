@@ -156,6 +156,7 @@ const Steps: FC<Props> = ({
                 // steps={steps}
                 step={step}
                 index={index}
+                isEdition={isEdition}
                 // index={index}
                 // isHover={_isHover(index)}
                 // isDeleteHover={_isDeleteHover(index)}
