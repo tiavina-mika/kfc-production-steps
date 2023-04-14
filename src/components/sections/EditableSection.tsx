@@ -14,6 +14,7 @@ import {
 } from "../../utils/recipeUtils";
 import {
   StyledErrorMessage,
+  StyledProductionStepTextField,
   StyledSectionFirstBodyColumn
 } from "../StyledSectionComponents";
 
@@ -76,27 +77,8 @@ const StyledText = styled(Box, {
   return defaultStyles;
 });
 
-const StyledTextField = styled(TextField)({
-  width: 512,
-  height: 30,
-  background: "#fff",
-  borderRadius: 4,
-  "& .MuiInputBase-root": {
-    "&:before, :after": {
-      borderBottom: "none",
-      "&:hover": {
-        borderBottom: "none"
-      }
-    },
-    "& .MuiInputBase-input": {
-      paddingLeft: 7
-    }
-  },
-  "& .MuiInput-input": {
-    fontWeight: 600,
-    fontSize: 14,
-    color: "#414141"
-  }
+const StyledTextField = styled(StyledProductionStepTextField)({
+  width: 512
 });
 
 type Props = {

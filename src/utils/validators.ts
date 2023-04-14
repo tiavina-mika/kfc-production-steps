@@ -7,20 +7,20 @@ export const RecipeProductionStepsSchema = Yup.object().shape({
       productionSteps: Yup.array().of(
         Yup.object().shape({
           name: Yup.string(),
-          description: Yup.string().required("Obligatoire"),
-          stepComponents: Yup.array().of(
-            Yup.object().shape({
-              supplierItem: Yup.mixed().notOneOf(
-                [null, undefined],
-                "Obligatoire"
-              ),
-              grossWeight: Yup.number().required("Obligatoire"),
-              cookingMode: Yup.mixed().notOneOf(
-                [null, undefined],
-                "Obligatoire"
-              )
-            })
-          )
+          description: Yup.string().required("Obligatoire")
+          // stepComponents: Yup.array().of(
+          //   Yup.object().shape({
+          //     supplierItem: Yup.mixed().notOneOf(
+          //       [null, undefined],
+          //       "Obligatoire"
+          //     ),
+          //     grossWeight: Yup.number().required("Obligatoire"),
+          //     cookingMode: Yup.mixed().notOneOf(
+          //       [null, undefined],
+          //       "Obligatoire"
+          //     )
+          //   })
+          // )
         })
       )
     })

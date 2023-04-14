@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import { red } from "@mui/material/colors";
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, TextField } from "@mui/material";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
@@ -99,4 +99,58 @@ export const StyledStepBodyCell = styled(Box, {
   }
 
   return defaultStyles;
+});
+
+// type StyledTextFieldProps = {
+//   width?: number;
+// };
+// const StyledTextField = styled(TextField, {
+//   shouldForwardProp: (prop) => prop !== "width"
+// })<StyledTextFieldProps>(({ width }) => ({
+//   width,
+//   height: 30,
+//   background: "#fff",
+//   borderRadius: 4,
+//   "& .MuiInputBase-root": {
+//     "&:before, :after": {
+//       borderBottom: "none",
+//       "&:hover": {
+//         borderBottom: "none"
+//       }
+//     },
+//     "& .MuiInputBase-input": {
+//       paddingLeft: 7
+//     }
+//   },
+//   "& .MuiInput-input": {
+//     fontWeight: 600,
+//     fontSize: 14,
+//     color: "#414141"
+//   }
+// }));
+
+export const StyledProductionStepTextField = styled(TextField)({
+  height: 30,
+  background: "#fff",
+  borderRadius: 4,
+  "& .MuiInputBase-root": {
+    "&:before, :after": {
+      borderBottom: "none",
+      "&:hover": {
+        borderBottom: "none"
+      }
+    },
+    "& .MuiInputBase-input": {
+      paddingLeft: 7
+    }
+  },
+  "& .MuiInput-input": {
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#414141"
+  }
+});
+
+export const StyledStepDescriptionText = styled(StyledStepText)({
+  fontWeight: 500
 });

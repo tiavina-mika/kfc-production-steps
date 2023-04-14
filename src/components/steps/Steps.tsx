@@ -12,6 +12,7 @@ import {
 import { COLORS, PRODUCTION_STEPS_SPACINGS } from "../../utils/constant";
 import StepPreview from "./StepPreview";
 import EditableStep from "./EditableStep";
+import { IHoveredRow } from "../sections/Sections";
 
 export const COMPONENT_NAME = "STEPS";
 
@@ -61,26 +62,23 @@ const StyledAccordionSummary = styled(
   }
 }));
 
-// type IHoveredRow = {
-//   component: string;
-//   index: number;
-//   parentIndex?: number;
-// };
 type Props = {
   steps: any[];
   isEdition: boolean;
-  // onRowHover: (
-  //   component: string,
-  //   index: number,
-  //   parendIndex?: number | null
-  // ) => void;
-  // onRowBlur: () => void;
-  // hoveredRow: IHoveredRow;
+  sectionIndex: number;
+  onRowHover: (
+    component: string,
+    index: number,
+    parendIndex?: number | null
+  ) => void;
+  onRowBlur: () => void;
+  hoveredRow: IHoveredRow;
   // genericSections?: Record<string, any>[];
   // onClearFocus: () => void;
-  // onFieldFocus: () => void;
-  // onFieldBlur: any;
-  // onKeyUp: (event: any, setFieldTouched: any) => void;
+  onFieldFocus: () => void;
+  onFieldBlur: any;
+  onKeyUp: (event: any, setFieldTouched: any) => void;
+  onKeyDown: (event: any) => void;
   // onDeleteHover: (
   //   component: string,
   //   index: number,
@@ -94,15 +92,17 @@ type Props = {
 
 const Steps: FC<Props> = ({
   steps,
-  isEdition
-  // onRowHover,
-  // onRowBlur,
-  // hoveredRow,
+  isEdition,
+  sectionIndex,
+  onRowHover,
+  onRowBlur,
+  hoveredRow,
   // genericSections,
   // onClearFocus,
-  // onFieldFocus,
-  // onFieldBlur,
-  // onKeyUp,
+  onFieldFocus,
+  onFieldBlur,
+  onKeyUp,
+  onKeyDown
   // onDeleteHover,
   // deleteHover,
   // setFieldValue,
@@ -122,6 +122,11 @@ const Steps: FC<Props> = ({
   //     hoveredRow.index === index
   //   );
   // };
+  const _isHover = (index) =>
+    hoveredRow &&
+    COMPONENT_NAME === hoveredRow.component &&
+    hoveredRow.index === index &&
+    hoveredRow.parentIndex === sectionIndex;
 
   // const _isDeleteHover = (index: number): boolean => {
   //   return (
@@ -148,8 +153,8 @@ const Steps: FC<Props> = ({
         >
           <StyledAccordionSummary
             expandIcon={<img alt="chevron" src="/icons/chevron-down.svg" />}
-            // onMouseEnter={() => onRowHover(COMPONENT_NAME, index)}
-            // onMouseLeave={onRowBlur}
+            onMouseEnter={() => onRowHover(COMPONENT_NAME, index, sectionIndex)}
+            onMouseLeave={onRowBlur}
           >
             {isEdition ? (
               <EditableStep
@@ -158,14 +163,15 @@ const Steps: FC<Props> = ({
                 index={index}
                 isEdition={isEdition}
                 // index={index}
-                // isHover={_isHover(index)}
+                isHover={_isHover(index)}
+                sectionIndex={sectionIndex}
                 // isDeleteHover={_isDeleteHover(index)}
                 // genericSections={genericSections}
                 // setFieldValue={setFieldValue}
                 // onClearFocus={onClearFocus}
-                // onFieldFocus={onFieldFocus}
-                // onFieldBlur={onFieldBlur}
-                // onKeyUp={onKeyUp}
+                onFieldFocus={onFieldFocus}
+                onFieldBlur={onFieldBlur}
+                onKeyUp={onKeyUp}
                 // onDeleteBlur={onDeleteBlur}
                 // hasError={_hasError}
               />

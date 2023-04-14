@@ -1,12 +1,11 @@
 import React, { FC } from "react";
 
-import { Stack, styled } from "@mui/material";
+import { Stack } from "@mui/material";
 
-import { StyledStepText } from "../StyledSectionComponents";
-
-export const StyledDescription = styled(StyledStepText)({
-  fontWeight: 500
-});
+import {
+  StyledStepDescriptionText,
+  StyledStepText
+} from "../StyledSectionComponents";
 
 type Props = {
   name: string;
@@ -21,7 +20,7 @@ const StepNameDescription: FC<Props> = ({ name, description, index }) => {
         <StyledStepText>{index + 1}.</StyledStepText>
         <StyledStepText>{name || "-"}</StyledStepText>
       </Stack>
-      <StyledDescription>{description}</StyledDescription>
+      <StyledStepDescriptionText>{description}</StyledStepDescriptionText>
     </Stack>
   );
 };
