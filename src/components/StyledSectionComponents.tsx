@@ -152,5 +152,5 @@ export const StyledProductionStepTextField = styled(TextField)({
 });
 
 export const StyledStepDescriptionText = styled(StyledStepText)({
-  fontWeight: 500
+  fontWeight: 400
 });
