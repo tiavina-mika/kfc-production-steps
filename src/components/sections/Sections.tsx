@@ -133,17 +133,6 @@ const Sections: FC<Props> = ({
     errors.sections[index] &&
     (errors.sections[index].name || errors.sections[index].parentPercent);
 
-  const _onKeyDown = (e, section, isGrossWeight = false) => {
-    // if (section.parentId) {
-    //     setCurrentGenericSection(parseSectionToObject([genericSections.find(elm => elm.id === section.parentId)])[0])
-    //     setCurrentSection(section)
-    //     setOpenChangedModal(true)
-    // } else if (isGrossWeight && section.preventGrossWeightChange) {
-    //     setCurrentPart(section)
-    //     setOpenGrossWeightChangeModal(true)
-    // }
-  };
-
   return (
     <Box className="flexColumn">
       {sections.map((section, index) => (
@@ -192,7 +181,8 @@ const Sections: FC<Props> = ({
               onKeyUp={onKeyUp}
               onRowHover={onRowHover}
               onRowBlur={onRowBlur}
-              onKeyDown={(e) => _onKeyDown(e, section)}
+              errors={errors}
+              // onKeyDown={(e) => _onKeyDown(e, section)}
             />
           </AccordionDetails>
         </StyledAccordion>

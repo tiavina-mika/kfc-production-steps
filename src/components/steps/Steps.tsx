@@ -78,14 +78,14 @@ type Props = {
   onFieldFocus: () => void;
   onFieldBlur: any;
   onKeyUp: (event: any, setFieldTouched: any) => void;
-  onKeyDown: (event: any) => void;
+  // onKeyDown: (event: any) => void;
   // onDeleteHover: (
   //   component: string,
   //   index: number,
   //   parendIndex?: number | null
   // ) => void;
   // deleteHover: Record<string, any>;
-  // errors: Record<string, any>;
+  errors: Record<string, any>;
   // setFieldValue: any;
   // onDeleteBlur: () => void;
 };
@@ -102,11 +102,11 @@ const Steps: FC<Props> = ({
   onFieldFocus,
   onFieldBlur,
   onKeyUp,
-  onKeyDown
+  // onKeyDown
   // onDeleteHover,
   // deleteHover,
   // setFieldValue,
-  // errors,
+  errors
   // onDeleteBlur
 }) => {
   // do not display steps row in preview if it's empty
@@ -136,10 +136,9 @@ const Steps: FC<Props> = ({
   //   );
   // };
 
-  // const _hasError = (index: number): boolean =>
-  //   errors.steps &&
-  //   errors.steps[index] &&
-  //   (errors.steps[index].name || errors.steps[index].parentPercent);
+  const _hasError = (index: number, fieldName: string) => {
+    return errors.sections?.[sectionIndex]?.steps[index]?.[fieldName];
+  };
 
   return (
     <Box className="flexColumn">
@@ -173,7 +172,7 @@ const Steps: FC<Props> = ({
                 onFieldBlur={onFieldBlur}
                 onKeyUp={onKeyUp}
                 // onDeleteBlur={onDeleteBlur}
-                // hasError={_hasError}
+                hasError={_hasError}
               />
             ) : (
               <StepPreview step={step} index={index} />

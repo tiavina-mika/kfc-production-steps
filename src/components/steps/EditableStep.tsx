@@ -51,14 +51,14 @@ type Props = {
   onFieldFocus: () => void;
   onFieldBlur: () => void;
   onKeyUp: (event: any, setFieldTouched: any) => void;
-  onKeyDown: (event: any) => void;
+  // onKeyDown: (event: any) => void;
   sectionIndex: number;
   // setFieldValue: (
   //   field: string,
   //   value: any,
   //   shouldValidate?: boolean | undefined
   // ) => Promise<FormikErrors<any>> | Promise<void>;
-  // hasError: (index: number) => boolean;
+  hasError: (index: number, fieldName: string) => boolean;
   // onDeleteBlur: () => void;
 };
 
@@ -78,8 +78,8 @@ const EditableStep: FC<Props> = ({
   onFieldFocus,
   onFieldBlur,
   onKeyUp,
-  onKeyDown
-  // hasError,
+  // onKeyDown
+  hasError,
   // onDeleteBlur
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
@@ -105,7 +105,7 @@ const EditableStep: FC<Props> = ({
                   onFocus={onFieldFocus}
                   onBlur={onFieldBlur}
                   onKeyUp={onKeyUp}
-                  onKeyDown={onKeyDown}
+                  // onKeyDown={onKeyDown}
                 />
               </Stack>
               <ErrorMessage
@@ -127,7 +127,7 @@ const EditableStep: FC<Props> = ({
                   onFocus={onFieldFocus}
                   onBlur={onFieldBlur}
                   onKeyUp={onKeyUp}
-                  onKeyDown={onKeyDown}
+                  // onKeyDown={onKeyDown}
                 />
               </Stack>
               <ErrorMessage
@@ -138,15 +138,22 @@ const EditableStep: FC<Props> = ({
               />
             </Stack>
           </Stack>
-        ) : (
-          <StepNameDescription
-            name={step.name}
-            description={
-              isEdition && step.error ? "Instructions :" : step.description
-            }
-            index={index}
-          />
-        )}
+          ) : hasError(index, 'name') ? (
+            <ErrorMessage
+              name={`sections[${index}].name`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          ) : (
+            <StepNameDescription
+              name={step.name}
+              description={
+                isEdition && step.error ? "Instructions :" : step.description
+              }
+              index={index}
+            />
+          )}
       </StyledStepFirstBodyColumn>
       <StyledStepBodyCell align="left" width={widths[1]}>
         <StyledStepText>{step.inputWeight || "-"}</StyledStepText>
