@@ -58,7 +58,7 @@ type Props = {
   //   value: any,
   //   shouldValidate?: boolean | undefined
   // ) => Promise<FormikErrors<any>> | Promise<void>;
-  hasError: (index: number, fieldName: string) => boolean;
+  hasError: (index: number) => boolean;
   // onDeleteBlur: () => void;
 };
 
@@ -79,7 +79,7 @@ const EditableStep: FC<Props> = ({
   onFieldBlur,
   onKeyUp,
   // onKeyDown
-  hasError,
+  hasError
   // onDeleteBlur
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
@@ -138,22 +138,30 @@ const EditableStep: FC<Props> = ({
               />
             </Stack>
           </Stack>
-          ) : hasError(index, 'name') ? (
+        ) : hasError(index) ? (
+          <Stack spacing={1}>
             <ErrorMessage
               name={`sections[${index}].name`}
               render={(message) => (
                 <StyledErrorMessage>{message}</StyledErrorMessage>
               )}
             />
-          ) : (
-            <StepNameDescription
-              name={step.name}
-              description={
-                isEdition && step.error ? "Instructions :" : step.description
-              }
-              index={index}
+            <ErrorMessage
+              name={`sections[${index}].description`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
             />
-          )}
+          </Stack>
+        ) : (
+          <StepNameDescription
+            name={step.name}
+            description={
+              isEdition && step.error ? "Instructions :" : step.description
+            }
+            index={index}
+          />
+        )}
       </StyledStepFirstBodyColumn>
       <StyledStepBodyCell align="left" width={widths[1]}>
         <StyledStepText>{step.inputWeight || "-"}</StyledStepText>
