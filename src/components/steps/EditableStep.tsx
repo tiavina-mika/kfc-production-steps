@@ -141,13 +141,13 @@ const EditableStep: FC<Props> = ({
         ) : hasError(index) ? (
           <Stack spacing={1}>
             <ErrorMessage
-              name={`sections[${index}].name`}
+              name={`sections[${sectionIndex}].productionSteps[${index}].name`}
               render={(message) => (
                 <StyledErrorMessage>{message}</StyledErrorMessage>
               )}
             />
             <ErrorMessage
-              name={`sections[${index}].description`}
+              name={`sections[${sectionIndex}].productionSteps[${index}].description`}
               render={(message) => (
                 <StyledErrorMessage>{message}</StyledErrorMessage>
               )}
