@@ -302,7 +302,7 @@ const EditableSection: FC<Props> = ({
                     onClick={_stopPropagation}
                     onFocus={onFieldFocus}
                     onBlur={onFieldBlur}
-                    onKeyUp={onKeyUp}
+                    onKeyUp={onKeyUp as any}
                     variant="standard"
                     fullWidth
                   />
