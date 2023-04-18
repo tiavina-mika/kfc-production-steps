@@ -88,6 +88,7 @@ type Props = {
   errors: Record<string, any>;
   // setFieldValue: any;
   // onDeleteBlur: () => void;
+  machineTypes: Record<string, any>[];
 };
 
 const Steps: FC<Props> = ({
@@ -106,7 +107,8 @@ const Steps: FC<Props> = ({
   // onDeleteHover,
   // deleteHover,
   // setFieldValue,
-  errors
+  errors,
+  machineTypes
   // onDeleteBlur
 }) => {
   // do not display steps row in preview if it's empty
@@ -175,6 +177,7 @@ const Steps: FC<Props> = ({
                 onKeyUp={onKeyUp}
                 // onDeleteBlur={onDeleteBlur}
                 hasError={_hasError}
+                machineTypes={machineTypes}
               />
             ) : (
               <StepPreview step={step} index={index} />

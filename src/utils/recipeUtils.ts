@@ -342,7 +342,11 @@ export const parseStepsToObject = (steps, percent = false) => {
   });
 };
 
-export const parseProductionStepsToObject = (steps, percent = false) => {
+export const parseProductionStepsToObject = (
+  steps,
+  percent = false,
+  pointers
+) => {
   return steps.map((step) => {
     return {
       objectId: step.objectId,
@@ -360,7 +364,7 @@ export const parseProductionStepsToObject = (steps, percent = false) => {
       preventGrossWeightChange: true,
       kitchenArea: step.kitchenArea,
       transformation: step.transformation || "",
-      machineType: step.machineType,
+      machineType: step.machineType || pointers.machineType,
       machineSetting: step.machineSetting || "",
       stepDuration: step.stepDuration || 0,
       stepDurationUnit: step.stepDurationUnit || ""
@@ -427,7 +431,7 @@ export function computeIngredientData(ingredient) {
 }
 
 // simulate a parse object
-export const parseSectionToObject = (sections, percent = false) => {
+export const parseSectionToObject = (sections, percent = false, pointers) => {
   return sections.map((section) => {
     return {
       id: section.objectId,
@@ -441,7 +445,11 @@ export const parseSectionToObject = (sections, percent = false) => {
       reusable: false,
       steps: section.steps ? parseStepsToObject(section.steps, percent) : [],
       productionSteps: section.productionSteps
-        ? parseProductionStepsToObject(section.productionSteps, percent)
+        ? parseProductionStepsToObject(
+            section.productionSteps,
+            percent,
+            pointers
+          )
         : [],
       error: section.name && section.name !== "" ? false : true,
       parentId: section.parentId ? section.parentId : null,
@@ -590,7 +598,8 @@ function computeDisplayData(
 
 export const getRecipeSectionsFormInitialValues = (
   recipe,
-  isProductionSteps = false
+  isProductionSteps = false,
+  pointers
 ) => {
   const values: Record<string, any> = {};
 
@@ -606,7 +615,7 @@ export const getRecipeSectionsFormInitialValues = (
     values.id = recipe.id;
     values.sections =
       recipeObject.sections && recipeObject.sections.length
-        ? parseSectionToObject(recipeObject.sections)
+        ? parseSectionToObject(recipeObject.sections, false, pointers)
         : [getDefaultSection()];
     values.type = recipeObject.type;
     values.HTprice =

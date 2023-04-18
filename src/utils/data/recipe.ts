@@ -485,7 +485,7 @@ export const recipe = {
               // realCost: 0.136,
               // transformRate: 210,
               cookingModeLabel: "vapeur/blanchi"
-            },
+            }
           ],
           name: "",
           description:
@@ -508,12 +508,27 @@ export const recipe = {
             name: "Légumerie"
           },
           machineType: {
-            createdAt: "2023-03-20T20:01:33.912Z",
-            updatedAt: "2023-03-20T20:01:33.912Z",
-            objectId: "x0Jq6WQYfd",
-            __type: "Object",
-            className: "MachineType",
-            name: "Laveuse"
+            name: "Machine 2",
+            createdAt: "2022-08-24T08:54:36.329Z",
+            updatedAt: "2022-09-01T08:46:35.321Z",
+            machineModels: [
+              {
+                __type: "Pointer",
+                className: "MachineModels",
+                objectId: "4GgEHZS81a"
+              },
+              {
+                __type: "Pointer",
+                className: "MachineModels",
+                objectId: "yhnXE2VdpH"
+              },
+              {
+                __type: "Pointer",
+                className: "MachineModels",
+                objectId: "zvHwBLmG4u"
+              }
+            ],
+            objectId: "Bv9NbFsmUK"
           },
           machineSetting: "Lame 5mm",
           stepDuration: 800,

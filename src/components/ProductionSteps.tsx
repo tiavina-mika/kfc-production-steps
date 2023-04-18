@@ -10,6 +10,7 @@ import ProductionStepsTable from "./ProductionStepsTable";
 import { getRecipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
 import ProductionStepsContainer from "./ProductionStepsContainer";
+import { machineTypes } from "../utils/data/machineTypes";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -56,7 +57,12 @@ const ProductionSteps: FC<Props> = ({
   );
 
   useEffect(() => {
-    const formValues = getRecipeSectionsFormInitialValues(recipe, true);
+    const pointers = { machineType: machineTypes[0] };
+    const formValues = getRecipeSectionsFormInitialValues(
+      recipe,
+      true,
+      pointers
+    );
     setInitialValues(formValues);
     setDefaultValues(cloneDeep(formValues));
   }, [recipe]);
@@ -175,6 +181,7 @@ const ProductionSteps: FC<Props> = ({
                     errors={errors}
                     formValues={values}
                     setValues={setValues}
+                    machineTypes={machineTypes}
                   />
                 );
               }}

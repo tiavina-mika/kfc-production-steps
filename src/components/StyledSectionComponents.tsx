@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import { red } from "@mui/material/colors";
-import { Box, BoxProps, TextField } from "@mui/material";
+import { Box, BoxProps, Select, SelectProps, TextField } from "@mui/material";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
@@ -154,3 +154,15 @@ export const StyledProductionStepTextField = styled(TextField)({
 export const StyledStepDescriptionText = styled(StyledStepText)({
   fontWeight: 400
 });
+
+type StyledProductionStepsSelectProps = {
+  width: number;
+};
+export const StyledProductionStepsSelect = styled(
+  (props: SelectProps) => <Select {...props} />,
+  {
+    shouldForwardProp: (prop) => prop !== "width"
+  }
+)<StyledProductionStepsSelectProps & SelectProps>((props) => ({
+  width: props.width
+}));

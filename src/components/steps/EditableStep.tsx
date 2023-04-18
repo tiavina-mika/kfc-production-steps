@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 
-import { Box, Stack, styled } from "@mui/material";
+import { Autocomplete, Box, Stack, styled, TextField } from "@mui/material";
 
 import {
   StyledErrorMessage,
+  StyledProductionStepsSelect,
   StyledProductionStepTextField,
   StyledStepBodyCell,
   StyledStepDescriptionText,
@@ -38,6 +39,45 @@ const FormikTextFieldDescription = ({ field, ...props }) => (
   <StyledTextFieldDescription {...field} {...props} />
 );
 
+// const FormikSelect = ({ children, form, field, ...props }) => {
+//   const { name, value } = field;
+//   const { setFieldValue } = form;
+
+//   return (
+//     <StyledProductionStepsSelect
+//       name={name}
+//       value={value}
+//       onChange={e => {
+//         setFieldValue(name, e.target.value);
+//       }}
+//       renderValue={(value) => (value as any).objectId}
+//       width={props.width}
+//     >
+//       {children}
+//     </StyledProductionStepsSelect>
+//   );
+// };
+
+const FormikAutocomplete = ({ form, field, ...props }) => {
+  const { name, value } = field;
+  const { setFieldValue } = form;
+
+  return (
+    <Autocomplete
+      {...props}
+      options={props.options}
+      // name={name}
+      value={value}
+      onChange={(_, newValue: Record<string, any>) => {
+        setFieldValue(name, newValue);
+      }}
+      renderInput={(params) => (
+        <TextField {...params} label="Fruits" variant="standard" />
+      )}
+    />
+  );
+};
+
 type Props = {
   step: Record<string, any>;
   index: number;
@@ -60,6 +100,7 @@ type Props = {
   // ) => Promise<FormikErrors<any>> | Promise<void>;
   hasError: (index: number) => boolean;
   // onDeleteBlur: () => void;
+  machineTypes: Record<string, any>[];
 };
 
 const EditableStep: FC<Props> = ({
@@ -79,7 +120,8 @@ const EditableStep: FC<Props> = ({
   onFieldBlur,
   onKeyUp,
   // onKeyDown
-  hasError
+  hasError,
+  machineTypes
   // onDeleteBlur
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
@@ -187,7 +229,30 @@ const EditableStep: FC<Props> = ({
         <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[8]}>
-        <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
+        <StyledStepText>
+          {/* {isHover
+            ? ( */}
+          {/* <Field
+                name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
+                component={FormikSelect}>
+                {machineTypes.map(machineType => (
+                  <MenuItem key={machineType.objectId} value={machineType}>{machineType.name}</MenuItem>
+                ))}
+              </Field> */}
+          <Field
+            name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
+            component={FormikAutocomplete}
+            options={machineTypes}
+            isOptionEqualToValue={(option, value) =>
+              option.objectId === value.objectId
+            }
+            getOptionLabel={(option) => option.name}
+          />
+          {/* ) : (
+              <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
+            )
+          } */}
+        </StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[9]}>
         <StyledStepText>{step.machineSetting || "-"}</StyledStepText>
