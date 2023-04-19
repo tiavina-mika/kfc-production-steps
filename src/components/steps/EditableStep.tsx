@@ -130,7 +130,6 @@ const EditableStep: FC<Props> = ({
       }}
       onClick={_stopPropagation}
     >
-      {/* <StepPreview step={step} index={index} isEdition={isEdition} /> */}
       <StyledStepFirstBodyColumn className="flexRow center">
         {isHover ? (
           <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
