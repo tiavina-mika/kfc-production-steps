@@ -240,30 +240,21 @@ const EditableStep: FC<Props> = ({
         <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell px={0} align="left" width={widths[8]}>
-        {/* {isHover
-            ? ( */}
-        {/* <Field
-                name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
-                component={FormikSelect}>
-                {machineTypes.map(machineType => (
-                  <MenuItem key={machineType.objectId} value={machineType}>{machineType.name}</MenuItem>
-                ))}
-              </Field> */}
-        <Field
-          name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
-          component={FormikAutocomplete}
-          options={machineTypes}
-          isOptionEqualToValue={(option, value) =>
-            option.objectId === value.objectId
-          }
-          getOptionLabel={(option) => option.name}
-          disableClearable
-          readOnly
-        />
-        {/* ) : (
-              <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
-            )
-          } */}
+        {isHover ? (
+          <Field
+            name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
+            component={FormikAutocomplete}
+            options={machineTypes}
+            isOptionEqualToValue={(option, value) =>
+              option.objectId === value.objectId
+            }
+            getOptionLabel={(option) => option.name}
+            disableClearable
+            readOnly
+          />
+        ) : (
+          <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
+        )}
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[9]}>
         <StyledStepText>{step.machineSetting || "-"}</StyledStepText>
