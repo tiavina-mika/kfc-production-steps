@@ -56,15 +56,21 @@ const FormikTextFieldDescription = ({ field, ...props }) => (
 //     </StyledProductionStepsSelect>
 //   );
 // };
-
-const FormikAutocomplete = ({ form, field, ...props }) => {
+const autocompleteSx = {
+  textField: {
+    "& .MuiInput-input": {
+      cursor: "pointer"
+    }
+  }
+};
+const FormikAutocomplete = ({ form, field, readOnly = false, ...props }) => {
   const { name, value } = field;
   const { setFieldValue } = form;
 
   return (
     <Autocomplete
       {...props}
-      sx={{ flex: 1 }}
+      sx={{ flex: 1, pointer: "cursor" }}
       options={props.options}
       value={value}
       onChange={(_, newValue: Record<string, any>) => {
@@ -72,9 +78,11 @@ const FormikAutocomplete = ({ form, field, ...props }) => {
       }}
       renderInput={(params) => (
         <StyledProductionStepTextField
-          {...params} 
-          variant="standard" 
+          {...params}
+          variant="standard"
           fullWidth
+          inputProps={{ ...params.inputProps, readOnly }}
+          sx={readOnly ? autocompleteSx.textField : null}
         />
       )}
     />
@@ -231,32 +239,28 @@ const EditableStep: FC<Props> = ({
       <StyledStepBodyCell align="left" width={widths[7]}>
         <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
       </StyledStepBodyCell>
-      <StyledStepBodyCell
-        px={0}
-        align="left"
-        width={widths[8]}
-      >
-          {/* {isHover
+      <StyledStepBodyCell px={0} align="left" width={widths[8]}>
+        {/* {isHover
             ? ( */}
-          {/* <Field
+        {/* <Field
                 name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
                 component={FormikSelect}>
                 {machineTypes.map(machineType => (
                   <MenuItem key={machineType.objectId} value={machineType}>{machineType.name}</MenuItem>
                 ))}
               </Field> */}
-          <Field
-            name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
-            component={FormikAutocomplete}
-            options={machineTypes}
-            isOptionEqualToValue={(option, value) =>
-              option.objectId === value.objectId
-            }
-            getOptionLabel={(option) => option.name}
-            disableClearable
-            autoComplete={false}
-          />
-          {/* ) : (
+        <Field
+          name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
+          component={FormikAutocomplete}
+          options={machineTypes}
+          isOptionEqualToValue={(option, value) =>
+            option.objectId === value.objectId
+          }
+          getOptionLabel={(option) => option.name}
+          disableClearable
+          readOnly
+        />
+        {/* ) : (
               <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
             )
           } */}
