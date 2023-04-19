@@ -30,32 +30,18 @@ const StyledTextFieldDescription = styled(StyledProductionStepTextField)({
   }
 });
 
-const FormikTextField = ({ field, ...props }) => (
+const FormikTextFieldName = ({ field, ...props }) => (
   <StyledTextFieldName {...field} {...props} />
+);
+
+const FormikTextField = ({ field, ...props }) => (
+  <StyledProductionStepTextField {...field} {...props} />
 );
 
 const FormikTextFieldDescription = ({ field, ...props }) => (
   <StyledTextFieldDescription {...field} {...props} />
 );
 
-// const FormikSelect = ({ children, form, field, ...props }) => {
-//   const { name, value } = field;
-//   const { setFieldValue } = form;
-
-//   return (
-//     <StyledProductionStepsSelect
-//       name={name}
-//       value={value}
-//       onChange={e => {
-//         setFieldValue(name, e.target.value);
-//       }}
-//       renderValue={(value) => (value as any).objectId}
-//       width={props.width}
-//     >
-//       {children}
-//     </StyledProductionStepsSelect>
-//   );
-// };
 const autocompleteSx = {
   textField: {
     "& .MuiInput-input": {
@@ -109,7 +95,7 @@ type Props = {
   //   value: any,
   //   shouldValidate?: boolean | undefined
   // ) => Promise<FormikErrors<any>> | Promise<void>;
-  hasError: (index: number) => boolean;
+  hasError: (index: number, field: string) => boolean;
   // onDeleteBlur: () => void;
   machineTypes: Record<string, any>[];
 };
@@ -152,7 +138,7 @@ const EditableStep: FC<Props> = ({
               <Stack direction="row" spacing={1} alignItems="center">
                 <StyledStepText>{index + 1}.</StyledStepText>
                 <Field
-                  component={FormikTextField}
+                  component={FormikTextFieldName}
                   name={`sections[${sectionIndex}].productionSteps[${index}].name`}
                   onClick={_stopPropagation}
                   onFocus={onFieldFocus}
@@ -191,21 +177,13 @@ const EditableStep: FC<Props> = ({
               />
             </Stack>
           </Stack>
-        ) : hasError(index) ? (
-          <Stack spacing={1}>
-            <ErrorMessage
-              name={`sections[${sectionIndex}].productionSteps[${index}].name`}
-              render={(message) => (
-                <StyledErrorMessage>{message}</StyledErrorMessage>
-              )}
-            />
-            <ErrorMessage
-              name={`sections[${sectionIndex}].productionSteps[${index}].description`}
-              render={(message) => (
-                <StyledErrorMessage>{message}</StyledErrorMessage>
-              )}
-            />
-          </Stack>
+        ) : hasError(index, "description") ? (
+          <ErrorMessage
+            name={`sections[${sectionIndex}].productionSteps[${index}].description`}
+            render={(message) => (
+              <StyledErrorMessage>{message}</StyledErrorMessage>
+            )}
+          />
         ) : (
           <StepNameDescription
             name={step.name}
@@ -241,23 +219,57 @@ const EditableStep: FC<Props> = ({
       </StyledStepBodyCell>
       <StyledStepBodyCell px={0} align="left" width={widths[8]}>
         {isHover ? (
-          <Field
-            name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
-            component={FormikAutocomplete}
-            options={machineTypes}
-            isOptionEqualToValue={(option, value) =>
-              option.objectId === value.objectId
-            }
-            getOptionLabel={(option) => option.name}
-            disableClearable
-            readOnly
-          />
+          <Stack>
+            <Field
+              name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
+              component={FormikAutocomplete}
+              options={machineTypes}
+              isOptionEqualToValue={(option, value) =>
+                option.objectId === value.objectId
+              }
+              getOptionLabel={(option) => option.name}
+              disableClearable
+              readOnly
+            />
+            <ErrorMessage
+              name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          </Stack>
         ) : (
           <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
         )}
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[9]}>
-        <StyledStepText>{step.machineSetting || "-"}</StyledStepText>
+        {isHover ? (
+          <Stack>
+            <Field
+              component={FormikTextField}
+              name={`sections[${sectionIndex}].productionSteps[${index}].machineSetting`}
+              onClick={_stopPropagation}
+              onFocus={onFieldFocus}
+              onBlur={onFieldBlur}
+              onKeyUp={onKeyUp}
+            />
+            <ErrorMessage
+              name={`sections[${sectionIndex}].productionSteps[${index}].machineSetting`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          </Stack>
+        ) : hasError(index, "machineSetting") ? (
+          <ErrorMessage
+            name={`sections[${sectionIndex}].productionSteps[${index}].machineSetting`}
+            render={(message) => (
+              <StyledErrorMessage>{message}</StyledErrorMessage>
+            )}
+          />
+        ) : (
+          <StyledStepText>{step.machineSetting || "-"}</StyledStepText>
+        )}
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[10]}>
         <StyledStepText>{step.stepDuration || "-"}</StyledStepText>

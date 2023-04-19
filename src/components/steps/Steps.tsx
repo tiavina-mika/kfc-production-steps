@@ -138,10 +138,8 @@ const Steps: FC<Props> = ({
   //   );
   // };
 
-  const _hasError = (index: number) => {
-    const productionStep =
-      errors.sections?.[sectionIndex]?.productionSteps[index];
-    return productionStep?.description || productionStep?.name;
+  const _hasError = (index: number, field: string) => {
+    return errors.sections?.[sectionIndex]?.productionSteps[index]?.[field];
   };
 
   return (

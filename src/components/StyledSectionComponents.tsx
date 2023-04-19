@@ -28,6 +28,7 @@ export const StyledProductionStepTextField = styled(TextField)({
   background: "#fff",
   borderRadius: 4,
   "& .MuiInputBase-root, .MuiAutocomplete-inputRoot.MuiInputBase-root": {
+    height: "100%",
     "&:before, :after": {
       borderBottom: "none",
       "&:hover": {
@@ -104,8 +105,9 @@ type StyledStepBodyCellProps = {
   px?: number;
 };
 export const StyledStepBodyCell = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "align" && prop !== "width" && prop !== "px"
-})<StyledStepBodyCellProps>(({ width, align, px = 16}) => {
+  shouldForwardProp: (prop) =>
+    prop !== "align" && prop !== "width" && prop !== "px"
+})<StyledStepBodyCellProps>(({ width, align, px = 16 }) => {
   let defaultStyles: Record<string, any> = {
     display: "flex",
     alignItems: "center",
@@ -113,7 +115,7 @@ export const StyledStepBodyCell = styled(Box, {
     alignSelf: "stretch",
     margin: 0,
     paddingLeft: px,
-    paddingRight: px,
+    paddingRight: px
   };
 
   if (align) {
