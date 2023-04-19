@@ -1,17 +1,32 @@
 export const PRODUCTION_STEPS_COL_WIDTHS = [
   640,
-  132,
+  100,
   116,
-  112,
+  96,
   129,
-  128,
-  148,
-  83,
-  86,
+  124,
+  100,
+  96,
+  120,
   170,
   184,
   177
 ];
+
+// export const PRODUCTION_STEPS_COL_WIDTHS2 = [
+//   640,
+//   132,
+//   116,
+//   112,
+//   129,
+//   128,
+//   148,
+//   96,
+//   120,
+//   170,
+//   184,
+//   177
+// ];
 
 const SECTION_FIRST_COL_PL = 80;
 const STEP_FIRST_COL_PL_DIFF = 30;

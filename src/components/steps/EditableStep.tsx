@@ -1,10 +1,9 @@
 import React, { FC } from "react";
 
-import { Autocomplete, Box, Stack, styled, TextField } from "@mui/material";
+import { Autocomplete, Box, Stack, styled } from "@mui/material";
 
 import {
   StyledErrorMessage,
-  StyledProductionStepsSelect,
   StyledProductionStepTextField,
   StyledStepBodyCell,
   StyledStepDescriptionText,
@@ -65,14 +64,18 @@ const FormikAutocomplete = ({ form, field, ...props }) => {
   return (
     <Autocomplete
       {...props}
+      sx={{ flex: 1 }}
       options={props.options}
-      // name={name}
       value={value}
       onChange={(_, newValue: Record<string, any>) => {
         setFieldValue(name, newValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Fruits" variant="standard" />
+        <StyledProductionStepTextField
+          {...params} 
+          variant="standard" 
+          fullWidth
+        />
       )}
     />
   );
@@ -228,8 +231,11 @@ const EditableStep: FC<Props> = ({
       <StyledStepBodyCell align="left" width={widths[7]}>
         <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
       </StyledStepBodyCell>
-      <StyledStepBodyCell align="left" width={widths[8]}>
-        <StyledStepText>
+      <StyledStepBodyCell
+        px={0}
+        align="left"
+        width={widths[8]}
+      >
           {/* {isHover
             ? ( */}
           {/* <Field
@@ -247,12 +253,13 @@ const EditableStep: FC<Props> = ({
               option.objectId === value.objectId
             }
             getOptionLabel={(option) => option.name}
+            disableClearable
+            autoComplete={false}
           />
           {/* ) : (
               <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
             )
           } */}
-        </StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[9]}>
         <StyledStepText>{step.machineSetting || "-"}</StyledStepText>

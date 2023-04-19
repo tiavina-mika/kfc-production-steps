@@ -23,6 +23,31 @@ export const StyledErrorMessage = styled("div")({
   color: red[500]
 });
 
+export const StyledProductionStepTextField = styled(TextField)({
+  height: 30,
+  background: "#fff",
+  borderRadius: 4,
+  "& .MuiInputBase-root, .MuiAutocomplete-inputRoot.MuiInputBase-root": {
+    "&:before, :after": {
+      borderBottom: "none",
+      "&:hover": {
+        borderBottom: "none"
+      }
+    },
+    "& .MuiInputBase-input": {
+      paddingLeft: 7
+    }
+  },
+  "& .MuiInput-input, .MuiAutocomplete-input": {
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#414141"
+  }
+});
+
+// --------------------------------------- //
+// -------------- Sections --------------- //
+// --------------------------------------- //
 export const StyledSectionFirstBodyColumn = styled((props: BoxProps) => (
   <Box {...props} sx={{ ...stickyStyle }} />
 ))({
@@ -73,29 +98,26 @@ export const StyledStepText = styled(Box, {
   return defaultStyles;
 });
 
-const stepBodyCellsStyle = {
-  paddingRight: 16,
-  paddingLeft: 16
-};
-
 type StyledStepBodyCellProps = {
   align: "left" | "center" | "right";
   width: number;
+  px?: number;
 };
 export const StyledStepBodyCell = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "align" && prop !== "width"
-})<StyledStepBodyCellProps>((props) => {
+  shouldForwardProp: (prop) => prop !== "align" && prop !== "width" && prop !== "px"
+})<StyledStepBodyCellProps>(({ width, align, px = 16}) => {
   let defaultStyles: Record<string, any> = {
     display: "flex",
     alignItems: "center",
-    width: props.width,
+    width,
     alignSelf: "stretch",
     margin: 0,
-    ...stepBodyCellsStyle
+    paddingLeft: px,
+    paddingRight: px,
   };
 
-  if (props.align) {
-    defaultStyles.justifyContent = getCellAlignment(props.align);
+  if (align) {
+    defaultStyles.justifyContent = getCellAlignment(align);
   }
 
   return defaultStyles;
@@ -128,28 +150,6 @@ export const StyledStepBodyCell = styled(Box, {
 //     color: "#414141"
 //   }
 // }));
-
-export const StyledProductionStepTextField = styled(TextField)({
-  height: 30,
-  background: "#fff",
-  borderRadius: 4,
-  "& .MuiInputBase-root": {
-    "&:before, :after": {
-      borderBottom: "none",
-      "&:hover": {
-        borderBottom: "none"
-      }
-    },
-    "& .MuiInputBase-input": {
-      paddingLeft: 7
-    }
-  },
-  "& .MuiInput-input": {
-    fontWeight: 600,
-    fontSize: 14,
-    color: "#414141"
-  }
-});
 
 export const StyledStepDescriptionText = styled(StyledStepText)({
   fontWeight: 400
