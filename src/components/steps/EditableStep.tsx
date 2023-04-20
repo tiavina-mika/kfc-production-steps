@@ -11,7 +11,7 @@ import {
   StyledStepText
 } from "../StyledSectionComponents";
 import StepNameDescription from "./StepNameDescription";
-import { roundNumber } from "../../utils/utils";
+import { getTransformationTypeLabel, roundNumber } from "../../utils/utils";
 import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
 import { ErrorMessage, Field } from "formik";
 
@@ -205,7 +205,9 @@ const EditableStep: FC<Props> = ({
         </StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[4]}>
-        <StyledStepText>{step.transformation || "-"}</StyledStepText>
+        <StyledStepText>
+          {getTransformationTypeLabel(step.transformation) || "-"}
+        </StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[5]}>
         <StyledStepText>-</StyledStepText>

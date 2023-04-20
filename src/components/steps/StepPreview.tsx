@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { roundNumber } from "../../utils/utils";
+import { roundNumber, getTransformationTypeLabel } from "../../utils/utils";
 import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
 import {
   StyledStepBodyCell,
@@ -23,7 +23,9 @@ const StepPreview: FC<Props> = ({ step, index, isEdition }) => {
       <StyledStepFirstBodyColumn className="flexRow center">
         <StepNameDescription
           name={step.name}
-          description={isEdition && step.error ? "Instructions :" : step.description}
+          description={
+            isEdition && step.error ? "Instructions :" : step.description
+          }
           index={index}
         />
       </StyledStepFirstBodyColumn>
@@ -39,7 +41,9 @@ const StepPreview: FC<Props> = ({ step, index, isEdition }) => {
         </StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[4]}>
-        <StyledStepText>{step.transformation || "-"}</StyledStepText>
+        <StyledStepText>
+          {getTransformationTypeLabel(step.transformation) || "-"}
+        </StyledStepText>
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[5]}>
         <StyledStepText>-</StyledStepText>

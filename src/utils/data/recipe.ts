@@ -533,7 +533,7 @@ export const recipe = {
           // machineSetting: "Lame 5mm",
           stepDuration: 800,
           stepDurationUnit: "kg / heure",
-          transformation: "Refroidissement"
+          transformation: "WASHING"
         }
       ],
       objectId: "JVMBAFW6Sp",

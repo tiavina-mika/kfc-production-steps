@@ -126,3 +126,43 @@ export function computeRecipeASP(recipe) {
 
   return result;
 }
+
+export const TRANSFORMATION_TYPES = [
+  {
+    value: "UNPACKING",
+    type: "UNPACKING",
+    label: "Déconditionnement"
+  },
+  {
+    value: "WASHING",
+    type: "WASHING",
+    label: "Lavage"
+  },
+  {
+    value: "CUTTING",
+    type: "CUTTING",
+    label: "Découpe"
+  },
+  {
+    value: "MIXED",
+    type: "MIXED",
+    label: "Mélange"
+  },
+  {
+    value: "COOKING",
+    type: "COOKING",
+    label: "Cuisson"
+  },
+  {
+    value: "COOLING",
+    type: "COOLING",
+    label: "Refroidissement"
+  }
+];
+
+export const getTransformationTypeLabel = (value) => {
+  const currentTransformationType = TRANSFORMATION_TYPES.find(
+    (transformationType) => transformationType.value === value
+  );
+  return currentTransformationType?.label;
+};
