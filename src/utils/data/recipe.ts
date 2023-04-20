@@ -529,9 +529,9 @@ export const recipe = {
               }
             ],
             objectId: "Bv9NbFsmUK"
-          },
+          }
           // machineSetting: "Lame 5mm",
-          stepDuration: 800
+          // stepDuration: 800
           // stepDurationUnit: "kg / heure"
           // transformation: "WASHING"
         }

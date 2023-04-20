@@ -340,8 +340,37 @@ const EditableStep: FC<Props> = ({
           <StyledStepText>{step.machineSetting || "-"}</StyledStepText>
         )}
       </StyledStepBodyCell>
-      <StyledStepBodyCell align="left" width={widths[10]}>
-        <StyledStepText>{step.stepDuration || "-"}</StyledStepText>
+      {/* ------------ stepDuration ------------ */}
+      <StyledStepBodyCell px={0} align="left" width={widths[10]}>
+        {isHover ? (
+          <Stack className="flex1">
+            <Field
+              type="number"
+              component={FormikTextField}
+              name={`sections[${sectionIndex}].productionSteps[${index}].stepDuration`}
+              onClick={_stopPropagation}
+              onFocus={onFieldFocus}
+              onBlur={onFieldBlur}
+              onKeyUp={onKeyUp}
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            />
+            <ErrorMessage
+              name={`sections[${sectionIndex}].productionSteps[${index}].stepDuration`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          </Stack>
+        ) : hasError(index, "stepDuration") ? (
+          <ErrorMessage
+            name={`sections[${sectionIndex}].productionSteps[${index}].stepDuration`}
+            render={(message) => (
+              <StyledErrorMessage>{message}</StyledErrorMessage>
+            )}
+          />
+        ) : (
+          <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
+        )}
       </StyledStepBodyCell>
       {/* ------------ stepDurationUnit ------------ */}
       <StyledStepBodyCell px={0} align="left" width={widths[11]}>
