@@ -364,7 +364,7 @@ export const parseProductionStepsToObject = (
           ? step.grossWeight || 0
           : ((step.grossWeight || 0) * (percent as any)) / 100,
       preventGrossWeightChange: true,
-      kitchenArea: step.kitchenArea,
+      kitchenArea: step.kitchenArea || null,
       transformation: step.transformation || "",
       machineType: step.machineType || pointers.machineType,
       machineSetting: step.machineSetting || "",

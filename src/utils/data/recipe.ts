@@ -499,14 +499,14 @@ export const recipe = {
           objectId: "60Jq6WQYfd",
           __type: "Object",
           className: "ProductionStep",
-          kitchenArea: {
-            createdAt: "2023-03-20T20:01:33.912Z",
-            updatedAt: "2023-03-20T20:01:33.912Z",
-            objectId: "00Jq6WQYfd",
-            __type: "Object",
-            className: "KitchenArea",
-            name: "Légumerie"
-          },
+          // kitchenArea: {
+          //   createdAt: "2023-03-20T20:01:33.912Z",
+          //   updatedAt: "2023-03-20T20:01:33.912Z",
+          //   objectId: "00Jq6WQYfd",
+          //   __type: "Object",
+          //   className: "KitchenArea",
+          //   name: "Légumerie"
+          // },
           machineType: {
             name: "Machine 2",
             createdAt: "2022-08-24T08:54:36.329Z",

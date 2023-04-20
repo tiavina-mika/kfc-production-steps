@@ -89,6 +89,7 @@ type Props = {
   // setFieldValue: any;
   // onDeleteBlur: () => void;
   machineTypes: Record<string, any>[];
+  kitchenAreas: Record<string, any>[];
 };
 
 const Steps: FC<Props> = ({
@@ -108,7 +109,8 @@ const Steps: FC<Props> = ({
   // deleteHover,
   // setFieldValue,
   errors,
-  machineTypes
+  machineTypes,
+  kitchenAreas
   // onDeleteBlur
 }) => {
   // do not display steps row in preview if it's empty
@@ -176,6 +178,7 @@ const Steps: FC<Props> = ({
                 // onDeleteBlur={onDeleteBlur}
                 hasError={_hasError}
                 machineTypes={machineTypes}
+                kitchenAreas={kitchenAreas}
               />
             ) : (
               <StepPreview step={step} index={index} />

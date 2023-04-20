@@ -11,6 +11,7 @@ import { getRecipeSectionsFormInitialValues } from "../utils/recipeUtils";
 import { RecipeProductionStepsSchema } from "../utils/validators";
 import ProductionStepsContainer from "./ProductionStepsContainer";
 import { machineTypes } from "../utils/data/machineTypes";
+import { kitchenAreas } from "../utils/data/kitchenAreas";
 
 const headers = [
   { label: "Section / Étape / Article" },
@@ -182,6 +183,7 @@ const ProductionSteps: FC<Props> = ({
                     formValues={values}
                     setValues={setValues}
                     machineTypes={machineTypes}
+                    kitchenAreas={kitchenAreas}
                   />
                 );
               }}

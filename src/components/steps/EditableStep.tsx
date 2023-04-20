@@ -131,6 +131,7 @@ type Props = {
   hasError: (index: number, field: string) => boolean;
   // onDeleteBlur: () => void;
   machineTypes: Record<string, any>[];
+  kitchenAreas: Record<string, any>[];
 };
 
 const EditableStep: FC<Props> = ({
@@ -151,7 +152,8 @@ const EditableStep: FC<Props> = ({
   onKeyUp,
   // onKeyDown
   hasError,
-  machineTypes
+  machineTypes,
+  kitchenAreas
   // onDeleteBlur
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
@@ -281,8 +283,34 @@ const EditableStep: FC<Props> = ({
       <StyledStepBodyCell align="left" width={widths[6]}>
         <StyledStepText>{step.outputWeight || "-"}</StyledStepText>
       </StyledStepBodyCell>
-      <StyledStepBodyCell align="left" width={widths[7]}>
+      {/* <StyledStepBodyCell align="left" width={widths[7]}>
         <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
+      </StyledStepBodyCell> */}
+      {/* ------------ kitchenArea ------------ */}
+      <StyledStepBodyCell px={0} align="left" width={widths[7]}>
+        {isHover ? (
+          <Stack className="flex1">
+            <Field
+              name={`sections[${sectionIndex}].productionSteps[${index}].kitchenArea`}
+              component={FormikAutocomplete}
+              options={kitchenAreas}
+              isOptionEqualToValue={(option, value) =>
+                option.objectId === value.objectId
+              }
+              getOptionLabel={(option) => option.name}
+              disableClearable
+              readOnly
+            />
+            <ErrorMessage
+              name={`sections[${sectionIndex}].productionSteps[${index}].kitchenArea`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          </Stack>
+        ) : (
+          <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
+        )}
       </StyledStepBodyCell>
       {/* ------------ machineType ------------ */}
       <StyledStepBodyCell px={0} align="left" width={widths[8]}>

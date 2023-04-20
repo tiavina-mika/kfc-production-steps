@@ -83,6 +83,7 @@ type Props = {
   deleteHover: Record<string, any>;
   errors: Record<string, any>;
   machineTypes: Record<string, any>[];
+  kitchenAreas: Record<string, any>[];
   setFieldValue: any;
   onDeleteBlur: () => void;
   formValues: Record<string, any>;
@@ -107,7 +108,8 @@ const Sections: FC<Props> = ({
   onDeleteBlur,
   formValues,
   setValues,
-  machineTypes
+  machineTypes,
+  kitchenAreas
 }) => {
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
@@ -185,6 +187,7 @@ const Sections: FC<Props> = ({
               onRowBlur={onRowBlur}
               errors={errors}
               machineTypes={machineTypes}
+              kitchenAreas={kitchenAreas}
               // onKeyDown={(e) => _onKeyDown(e, section)}
             />
           </AccordionDetails>
