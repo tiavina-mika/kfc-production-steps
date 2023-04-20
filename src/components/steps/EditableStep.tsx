@@ -26,6 +26,7 @@ import {
   TRANSFORMATION_TYPES
 } from "../../utils/utils";
 import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
+import { STEP_DURATION_UNITS } from "../../utils/recipeUtils";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 
@@ -162,6 +163,7 @@ const EditableStep: FC<Props> = ({
       }}
       onClick={_stopPropagation}
     >
+      {/* ------------ name and description ------------ */}
       <StyledStepFirstBodyColumn className="flexRow center">
         {isHover ? (
           <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
@@ -236,6 +238,7 @@ const EditableStep: FC<Props> = ({
           {step.cost ? `${roundNumber(step.cost, 3)} €` : "_"}
         </StyledStepText>
       </StyledStepBodyCell>
+      {/* ------------ transformation ------------ */}
       <StyledStepBodyCell px={0} align="left" width={widths[4]}>
         {isHover ? (
           <Stack className="flex1">
@@ -281,6 +284,7 @@ const EditableStep: FC<Props> = ({
       <StyledStepBodyCell align="left" width={widths[7]}>
         <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
       </StyledStepBodyCell>
+      {/* ------------ machineType ------------ */}
       <StyledStepBodyCell px={0} align="left" width={widths[8]}>
         {isHover ? (
           <Stack className="flex1">
@@ -306,6 +310,7 @@ const EditableStep: FC<Props> = ({
           <StyledStepText>{step.machineType?.name || "-"}</StyledStepText>
         )}
       </StyledStepBodyCell>
+      {/* ------------ machineSetting ------------ */}
       <StyledStepBodyCell align="left" width={widths[9]}>
         {isHover ? (
           <Stack>
@@ -338,8 +343,37 @@ const EditableStep: FC<Props> = ({
       <StyledStepBodyCell align="left" width={widths[10]}>
         <StyledStepText>{step.stepDuration || "-"}</StyledStepText>
       </StyledStepBodyCell>
-      <StyledStepBodyCell align="left" width={widths[11]}>
-        <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
+      {/* ------------ stepDurationUnit ------------ */}
+      <StyledStepBodyCell px={0} align="left" width={widths[11]}>
+        {isHover ? (
+          <Stack className="flex1">
+            <Field
+              name={`sections[${sectionIndex}].productionSteps[${index}].stepDurationUnit`}
+              component={FormikSelect}
+            >
+              {STEP_DURATION_UNITS.map((unit, index) => (
+                <MenuItem key={unit + index} value={unit}>
+                  {unit}
+                </MenuItem>
+              ))}
+            </Field>
+            <ErrorMessage
+              name={`sections[${sectionIndex}].productionSteps[${index}].stepDurationUnit`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          </Stack>
+        ) : hasError(index, "stepDurationUnit") ? (
+          <ErrorMessage
+            name={`sections[${sectionIndex}].productionSteps[${index}].stepDurationUnit`}
+            render={(message) => (
+              <StyledErrorMessage>{message}</StyledErrorMessage>
+            )}
+          />
+        ) : (
+          <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
+        )}
       </StyledStepBodyCell>
     </Box>
   );

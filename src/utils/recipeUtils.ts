@@ -103,6 +103,8 @@ const SUGGESTED_PRICE = {
   }
 };
 
+export const STEP_DURATION_UNITS = ["kg / heure", "minute"];
+
 export const recipeFields = [
   "name",
   "commercialName",
