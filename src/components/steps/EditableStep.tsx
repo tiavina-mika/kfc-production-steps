@@ -1,9 +1,18 @@
 import React, { FC } from "react";
 
-import { Autocomplete, Box, Stack, styled } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  MenuItem,
+  Select,
+  Stack,
+  styled
+} from "@mui/material";
+import { ErrorMessage, Field } from "formik";
 
 import {
   StyledErrorMessage,
+  StyledProductionStepInputBase,
   StyledProductionStepTextField,
   StyledStepBodyCell,
   StyledStepDescriptionText,
@@ -11,9 +20,12 @@ import {
   StyledStepText
 } from "../StyledSectionComponents";
 import StepNameDescription from "./StepNameDescription";
-import { getTransformationTypeLabel, roundNumber } from "../../utils/utils";
+import {
+  getTransformationTypeLabel,
+  roundNumber,
+  TRANSFORMATION_TYPES
+} from "../../utils/utils";
 import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
-import { ErrorMessage, Field } from "formik";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 
@@ -72,6 +84,26 @@ const FormikAutocomplete = ({ form, field, readOnly = false, ...props }) => {
         />
       )}
     />
+  );
+};
+
+const FormikSelect = ({ form, field, children, ...props }) => {
+  const { name, value } = field;
+  const { setFieldValue } = form;
+
+  return (
+    <Select
+      {...props}
+      name={name}
+      value={value}
+      onChange={(e) => {
+        setFieldValue(name, e.target.value);
+      }}
+      variant="standard"
+      input={<StyledProductionStepInputBase />}
+    >
+      {children}
+    </Select>
   );
 };
 
@@ -204,10 +236,41 @@ const EditableStep: FC<Props> = ({
           {step.cost ? `${roundNumber(step.cost, 3)} €` : "_"}
         </StyledStepText>
       </StyledStepBodyCell>
-      <StyledStepBodyCell align="left" width={widths[4]}>
-        <StyledStepText>
-          {getTransformationTypeLabel(step.transformation) || "-"}
-        </StyledStepText>
+      <StyledStepBodyCell px={0} align="left" width={widths[4]}>
+        {isHover ? (
+          <Stack className="flex1">
+            <Field
+              name={`sections[${sectionIndex}].productionSteps[${index}].transformation`}
+              component={FormikSelect}
+            >
+              {TRANSFORMATION_TYPES.map((transformation) => (
+                <MenuItem
+                  key={transformation.value}
+                  value={transformation.value}
+                >
+                  {transformation.label}
+                </MenuItem>
+              ))}
+            </Field>
+            <ErrorMessage
+              name={`sections[${sectionIndex}].productionSteps[${index}].transformation`}
+              render={(message) => (
+                <StyledErrorMessage>{message}</StyledErrorMessage>
+              )}
+            />
+          </Stack>
+        ) : hasError(index, "transformation") ? (
+          <ErrorMessage
+            name={`sections[${sectionIndex}].productionSteps[${index}].transformation`}
+            render={(message) => (
+              <StyledErrorMessage>{message}</StyledErrorMessage>
+            )}
+          />
+        ) : (
+          <StyledStepText>
+            {getTransformationTypeLabel(step.transformation) || "-"}
+          </StyledStepText>
+        )}
       </StyledStepBodyCell>
       <StyledStepBodyCell align="left" width={widths[5]}>
         <StyledStepText>-</StyledStepText>
@@ -220,7 +283,7 @@ const EditableStep: FC<Props> = ({
       </StyledStepBodyCell>
       <StyledStepBodyCell px={0} align="left" width={widths[8]}>
         {isHover ? (
-          <Stack>
+          <Stack className="flex1">
             <Field
               name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
               component={FormikAutocomplete}

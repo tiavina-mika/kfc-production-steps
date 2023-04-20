@@ -2,7 +2,14 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import { red } from "@mui/material/colors";
-import { Box, BoxProps, Select, SelectProps, TextField } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  InputBase,
+  Select,
+  SelectProps,
+  TextField
+} from "@mui/material";
 import {
   COLORS,
   PRODUCTION_STEPS_COL_WIDTHS,
@@ -43,6 +50,26 @@ export const StyledProductionStepTextField = styled(TextField)({
     fontWeight: 600,
     fontSize: 14,
     color: "#414141"
+  }
+});
+
+export const StyledProductionStepInputBase = styled(InputBase)({
+  "& .MuiInputBase-input": {
+    background: "#fff",
+    borderRadius: 4,
+    paddingLeft: 7,
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#414141",
+    lineHeight: "1em",
+    display: "flex",
+    alignItems: "center",
+    "&:before, :after": {
+      borderBottom: "none",
+      "&:hover": {
+        borderBottom: "none"
+      }
+    }
   }
 });
 

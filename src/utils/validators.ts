@@ -8,7 +8,13 @@ export const RecipeProductionStepsSchema = Yup.object().shape({
         Yup.object().shape({
           name: Yup.string(),
           description: Yup.string().required("Obligatoire"),
-          machineSetting: Yup.string()
+          machineSetting: Yup.string(),
+          transformation: Yup.string()
+          // transformation: Yup.object().shape({
+          //   value: Yup.string(),
+          //   label: Yup.string(),
+          //   type: Yup.string(),
+          // })
           // stepComponents: Yup.array().of(
           //   Yup.object().shape({
           //     supplierItem: Yup.mixed().notOneOf(
