@@ -433,7 +433,11 @@ export function computeIngredientData(ingredient) {
 }
 
 // simulate a parse object
-export const parseSectionToObject = (sections, percent = false, pointers) => {
+export const parseSectionToObject = (
+  sections,
+  percent = false,
+  pointers?: Record<string, any>
+) => {
   return sections.map((section) => {
     return {
       id: section.objectId,

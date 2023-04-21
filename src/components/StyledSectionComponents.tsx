@@ -134,7 +134,7 @@ type StyledStepBodyCellProps = {
 export const StyledStepBodyCell = styled(Box, {
   shouldForwardProp: (prop) =>
     prop !== "align" && prop !== "width" && prop !== "px"
-})<StyledStepBodyCellProps>(({ width, align, px = 16 }) => {
+})<StyledStepBodyCellProps>(({ width, align, px = 8 }) => {
   let defaultStyles: Record<string, any> = {
     display: "flex",
     alignItems: "center",

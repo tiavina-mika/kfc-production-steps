@@ -241,7 +241,7 @@ const EditableStep: FC<Props> = ({
         </StyledStepText>
       </StyledStepBodyCell>
       {/* ------------ transformation ------------ */}
-      <StyledStepBodyCell px={0} align="left" width={widths[4]}>
+      <StyledStepBodyCell align="left" width={widths[4]}>
         {isHover ? (
           <Stack className="flex1">
             <Field
@@ -287,7 +287,7 @@ const EditableStep: FC<Props> = ({
         <StyledStepText>{step.kitchenArea?.name || "-"}</StyledStepText>
       </StyledStepBodyCell> */}
       {/* ------------ kitchenArea ------------ */}
-      <StyledStepBodyCell px={0} align="left" width={widths[7]}>
+      <StyledStepBodyCell align="left" width={widths[7]}>
         {isHover ? (
           <Stack className="flex1">
             <Field
@@ -313,7 +313,7 @@ const EditableStep: FC<Props> = ({
         )}
       </StyledStepBodyCell>
       {/* ------------ machineType ------------ */}
-      <StyledStepBodyCell px={0} align="left" width={widths[8]}>
+      <StyledStepBodyCell align="left" width={widths[8]}>
         {isHover ? (
           <Stack className="flex1">
             <Field
@@ -369,7 +369,7 @@ const EditableStep: FC<Props> = ({
         )}
       </StyledStepBodyCell>
       {/* ------------ stepDuration ------------ */}
-      <StyledStepBodyCell px={0} align="left" width={widths[10]}>
+      <StyledStepBodyCell align="left" width={widths[10]}>
         {isHover ? (
           <Stack className="flex1">
             <Field
@@ -401,7 +401,7 @@ const EditableStep: FC<Props> = ({
         )}
       </StyledStepBodyCell>
       {/* ------------ stepDurationUnit ------------ */}
-      <StyledStepBodyCell px={0} align="left" width={widths[11]}>
+      <StyledStepBodyCell align="left" width={widths[11]}>
         {isHover ? (
           <Stack className="flex1">
             <Field

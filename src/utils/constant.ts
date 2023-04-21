@@ -6,10 +6,10 @@ export const PRODUCTION_STEPS_COL_WIDTHS = [
   129,
   124,
   100,
-  96,
   120,
+  130,
   170,
-  184,
+  160,
   177
 ];
 
