@@ -170,7 +170,7 @@ const EditableStep: FC<Props> = ({
       onClick={_stopPropagation}
     >
       {/* ------------ name and description ------------ */}
-      <StyledStepFirstBodyColumn className="flexRow center">
+      <StyledStepFirstBodyColumn className="flexCol">
         {isHover ? (
           <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
             <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
@@ -216,20 +216,24 @@ const EditableStep: FC<Props> = ({
               />
             </Stack>
           </Stack>
-        ) : hasError(index, "description") ? (
+        ) : (
+          <StepNameDescription
+            name={step.name}
+            description={
+              isEdition && step.error
+                ? "Instructions :" + step.description
+                : step.description
+            }
+            index={index}
+          />
+        )}
+        {/* error message while not on hover */}
+        {!isHover && hasError(index, "description") && (
           <ErrorMessage
             name={`sections[${sectionIndex}].productionSteps[${index}].description`}
             render={(message) => (
               <StyledErrorMessage>{message}</StyledErrorMessage>
             )}
-          />
-        ) : (
-          <StepNameDescription
-            name={step.name}
-            description={
-              isEdition && step.error ? "Instructions :" : step.description
-            }
-            index={index}
           />
         )}
       </StyledStepFirstBodyColumn>

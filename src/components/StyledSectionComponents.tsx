@@ -28,7 +28,7 @@ export const stickyStyle = {
 };
 
 export const StyledErrorMessage = styled("div")({
-  marginLeft: 15,
+  marginTop: 2,
   color: red[500]
 });
 
