@@ -15,9 +15,9 @@ import {
   StyledProductionStepInputBase,
   StyledProductionStepTextField,
   StyledStepBodyCell,
-  StyledStepDescriptionText,
   StyledStepFirstBodyColumn,
-  StyledStepText
+  StyledStepText,
+  StyledProductionStepsTextarea
 } from "../StyledSectionComponents";
 import StepNameDescription from "./StepNameDescription";
 import {
@@ -36,12 +36,12 @@ const StyledTextFieldName = styled(StyledProductionStepTextField)({
     height: "100%"
   }
 });
-const StyledTextFieldDescription = styled(StyledProductionStepTextField)({
-  width: 391,
-  "& .MuiInputBase-root": {
-    height: "100%"
-  }
-});
+// const StyledTextFieldDescription = styled(StyledProductionStepTextField)({
+//   width: 391,
+//   "& .MuiInputBase-root": {
+//     height: "100%"
+//   }
+// });
 
 const FormikTextFieldName = ({ field, ...props }) => (
   <StyledTextFieldName {...field} {...props} />
@@ -51,8 +51,12 @@ const FormikTextField = ({ field, ...props }) => (
   <StyledProductionStepTextField {...field} {...props} />
 );
 
-const FormikTextFieldDescription = ({ field, ...props }) => (
-  <StyledTextFieldDescription {...field} {...props} />
+// const FormikTextFieldDescription = ({ field, ...props }) => (
+//   <StyledTextFieldDescription {...field} {...props} />
+// );
+
+const FormikTextarea = ({ field, ...props }) => (
+  <StyledProductionStepsTextarea {...field} {...props} />
 );
 
 const autocompleteSx = {
@@ -191,11 +195,11 @@ const EditableStep: FC<Props> = ({
             </Stack>
             <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
               <Stack direction="row" spacing={1} alignItems="center">
-                <StyledStepDescriptionText>
+                {/* <StyledStepDescriptionText>
                   Instructions :
-                </StyledStepDescriptionText>
+                </StyledStepDescriptionText> */}
                 <Field
-                  component={FormikTextFieldDescription}
+                  component={FormikTextarea}
                   name={`sections[${sectionIndex}].productionSteps[${index}].description`}
                   onClick={_stopPropagation}
                   onFocus={onFieldFocus}

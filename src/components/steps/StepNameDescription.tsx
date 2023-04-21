@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 import {
   StyledStepDescriptionText,
@@ -16,10 +16,12 @@ type Props = {
 const StepNameDescription: FC<Props> = ({ name, description, index }) => {
   return (
     <Stack spacing={1}>
-      <Stack direction="row" spacing={1}>
-        <StyledStepText>{index + 1}.</StyledStepText>
-        <StyledStepText>{name || "-"}</StyledStepText>
-      </Stack>
+      <Box sx={{ height: 30 }} className="flexRow center">
+        <Stack direction="row" spacing={1}>
+          <StyledStepText>{index + 1}.</StyledStepText>
+          <StyledStepText>{name || "-"}</StyledStepText>
+        </Stack>
+      </Box>
       <StyledStepDescriptionText>{description}</StyledStepDescriptionText>
     </Stack>
   );

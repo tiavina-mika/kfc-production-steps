@@ -8,7 +8,9 @@ import {
   InputBase,
   Select,
   SelectProps,
-  TextField
+  TextareaAutosize,
+  TextField,
+  Typography
 } from "@mui/material";
 import {
   COLORS,
@@ -51,6 +53,18 @@ export const StyledProductionStepTextField = styled(TextField)({
     fontSize: 14,
     color: "#414141"
   }
+});
+
+export const StyledProductionStepsTextarea = styled(TextareaAutosize)({
+  height: 30,
+  background: "#fff",
+  borderRadius: 4,
+  fontWeight: 400,
+  fontSize: 14,
+  color: "#414141",
+  width: "100%",
+  fontFamily: "Roboto, sans-serif",
+  lineHeight: 1.3
 });
 
 export const StyledProductionStepInputBase = styled(InputBase)({
@@ -108,7 +122,7 @@ export const StyledStepFirstBodyColumn = styled(
 type StyledTextProps = {
   disabled?: boolean;
 };
-export const StyledStepText = styled(Box, {
+export const StyledStepText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "disabled"
 })<StyledTextProps>(({ disabled = false }) => {
   let defaultStyles: Record<string, any> = {
