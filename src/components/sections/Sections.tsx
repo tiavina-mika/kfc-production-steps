@@ -188,6 +188,7 @@ const Sections: FC<Props> = ({
               errors={errors}
               machineTypes={machineTypes}
               kitchenAreas={kitchenAreas}
+              setFieldValue={setFieldValue}
               // onKeyDown={(e) => _onKeyDown(e, section)}
             />
           </AccordionDetails>

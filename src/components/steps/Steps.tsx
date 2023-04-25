@@ -13,6 +13,7 @@ import { COLORS, PRODUCTION_STEPS_SPACINGS } from "../../utils/constant";
 import StepPreview from "./StepPreview";
 import EditableStep from "./EditableStep";
 import { IHoveredRow } from "../sections/Sections";
+import { FormikErrors } from "formik";
 
 export const COMPONENT_NAME = "STEPS";
 
@@ -63,7 +64,7 @@ const StyledAccordionSummary = styled(
 }));
 
 type Props = {
-  steps: any[];
+  steps: Record<string, any>[];
   isEdition: boolean;
   sectionIndex: number;
   onRowHover: (
@@ -86,7 +87,11 @@ type Props = {
   // ) => void;
   // deleteHover: Record<string, any>;
   errors: Record<string, any>;
-  // setFieldValue: any;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<any>> | Promise<void>;
   // onDeleteBlur: () => void;
   machineTypes: Record<string, any>[];
   kitchenAreas: Record<string, any>[];
@@ -107,10 +112,10 @@ const Steps: FC<Props> = ({
   // onKeyDown
   // onDeleteHover,
   // deleteHover,
-  // setFieldValue,
+  setFieldValue,
   errors,
   machineTypes,
-  kitchenAreas
+  kitchenAreas,
   // onDeleteBlur
 }) => {
   // do not display steps row in preview if it's empty
@@ -161,7 +166,7 @@ const Steps: FC<Props> = ({
           >
             {isEdition ? (
               <EditableStep
-                // steps={steps}
+                steps={steps}
                 step={step}
                 index={index}
                 isEdition={isEdition}
@@ -170,7 +175,7 @@ const Steps: FC<Props> = ({
                 sectionIndex={sectionIndex}
                 // isDeleteHover={_isDeleteHover(index)}
                 // genericSections={genericSections}
-                // setFieldValue={setFieldValue}
+                setFieldValue={setFieldValue}
                 // onClearFocus={onClearFocus}
                 onFieldFocus={onFieldFocus}
                 onFieldBlur={onFieldBlur}

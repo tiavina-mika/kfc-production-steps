@@ -3,12 +3,13 @@ import React, { FC } from "react";
 import {
   Autocomplete,
   Box,
+  Button,
   MenuItem,
   Select,
   Stack,
   styled
 } from "@mui/material";
-import { ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, FormikErrors } from "formik";
 
 import {
   StyledErrorMessage,
@@ -26,7 +27,7 @@ import {
   TRANSFORMATION_TYPES
 } from "../../utils/utils";
 import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
-import { STEP_DURATION_UNITS } from "../../utils/recipeUtils";
+import { computeStepData, getDefaultSteps, STEP_DURATION_UNITS } from "../../utils/recipeUtils";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 
@@ -116,7 +117,7 @@ type Props = {
   step: Record<string, any>;
   index: number;
   isEdition?: boolean;
-  // steps: Record<string, any>[];
+  steps: Record<string, any>[];
   // index: number;
   isHover: boolean;
   // isDeleteHover: boolean;
@@ -127,11 +128,11 @@ type Props = {
   onKeyUp: (event: any, setFieldTouched: any) => void;
   // onKeyDown: (event: any) => void;
   sectionIndex: number;
-  // setFieldValue: (
-  //   field: string,
-  //   value: any,
-  //   shouldValidate?: boolean | undefined
-  // ) => Promise<FormikErrors<any>> | Promise<void>;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<any>> | Promise<void>;
   hasError: (index: number, field: string) => boolean;
   // onDeleteBlur: () => void;
   machineTypes: Record<string, any>[];
@@ -139,6 +140,7 @@ type Props = {
 };
 
 const EditableStep: FC<Props> = ({
+  steps,
   step,
   index,
   isEdition,
@@ -149,7 +151,7 @@ const EditableStep: FC<Props> = ({
   isHover,
   // isDeleteHover,
   // genericSections,
-  // setFieldValue,
+  setFieldValue,
   // onClearFocus,
   onFieldFocus,
   onFieldBlur,
@@ -157,10 +159,23 @@ const EditableStep: FC<Props> = ({
   // onKeyDown
   hasError,
   machineTypes,
-  kitchenAreas
+  kitchenAreas,
   // onDeleteBlur
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
+
+  const _addStep = (index: number, event = null) => {
+    const newSteps = [...steps]
+    newSteps.splice(index + 1, 0, getDefaultSteps())
+
+    // update production steps and step components data
+    const newStep = newSteps[newSteps.length - 1];
+    if (newStep) {
+      computeStepData(newStep, "stepComponents");
+    }
+    setFieldValue(`sections[${sectionIndex}].productionSteps`, newSteps)
+    _stopPropagation(event)
+  }
 
   return (
     <Box
@@ -172,50 +187,73 @@ const EditableStep: FC<Props> = ({
       {/* ------------ name and description ------------ */}
       <StyledStepFirstBodyColumn className="flexCol">
         {isHover ? (
-          <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
+          <>
+            {/* add button */}
+            <Button
+              onClick={(e) => _addStep(index, e)}
+              className="flexCenter"
+              sx={{ position: "absolute", left: -8 }}
+            >
+              {/* need to use directly the svg element because of an error in codesandbox importation */}
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 8H8V13C8 13.55 7.55 14 7 14C6.45 14 6 13.55 6 13V8H1C0.45 8 0 7.55 0 7C0 6.45 0.45 6 1 6H6V1C6 0.45 6.45 0 7 0C7.55 0 8 0.45 8 1V6H13C13.55 6 14 6.45 14 7C14 7.55 13.55 8 13 8Z"
+                  fill="#2196F3"
+                />
+              </svg>
+            </Button>
+            {/* input */}
             <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <StyledStepText>{index + 1}.</StyledStepText>
-                <Field
-                  component={FormikTextFieldName}
+              <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <StyledStepText>{index + 1}.</StyledStepText>
+                  <Field
+                    component={FormikTextFieldName}
+                    name={`sections[${sectionIndex}].productionSteps[${index}].name`}
+                    onClick={_stopPropagation}
+                    onFocus={onFieldFocus}
+                    onBlur={onFieldBlur}
+                    onKeyUp={onKeyUp}
+                    // onKeyDown={onKeyDown}
+                  />
+                </Stack>
+                <ErrorMessage
                   name={`sections[${sectionIndex}].productionSteps[${index}].name`}
-                  onClick={_stopPropagation}
-                  onFocus={onFieldFocus}
-                  onBlur={onFieldBlur}
-                  onKeyUp={onKeyUp}
-                  // onKeyDown={onKeyDown}
+                  render={(message) => (
+                    <StyledErrorMessage>{message}</StyledErrorMessage>
+                  )}
                 />
               </Stack>
-              <ErrorMessage
-                name={`sections[${sectionIndex}].productionSteps[${index}].name`}
-                render={(message) => (
-                  <StyledErrorMessage>{message}</StyledErrorMessage>
-                )}
-              />
-            </Stack>
-            <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
-              <Stack direction="row" spacing={1} alignItems="center">
-                {/* <StyledStepDescriptionText>
-                  Instructions :
-                </StyledStepDescriptionText> */}
-                <Field
-                  component={FormikTextarea}
+              <Stack direction="column" spacing={1} sx={{ flex: 1 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  {/* <StyledStepDescriptionText>
+                    Instructions :
+                  </StyledStepDescriptionText> */}
+                  <Field
+                    component={FormikTextarea}
+                    name={`sections[${sectionIndex}].productionSteps[${index}].description`}
+                    onClick={_stopPropagation}
+                    onFocus={onFieldFocus}
+                    onBlur={onFieldBlur}
+                    onKeyUp={onKeyUp}
+                    // onKeyDown={onKeyDown}
+                  />
+                </Stack>
+                <ErrorMessage
                   name={`sections[${sectionIndex}].productionSteps[${index}].description`}
-                  onClick={_stopPropagation}
-                  onFocus={onFieldFocus}
-                  onBlur={onFieldBlur}
-                  onKeyUp={onKeyUp}
-                  // onKeyDown={onKeyDown}
+                  render={(message) => (
+                    <StyledErrorMessage>{message}</StyledErrorMessage>
+                  )}
                 />
               </Stack>
-              <ErrorMessage
-                name={`sections[${sectionIndex}].productionSteps[${index}].description`}
-                render={(message) => (
-                  <StyledErrorMessage>{message}</StyledErrorMessage>
-                )}
-              />
             </Stack>
-          </Stack>
+          </>
         ) : (
           <StepNameDescription
             name={step.name}

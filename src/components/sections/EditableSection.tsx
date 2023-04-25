@@ -191,7 +191,7 @@ const EditableSection: FC<Props> = ({
     }
   };
 
-  const _addSection = (index, event = null) => {
+  const _addSection = (index: number, event = null) => {
     const newSections = [...sections];
     newSections.splice(index + 1, 0, getDefaultSection());
 
