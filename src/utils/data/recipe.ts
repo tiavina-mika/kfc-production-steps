@@ -507,29 +507,29 @@ export const recipe = {
           //   className: "KitchenArea",
           //   name: "Légumerie"
           // },
-          machineType: {
-            name: "Machine 2",
-            createdAt: "2022-08-24T08:54:36.329Z",
-            updatedAt: "2022-09-01T08:46:35.321Z",
-            machineModels: [
-              {
-                __type: "Pointer",
-                className: "MachineModels",
-                objectId: "4GgEHZS81a"
-              },
-              {
-                __type: "Pointer",
-                className: "MachineModels",
-                objectId: "yhnXE2VdpH"
-              },
-              {
-                __type: "Pointer",
-                className: "MachineModels",
-                objectId: "zvHwBLmG4u"
-              }
-            ],
-            objectId: "Bv9NbFsmUK"
-          }
+          // machineType: {
+          //   name: "Machine 2",
+          //   createdAt: "2022-08-24T08:54:36.329Z",
+          //   updatedAt: "2022-09-01T08:46:35.321Z",
+          //   machineModels: [
+          //     {
+          //       __type: "Pointer",
+          //       className: "MachineModels",
+          //       objectId: "4GgEHZS81a"
+          //     },
+          //     {
+          //       __type: "Pointer",
+          //       className: "MachineModels",
+          //       objectId: "yhnXE2VdpH"
+          //     },
+          //     {
+          //       __type: "Pointer",
+          //       className: "MachineModels",
+          //       objectId: "zvHwBLmG4u"
+          //     }
+          //   ],
+          //   objectId: "Bv9NbFsmUK"
+          // }
           // machineSetting: "Lame 5mm",
           // stepDuration: 800
           // stepDurationUnit: "kg / heure"

@@ -347,7 +347,6 @@ export const parseStepsToObject = (steps, percent = false) => {
 export const parseProductionStepsToObject = (
   steps,
   percent = false,
-  pointers
 ) => {
   return steps.map((step) => {
     return {
@@ -366,7 +365,7 @@ export const parseProductionStepsToObject = (
       preventGrossWeightChange: true,
       kitchenArea: step.kitchenArea || null,
       transformation: step.transformation || "",
-      machineType: step.machineType || pointers.machineType,
+      machineType: step.machineType || null,
       machineSetting: step.machineSetting || "",
       stepDuration: step.stepDuration || 0,
       stepDurationUnit: step.stepDurationUnit || ""
@@ -436,7 +435,6 @@ export function computeIngredientData(ingredient) {
 export const parseSectionToObject = (
   sections,
   percent = false,
-  pointers?: Record<string, any>
 ) => {
   return sections.map((section) => {
     return {
@@ -454,7 +452,6 @@ export const parseSectionToObject = (
         ? parseProductionStepsToObject(
             section.productionSteps,
             percent,
-            pointers
           )
         : [],
       error: section.name && section.name !== "" ? false : true,
@@ -605,7 +602,6 @@ function computeDisplayData(
 export const getRecipeSectionsFormInitialValues = (
   recipe,
   isProductionSteps = false,
-  pointers
 ) => {
   const values: Record<string, any> = {};
 
@@ -621,7 +617,7 @@ export const getRecipeSectionsFormInitialValues = (
     values.id = recipe.id;
     values.sections =
       recipeObject.sections && recipeObject.sections.length
-        ? parseSectionToObject(recipeObject.sections, false, pointers)
+        ? parseSectionToObject(recipeObject.sections, false)
         : [getDefaultSection()];
     values.type = recipeObject.type;
     values.HTprice =

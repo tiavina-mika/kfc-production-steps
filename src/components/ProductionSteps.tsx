@@ -58,12 +58,7 @@ const ProductionSteps: FC<Props> = ({
   );
 
   useEffect(() => {
-    const pointers = { machineType: machineTypes[0] };
-    const formValues = getRecipeSectionsFormInitialValues(
-      recipe,
-      true,
-      pointers
-    );
+    const formValues = getRecipeSectionsFormInitialValues(recipe, true);
     setInitialValues(formValues);
     setDefaultValues(cloneDeep(formValues));
   }, [recipe]);

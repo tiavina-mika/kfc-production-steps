@@ -4,13 +4,14 @@ import {
   Autocomplete,
   Box,
   Button,
+  IconButton,
   MenuItem,
   Select,
   Stack,
   styled
 } from "@mui/material";
 import { ErrorMessage, Field, FormikErrors } from "formik";
-
+import ClearIcon from "@mui/icons-material/Clear";
 import {
   StyledErrorMessage,
   StyledProductionStepInputBase,
@@ -27,7 +28,11 @@ import {
   TRANSFORMATION_TYPES
 } from "../../utils/utils";
 import { PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
-import { computeStepData, getDefaultSteps, STEP_DURATION_UNITS } from "../../utils/recipeUtils";
+import {
+  computeStepData,
+  getDefaultSteps,
+  STEP_DURATION_UNITS
+} from "../../utils/recipeUtils";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 
@@ -107,6 +112,14 @@ const FormikSelect = ({ form, field, children, ...props }) => {
       }}
       variant="standard"
       input={<StyledProductionStepInputBase />}
+      endAdornment={
+        <IconButton
+          sx={{ visibility: value ? "visible" : "hidden" }}
+          // onClick={handleClearClick}
+        >
+          <ClearIcon />
+        </IconButton>
+      }
     >
       {children}
     </Select>
@@ -159,23 +172,23 @@ const EditableStep: FC<Props> = ({
   // onKeyDown
   hasError,
   machineTypes,
-  kitchenAreas,
+  kitchenAreas
   // onDeleteBlur
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
 
   const _addStep = (index: number, event = null) => {
-    const newSteps = [...steps]
-    newSteps.splice(index + 1, 0, getDefaultSteps())
+    const newSteps = [...steps];
+    newSteps.splice(index + 1, 0, getDefaultSteps());
 
     // update production steps and step components data
     const newStep = newSteps[newSteps.length - 1];
     if (newStep) {
       computeStepData(newStep, "stepComponents");
     }
-    setFieldValue(`sections[${sectionIndex}].productionSteps`, newSteps)
-    _stopPropagation(event)
-  }
+    setFieldValue(`sections[${sectionIndex}].productionSteps`, newSteps);
+    _stopPropagation(event);
+  };
 
   return (
     <Box
@@ -344,7 +357,6 @@ const EditableStep: FC<Props> = ({
                 option.objectId === value.objectId
               }
               getOptionLabel={(option) => option.name}
-              disableClearable
               readOnly
             />
             <ErrorMessage
@@ -370,7 +382,6 @@ const EditableStep: FC<Props> = ({
                 option.objectId === value.objectId
               }
               getOptionLabel={(option) => option.name}
-              disableClearable
               readOnly
             />
             <ErrorMessage
@@ -443,7 +454,7 @@ const EditableStep: FC<Props> = ({
             )}
           />
         ) : (
-          <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
+          <StyledStepText>{step.stepDuration || "-"}</StyledStepText>
         )}
       </StyledStepBodyCell>
       {/* ------------ stepDurationUnit ------------ */}

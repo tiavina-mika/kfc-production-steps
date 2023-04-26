@@ -116,7 +116,8 @@ export const StyledStepFirstBodyColumn = styled(
   backgroundColor: COLORS.PRODUCTION_STEPS_GREY,
   width: widths[0],
   paddingTop: 16,
-  paddingBottom: 17
+  paddingBottom: 17,
+  zIndex: 1000
 }));
 
 type StyledTextProps = {
