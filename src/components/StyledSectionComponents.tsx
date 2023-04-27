@@ -21,6 +21,11 @@ import { getCellAlignment } from "../utils/utils";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 
+export const lastColStickyStyle = {
+  position: "sticky",
+  right: 0
+};
+
 export const stickyStyle = {
   position: "sticky",
   left: 0,
@@ -98,6 +103,37 @@ export const StyledSectionFirstBodyColumn = styled((props: BoxProps) => (
   backgroundColor: COLORS.PRODUCTION_STEPS_BLUE,
   width: widths[0]
 });
+
+type StyledStickyLastBodyColumnProps = {
+  type?: "section" | "step" | "ingredients";
+  addBackground?: boolean;
+};
+export const StyledStickyLastBodyColumn = styled(
+  (props: BoxProps) => <Box {...props} sx={{ ...lastColStickyStyle }} />,
+  {
+    shouldForwardProp: (prop) => prop !== "type" && prop !== "addBackground"
+  }
+)<StyledStickyLastBodyColumnProps>(
+  ({ type = "section", addBackground = false }) => {
+    const defaultStyle: Record<string, any> = {
+      width: widths[widths.length - 1],
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+
+    if (addBackground) {
+      if (type === "section") {
+        defaultStyle.backgroundColor = COLORS.PRODUCTION_STEPS_BLUE;
+      }
+      if (type === "step") {
+        defaultStyle.backgroundColor = COLORS.PRODUCTION_STEPS_GREY;
+      }
+    }
+
+    return defaultStyle;
+  }
+);
 
 // --------------------------------------- //
 // ---------------- Steps ---------------- //

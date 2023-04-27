@@ -16,7 +16,6 @@ type Props = {
 const ProductionStepsTable: FC<Props> = ({ children, sx }) => {
   return (
     <Box sx={{ overflowX: "scroll", ...sx }}>
-      {/* <Box sx={{ mt: 10, overflowX: "scroll" }}> */}
       <div
         style={{
           maxWidth: "100vw",

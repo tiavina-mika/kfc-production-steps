@@ -7,13 +7,13 @@ import { ErrorMessage, FormikErrors } from "formik";
 import { roundNumber } from "../../utils/utils";
 import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
 import {
-  computeProductionStepsRecipeOnFieldChange,
   computeSectionData,
   getDefaultSection,
   parseSectionToObject
 } from "../../utils/recipeUtils";
 import {
   StyledErrorMessage,
+  StyledStickyLastBodyColumn,
   StyledProductionStepTextField,
   StyledSectionFirstBodyColumn,
   StyledStepBodyCell
@@ -280,16 +280,16 @@ const EditableSection: FC<Props> = ({
         <StyledText>-</StyledText>
       </StyledStepBodyCell>
       {/* -------- delete icon -------- */}
-      <StyledStepBodyCell align="left" width={widths[12]} px={0}>
-        {/* {isHover && ( */}
-        <IconButton
-          onClick={(e) => _removeSection(index, e)}
-          className="flexCenter"
-        >
-          <DeleteIcon />
-        </IconButton>
-        {/* )} */}
-      </StyledStepBodyCell>
+      <StyledStickyLastBodyColumn addBackground={isHover}>
+        {isHover && (
+          <IconButton
+            onClick={(e) => _removeSection(index, e)}
+            className="flexCenter"
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
+      </StyledStickyLastBodyColumn>
     </Box>
   );
 };

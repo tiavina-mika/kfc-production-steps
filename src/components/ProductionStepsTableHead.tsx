@@ -9,6 +9,7 @@ import {
   PRODUCTION_STEPS_SPACINGS
   // PRODUCTION_STEPS_FIST_COL_PL
 } from "../utils/constant";
+import { lastColStickyStyle } from "./StyledSectionComponents";
 
 // ----------------------------------------------- //
 // -------------------- styles ------------------- //
@@ -24,16 +25,21 @@ const stickyStyle = {
 // ----------------------------------------------- //
 type StyledTableHeadCellProps = {
   isFirstColumn: boolean;
+  isLastColumn: boolean;
   align: "left" | "center" | "right";
+  addBackground?: boolean;
 };
 
 const StyledHeadCell = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isFirstColumn" && prop !== "align"
+  shouldForwardProp: (prop) =>
+    prop !== "addBackground" &&
+    prop !== "isFirstColumn" &&
+    prop !== "isLatsColumn" &&
+    prop !== "align"
 })<StyledTableHeadCellProps>((props) => {
   let defaultStyles: Record<string, any> = {
     height: "100%",
     color: "#fff",
-    backgroundColor: "#2196f3",
     paddingRight: 16,
     paddingLeft: 16
   };
@@ -45,6 +51,18 @@ const StyledHeadCell = styled(Box, {
       zIndex: 1000,
       paddingLeft: PRODUCTION_STEPS_SPACINGS.SECTION_FIRST_COL_PL
     };
+  }
+
+  if (props.isLastColumn) {
+    defaultStyles = {
+      ...defaultStyles,
+      ...lastColStickyStyle,
+      zIndex: 1000
+    };
+  }
+
+  if (props.addBackground) {
+    defaultStyles.backgroundColor = "#2196f3";
   }
 
   if (props.align) {
@@ -59,10 +77,16 @@ const StyledHeadRow = styled(Box)({
   height: 60
 });
 
+const isHeadersLastColumn = (headersLength: number, index: number): boolean =>
+  headersLength - 1 === index;
 type Props = {
   headers?: any[];
+  hasAnyHoveredRow: boolean;
 };
-const ProductionStepsTableHead: FC<Props> = ({ headers }) => {
+const ProductionStepsTableHead: FC<Props> = ({
+  headers,
+  hasAnyHoveredRow = false
+}) => {
   return (
     <StyledHeadRow className="flexRow center">
       {headers.map((header, index) => (
@@ -70,6 +94,10 @@ const ProductionStepsTableHead: FC<Props> = ({ headers }) => {
         <StyledHeadCell
           key={header.label + index}
           isFirstColumn={index === 0}
+          isLastColumn={isHeadersLastColumn(headers.length, index)}
+          addBackground={
+            hasAnyHoveredRow && isHeadersLastColumn(headers.length, index)
+          }
           sx={{
             width: PRODUCTION_STEPS_COL_WIDTHS[index],
             pl: 16

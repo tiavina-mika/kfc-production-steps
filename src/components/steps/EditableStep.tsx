@@ -18,7 +18,8 @@ import {
   StyledStepBodyCell,
   StyledStepFirstBodyColumn,
   StyledStepText,
-  StyledProductionStepsTextarea
+  StyledProductionStepsTextarea,
+  StyledStickyLastBodyColumn
 } from "../StyledSectionComponents";
 import StepNameDescription from "./StepNameDescription";
 import {
@@ -470,7 +471,7 @@ const EditableStep: FC<Props> = ({
           <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
         )}
       </StyledStepBodyCell>
-      <StyledStepBodyCell align="left" width={widths[12]} />
+      <StyledStickyLastBodyColumn type="step" addBackground={isHover} />
     </Box>
   );
 };

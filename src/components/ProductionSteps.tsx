@@ -139,7 +139,10 @@ const ProductionSteps: FC<Props> = ({
         {/* table */}
         <ProductionStepsTable sx={{ mt: isEdition ? 0 : 10 }}>
           {/* table head */}
-          <ProductionStepsTableHead headers={headers} />
+          <ProductionStepsTableHead
+            headers={headers}
+            hasAnyHoveredRow={!!hoveredRow}
+          />
           <Box className="flexColumn">
             <Formik
               innerRef={formRef}
