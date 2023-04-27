@@ -25,7 +25,8 @@ const headers = [
   { label: "Machine" },
   { label: "Paramétrage machine" },
   { label: "Durée de l'étape (valeur)" },
-  { label: "Durée de l'étape (unité)" }
+  { label: "Durée de l'étape (unité)" },
+  { label: "" }
 ];
 
 type Props = {

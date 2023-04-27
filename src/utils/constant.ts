@@ -10,7 +10,8 @@ export const PRODUCTION_STEPS_COL_WIDTHS = [
   130,
   170,
   160,
-  177
+  177,
+  40 // delete button
 ];
 
 // export const PRODUCTION_STEPS_COL_WIDTHS2 = [

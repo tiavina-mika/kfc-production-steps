@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 
 import styled from "@emotion/styled";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, IconButton, Stack } from "@mui/material";
 import { ErrorMessage, FormikErrors } from "formik";
 
-import { getCellAlignment, roundNumber } from "../../utils/utils";
+import { roundNumber } from "../../utils/utils";
 import { COLORS, PRODUCTION_STEPS_COL_WIDTHS } from "../../utils/constant";
 import {
   computeProductionStepsRecipeOnFieldChange,
@@ -15,47 +15,13 @@ import {
 import {
   StyledErrorMessage,
   StyledProductionStepTextField,
-  StyledSectionFirstBodyColumn
+  StyledSectionFirstBodyColumn,
+  StyledStepBodyCell
 } from "../StyledSectionComponents";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const widths = PRODUCTION_STEPS_COL_WIDTHS;
 export const COMPONENT_NAME = "SECTIONS";
-
-// ----------------------------------------------- //
-// -------------------- styles ------------------- //
-// ----------------------------------------------- //
-const cellsStyle = {
-  paddingRight: 16,
-  paddingLeft: 16
-};
-
-// ----------------------------------------------- //
-// -------------- styled components -------------- //
-// ----------------------------------------------- //
-// -------------- Table -------------- //
-// body cell
-type StyledBodyCellProps = {
-  align: "left" | "center" | "right";
-  width: number;
-};
-const StyledBodyCell = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "align" && prop !== "width"
-})<StyledBodyCellProps>((props) => {
-  let defaultStyles: Record<string, any> = {
-    display: "flex",
-    alignItems: "center",
-    width: props.width,
-    alignSelf: "stretch",
-    margin: 0,
-    ...cellsStyle
-  };
-
-  if (props.align) {
-    defaultStyles.justifyContent = getCellAlignment(props.align);
-  }
-
-  return defaultStyles;
-});
 
 type StyledTextProps = {
   disabled?: boolean;
@@ -280,41 +246,52 @@ const EditableSection: FC<Props> = ({
           <StyledText disabled={false}>{section.name}</StyledText>
         )}
       </StyledSectionFirstBodyColumn>
-      <StyledBodyCell align="left" width={widths[1]}>
+      <StyledStepBodyCell align="left" width={widths[1]}>
         <StyledText>{section.inputWeight || "-"}</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[2]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[2]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[3]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[3]}>
         <StyledText>
           {section.cost ? `${roundNumber(section.cost, 3)} €` : "_"}
         </StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[4]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[4]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[5]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[5]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[6]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[6]}>
         <StyledText>{section.outputWeight || "-"}</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[7]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[7]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[8]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[8]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[9]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[9]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[10]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[10]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
-      <StyledBodyCell align="left" width={widths[11]}>
+      </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[11]}>
         <StyledText>-</StyledText>
-      </StyledBodyCell>
+      </StyledStepBodyCell>
+      {/* -------- delete icon -------- */}
+      <StyledStepBodyCell align="left" width={widths[12]} px={0}>
+        {/* {isHover && ( */}
+        <IconButton
+          onClick={(e) => _addSection(index, e)}
+          className="flexCenter"
+        >
+          <DeleteIcon />
+        </IconButton>
+        {/* )} */}
+      </StyledStepBodyCell>
     </Box>
   );
 };

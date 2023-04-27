@@ -66,6 +66,7 @@ const StepPreview: FC<Props> = ({ step, index, isEdition }) => {
       <StyledStepBodyCell align="left" width={widths[11]}>
         <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
       </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[12]} />
     </>
   );
 };

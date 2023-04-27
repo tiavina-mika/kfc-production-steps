@@ -470,6 +470,7 @@ const EditableStep: FC<Props> = ({
           <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
         )}
       </StyledStepBodyCell>
+      <StyledStepBodyCell align="left" width={widths[12]} />
     </Box>
   );
 };
