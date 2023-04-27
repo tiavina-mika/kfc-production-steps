@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 
 import styled from "@emotion/styled";
 import {
@@ -14,6 +14,7 @@ import { COLORS, PRODUCTION_STEPS_SPACINGS } from "../../utils/constant";
 import SectionPreview from "./SectionPreview";
 import EditableSection from "./EditableSection";
 import Steps from "../steps/Steps";
+import { computeProductionStepsRecipeOnFieldChange } from "../../utils/recipeUtils";
 
 export const COMPONENT_NAME = "SECTIONS";
 
@@ -111,6 +112,28 @@ const Sections: FC<Props> = ({
   machineTypes,
   kitchenAreas
 }) => {
+  const computeSectionsFormValues = useCallback(
+    (sections: Record<string, any>[], sectionIndex: number) => {
+      const newFormValues = { ...formValues };
+      newFormValues.sections = sections;
+
+      if (!sections[sectionIndex].productionSteps) return;
+      sections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
+        step.stepComponents.forEach((_, ingredientIndex) => {
+          computeProductionStepsRecipeOnFieldChange(
+            newFormValues,
+            sectionIndex,
+            stepIndex,
+            ingredientIndex
+          );
+        });
+      });
+
+      setValues(newFormValues);
+    },
+    [formValues, setValues]
+  );
+
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
   // alway has a default section, see: getDefaultSection()
@@ -167,8 +190,7 @@ const Sections: FC<Props> = ({
                 onKeyUp={onKeyUp}
                 onDeleteBlur={onDeleteBlur}
                 hasError={_hasError}
-                formValues={formValues}
-                setValues={setValues}
+                computeSectionsFormValues={computeSectionsFormValues}
               />
             ) : (
               <SectionPreview section={section} />

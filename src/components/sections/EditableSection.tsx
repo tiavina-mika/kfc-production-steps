@@ -65,8 +65,10 @@ type Props = {
   ) => Promise<FormikErrors<any>> | Promise<void>;
   hasError: (index: number) => boolean;
   onDeleteBlur: () => void;
-  formValues: Record<string, any>;
-  setValues: any;
+  computeSectionsFormValues: (
+    sections: Record<string, any>[],
+    sectionIndex: number
+  ) => void;
 };
 
 const EditableSection: FC<Props> = ({
@@ -84,8 +86,7 @@ const EditableSection: FC<Props> = ({
   onKeyUp,
   hasError,
   onDeleteBlur,
-  formValues,
-  setValues
+  computeSectionsFormValues
 }) => {
   const [changed, setChanged] = useState<number>(0);
 
@@ -121,21 +122,7 @@ const EditableSection: FC<Props> = ({
       newSections[sectionIndex].parentId = section.id;
       newSections[sectionIndex].parentPercent = 100;
 
-      const newFormValues = { ...formValues };
-      newFormValues.sections = newSections;
-
-      newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
-        step.stepComponents.forEach((_, ingredientIndex) => {
-          computeProductionStepsRecipeOnFieldChange(
-            newFormValues,
-            sectionIndex,
-            stepIndex,
-            ingredientIndex
-          );
-        });
-      });
-
-      setValues(newFormValues);
+      computeSectionsFormValues(newSections, sectionIndex);
     }
 
     if (reason === "input-change" && section) {
@@ -169,6 +156,17 @@ const EditableSection: FC<Props> = ({
 
     onDeleteBlur();
     setFieldValue("sections", newSections);
+    _stopPropagation(event);
+  };
+
+  const _removeSection = (index: number, event = null) => {
+    const newSections = [...sections];
+    newSections.splice(index, 1);
+    if (!newSections.length) {
+      newSections.splice(0, 0, getDefaultSection());
+    }
+
+    computeSectionsFormValues(newSections, index);
     _stopPropagation(event);
   };
 
@@ -285,7 +283,7 @@ const EditableSection: FC<Props> = ({
       <StyledStepBodyCell align="left" width={widths[12]} px={0}>
         {/* {isHover && ( */}
         <IconButton
-          onClick={(e) => _addSection(index, e)}
+          onClick={(e) => _removeSection(index, e)}
           className="flexCenter"
         >
           <DeleteIcon />
