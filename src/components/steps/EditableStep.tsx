@@ -4,14 +4,13 @@ import {
   Autocomplete,
   Box,
   Button,
-  IconButton,
   MenuItem,
   Select,
   Stack,
   styled
 } from "@mui/material";
 import { ErrorMessage, Field, FormikErrors } from "formik";
-import ClearIcon from "@mui/icons-material/Clear";
+
 import {
   StyledErrorMessage,
   StyledProductionStepInputBase,
@@ -42,12 +41,6 @@ const StyledTextFieldName = styled(StyledProductionStepTextField)({
     height: "100%"
   }
 });
-// const StyledTextFieldDescription = styled(StyledProductionStepTextField)({
-//   width: 391,
-//   "& .MuiInputBase-root": {
-//     height: "100%"
-//   }
-// });
 
 const FormikTextFieldName = ({ field, ...props }) => (
   <StyledTextFieldName {...field} {...props} />
@@ -56,10 +49,6 @@ const FormikTextFieldName = ({ field, ...props }) => (
 const FormikTextField = ({ field, ...props }) => (
   <StyledProductionStepTextField {...field} {...props} />
 );
-
-// const FormikTextFieldDescription = ({ field, ...props }) => (
-//   <StyledTextFieldDescription {...field} {...props} />
-// );
 
 const FormikTextarea = ({ field, ...props }) => (
   <StyledProductionStepsTextarea {...field} {...props} />
@@ -112,14 +101,6 @@ const FormikSelect = ({ form, field, children, ...props }) => {
       }}
       variant="standard"
       input={<StyledProductionStepInputBase />}
-      endAdornment={
-        <IconButton
-          sx={{ visibility: value ? "visible" : "hidden" }}
-          // onClick={handleClearClick}
-        >
-          <ClearIcon />
-        </IconButton>
-      }
     >
       {children}
     </Select>
