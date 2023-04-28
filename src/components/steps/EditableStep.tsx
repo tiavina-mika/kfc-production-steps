@@ -166,6 +166,7 @@ const EditableStep: FC<Props> = ({
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
 
+  // check if the selected value is the same as the option
   const isPointersOptionEqualToValue = (
     option: Record<string, any>,
     value: Record<string, any>
@@ -173,6 +174,7 @@ const EditableStep: FC<Props> = ({
     if (!value) return false;
     return option.objectId === value.objectId;
   };
+
   const _addStep = (index: number, event = null) => {
     const newSteps = [...steps];
     newSteps.splice(index + 1, 0, getDefaultSteps());
