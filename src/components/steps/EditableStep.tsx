@@ -4,12 +4,14 @@ import {
   Autocomplete,
   Box,
   Button,
+  IconButton,
   MenuItem,
   Select,
   Stack,
   styled
 } from "@mui/material";
 import { ErrorMessage, Field, FormikErrors } from "formik";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
   StyledErrorMessage,
@@ -132,6 +134,10 @@ type Props = {
   // onDeleteBlur: () => void;
   machineTypes: Record<string, any>[];
   kitchenAreas: Record<string, any>[];
+  computeStepsFormValues: (
+    steps: Record<string, any>,
+    sectionIndex: number
+  ) => void;
 };
 
 const EditableStep: FC<Props> = ({
@@ -154,11 +160,19 @@ const EditableStep: FC<Props> = ({
   // onKeyDown
   hasError,
   machineTypes,
-  kitchenAreas
+  kitchenAreas,
+  computeStepsFormValues
   // onDeleteBlur
 }) => {
   const _stopPropagation = (event) => event && event.stopPropagation();
 
+  const isPointersOptionEqualToValue = (
+    option: Record<string, any>,
+    value: Record<string, any>
+  ): boolean => {
+    if (!value) return false;
+    return option.objectId === value.objectId;
+  };
   const _addStep = (index: number, event = null) => {
     const newSteps = [...steps];
     newSteps.splice(index + 1, 0, getDefaultSteps());
@@ -169,6 +183,18 @@ const EditableStep: FC<Props> = ({
       computeStepData(newStep, "stepComponents");
     }
     setFieldValue(`sections[${sectionIndex}].productionSteps`, newSteps);
+    _stopPropagation(event);
+  };
+
+  const _removeStep = (index, event = null) => {
+    const newSteps = [...steps];
+    newSteps.splice(index, 1);
+    if (!newSteps.length) {
+      newSteps.splice(0, 0, getDefaultSteps());
+    }
+
+    computeStepsFormValues(newSteps, sectionIndex);
+
     _stopPropagation(event);
   };
 
@@ -335,9 +361,7 @@ const EditableStep: FC<Props> = ({
               name={`sections[${sectionIndex}].productionSteps[${index}].kitchenArea`}
               component={FormikAutocomplete}
               options={kitchenAreas}
-              isOptionEqualToValue={(option, value) =>
-                option.objectId === value.objectId
-              }
+              isOptionEqualToValue={isPointersOptionEqualToValue}
               getOptionLabel={(option) => option.name}
               readOnly
             />
@@ -360,9 +384,7 @@ const EditableStep: FC<Props> = ({
               name={`sections[${sectionIndex}].productionSteps[${index}].machineType`}
               component={FormikAutocomplete}
               options={machineTypes}
-              isOptionEqualToValue={(option, value) =>
-                option.objectId === value.objectId
-              }
+              isOptionEqualToValue={isPointersOptionEqualToValue}
               getOptionLabel={(option) => option.name}
               readOnly
             />
@@ -471,7 +493,17 @@ const EditableStep: FC<Props> = ({
           <StyledStepText>{step.stepDurationUnit || "-"}</StyledStepText>
         )}
       </StyledStepBodyCell>
-      <StyledStickyLastBodyColumn type="step" addBackground={isHover} />
+      {/* -------- delete icon -------- */}
+      <StyledStickyLastBodyColumn type="step" addBackground={isHover}>
+        {isHover && (
+          <IconButton
+            onClick={(e) => _removeStep(index, e)}
+            className="flexCenter"
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
+      </StyledStickyLastBodyColumn>
     </Box>
   );
 };

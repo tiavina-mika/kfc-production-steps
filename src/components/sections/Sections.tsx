@@ -134,6 +134,31 @@ const Sections: FC<Props> = ({
     [formValues, setValues]
   );
 
+  const computeStepsFormValues = useCallback(
+    (steps: Record<string, any>, sectionIndex: number) => {
+      const newFormValues = { ...formValues };
+
+      const newSections = [...sections]
+      if (!newSections[sectionIndex]) return
+      newSections[sectionIndex].productionSteps = steps
+
+      newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
+        step.stepComponents.forEach((_, ingredientIndex) => {
+          computeProductionStepsRecipeOnFieldChange(
+            newFormValues,
+            sectionIndex,
+            stepIndex,
+            ingredientIndex
+          );
+        });
+      });
+
+      newFormValues.sections = newSections;
+      setValues(newFormValues);
+    },
+    [sections, formValues, setValues]
+  );
+
   // do not display sections row in preview if it's empty
   // dsiplay an empty row if sections is empty in edition mode
   // alway has a default section, see: getDefaultSection()
@@ -211,6 +236,7 @@ const Sections: FC<Props> = ({
               machineTypes={machineTypes}
               kitchenAreas={kitchenAreas}
               setFieldValue={setFieldValue}
+              computeStepsFormValues={computeStepsFormValues}
               // onKeyDown={(e) => _onKeyDown(e, section)}
             />
           </AccordionDetails>

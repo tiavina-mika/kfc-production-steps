@@ -658,20 +658,23 @@ export const computeProductionStepsRecipeOnFieldChange = (
 
       if (stepComponentIndex !== null) {
         const stepComponent = step.stepComponents[stepComponentIndex];
-        const {
-          cost,
-          realCost,
-          grossWeight,
-          netWeight,
-          transformRate,
-          cookingModeLabel
-        }: Record<string, any> = computeIngredientData(stepComponent);
-        stepComponent.grossWeight = grossWeight;
-        stepComponent.netWeight = netWeight;
-        stepComponent.cost = cost;
-        stepComponent.realCost = realCost;
-        stepComponent.transformRate = transformRate;
-        stepComponent.cookingModeLabel = cookingModeLabel;
+
+        if (stepComponent) {
+          const {
+            cost,
+            realCost,
+            grossWeight,
+            netWeight,
+            transformRate,
+            cookingModeLabel
+          }: Record<string, any> = computeIngredientData(stepComponent);
+          stepComponent.grossWeight = grossWeight;
+          stepComponent.netWeight = netWeight;
+          stepComponent.cost = cost;
+          stepComponent.realCost = realCost;
+          stepComponent.transformRate = transformRate;
+          stepComponent.cookingModeLabel = cookingModeLabel;
+        }
       }
 
       computeStepData(step, "stepComponents");
