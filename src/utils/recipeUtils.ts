@@ -344,10 +344,7 @@ export const parseStepsToObject = (steps, percent = false) => {
   });
 };
 
-export const parseProductionStepsToObject = (
-  steps,
-  percent = false,
-) => {
+export const parseProductionStepsToObject = (steps, percent = false) => {
   return steps.map((step) => {
     return {
       objectId: step.objectId,
@@ -432,10 +429,7 @@ export function computeIngredientData(ingredient) {
 }
 
 // simulate a parse object
-export const parseSectionToObject = (
-  sections,
-  percent = false,
-) => {
+export const parseSectionToObject = (sections, percent = false) => {
   return sections.map((section) => {
     return {
       id: section.objectId,
@@ -449,10 +443,7 @@ export const parseSectionToObject = (
       reusable: false,
       steps: section.steps ? parseStepsToObject(section.steps, percent) : [],
       productionSteps: section.productionSteps
-        ? parseProductionStepsToObject(
-            section.productionSteps,
-            percent,
-          )
+        ? parseProductionStepsToObject(section.productionSteps, percent)
         : [],
       error: section.name && section.name !== "" ? false : true,
       parentId: section.parentId ? section.parentId : null,
@@ -601,7 +592,7 @@ function computeDisplayData(
 
 export const getRecipeSectionsFormInitialValues = (
   recipe,
-  isProductionSteps = false,
+  isProductionSteps = false
 ) => {
   const values: Record<string, any> = {};
 
@@ -637,6 +628,53 @@ export const getRecipeSectionsFormInitialValues = (
   }
 
   return values;
+};
+
+/**
+ * Here we assume that a computed data can change only if numbered values changes in an ingredient.
+ * If ingredientIndex is null, it means it's a new or a removed ingredient
+ */
+export const computeStepsRecipeOnFieldChange = (
+  recipe,
+  sectionIndex = null,
+  stepIndex = null,
+  stepComponentIndex = null
+) => {
+  if (sectionIndex !== null) {
+    // to avoid 0
+    const section = recipe.sections[sectionIndex];
+
+    if (stepIndex !== null) {
+      const step = section.steps[stepIndex];
+
+      if (stepComponentIndex !== null) {
+        const stepComponent = step.ingredients[stepComponentIndex];
+
+        if (stepComponent) {
+          const {
+            cost,
+            realCost,
+            grossWeight,
+            netWeight,
+            transformRate,
+            cookingModeLabel
+          }: Record<string, any> = computeIngredientData(stepComponent);
+          stepComponent.grossWeight = grossWeight;
+          stepComponent.netWeight = netWeight;
+          stepComponent.cost = cost;
+          stepComponent.realCost = realCost;
+          stepComponent.transformRate = transformRate;
+          stepComponent.cookingModeLabel = cookingModeLabel;
+        }
+      }
+
+      computeStepData(step);
+    }
+
+    computeSectionData(section);
+  }
+
+  computeRecipeData(recipe);
 };
 
 /**

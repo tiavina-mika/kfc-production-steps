@@ -138,9 +138,11 @@ const Sections: FC<Props> = ({
     (steps: Record<string, any>, sectionIndex: number) => {
       const newFormValues = { ...formValues };
 
-      const newSections = [...sections]
-      if (!newSections[sectionIndex]) return
-      newSections[sectionIndex].productionSteps = steps
+      const newSections = [...sections];
+      if (!newSections[sectionIndex]) return;
+
+      // production steps
+      newSections[sectionIndex].productionSteps = steps;
 
       newSections[sectionIndex].productionSteps.forEach((step, stepIndex) => {
         step.stepComponents.forEach((_, ingredientIndex) => {
