@@ -501,6 +501,7 @@ const EditableStep: FC<Props> = ({
           <IconButton
             onClick={(e) => _removeStep(index, e)}
             className="flexCenter"
+            disableRipple
           >
             <DeleteIcon />
           </IconButton>

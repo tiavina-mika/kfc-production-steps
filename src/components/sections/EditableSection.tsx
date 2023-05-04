@@ -285,6 +285,7 @@ const EditableSection: FC<Props> = ({
           <IconButton
             onClick={(e) => _removeSection(index, e)}
             className="flexCenter"
+            disableRipple
           >
             <DeleteIcon />
           </IconButton>
