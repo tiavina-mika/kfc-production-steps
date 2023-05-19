@@ -140,16 +140,19 @@ export const StyledStickyLastBodyColumn = styled(
 // --------------------------------------- //
 type StyledStepFirstBodyColumnProps = {
   leftStep?: number;
+  isReusable?: boolean;
 };
 export const StyledStepFirstBodyColumn = styled(
   (props: BoxProps) => <Box {...props} sx={{ ...stickyStyle }} />,
   {
-    shouldForwardProp: (prop) => prop !== "leftStep"
+    shouldForwardProp: (prop) => prop !== "leftStep" && prop !== "isReusable"
   }
-)<StyledStepFirstBodyColumnProps>(({ leftStep = 0 }) => ({
+)<StyledStepFirstBodyColumnProps>(({ leftStep = 0, isReusable = false }) => ({
   paddingLeft: PRODUCTION_STEPS_SPACINGS.STEP_FIRST_COL_PL + leftStep,
   paddingRight: 8,
-  backgroundColor: COLORS.PRODUCTION_STEPS_GREY,
+  backgroundColor: isReusable
+    ? COLORS.REUSABLE_PRODUCTION_STEP_YELLOW
+    : COLORS.PRODUCTION_STEPS_GREY,
   width: widths[0],
   paddingTop: 16,
   paddingBottom: 17,
