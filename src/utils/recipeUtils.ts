@@ -365,7 +365,8 @@ export const parseProductionStepsToObject = (steps, percent = false) => {
       machineType: step.machineType || null,
       machineSetting: step.machineSetting || "",
       stepDuration: step.stepDuration || 0,
-      stepDurationUnit: step.stepDurationUnit || ""
+      stepDurationUnit: step.stepDurationUnit || "",
+      isReusable: !!step.isReusable
     };
   });
 };

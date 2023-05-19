@@ -20,7 +20,10 @@ type Props = {
 const StepPreview: FC<Props> = ({ step, index, isEdition }) => {
   return (
     <>
-      <StyledStepFirstBodyColumn className="flexRow center">
+      <StyledStepFirstBodyColumn
+        className="flexRow center"
+        isReusable={step.isReusable}
+      >
         <StepNameDescription
           name={step.name}
           description={

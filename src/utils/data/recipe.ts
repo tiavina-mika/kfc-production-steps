@@ -2013,6 +2013,656 @@ export const recipe = {
           "parentPercent": 0,
           "grossWeight": 1.67415,
           "productionSteps": [
+            {
+                "createdAt": "2023-03-20T19:30:42.281Z",
+                "updatedAt": "2023-04-28T12:39:45.960Z",
+                objectId: "T3RxL4Bkd",
+                name: "Reusable step 01",
+                isReusable: true,
+                productionSteps: [
+                  {
+                      "stepComponents": [
+                          {
+                              "grossWeight": 1.055,
+                              "cookingMode": {
+                                  "name": "vapeur/blanchi",
+                                  "createdAt": "2019-01-24T15:24:25.868Z",
+                                  "updatedAt": "2019-01-24T15:24:25.868Z",
+                                  "objectId": "D1L6gKE5AA",
+                                  "__type": "Object",
+                                  "className": "CookingMode"
+                              },
+                              "supplierItem": {
+                                  "cookingModes": [
+                                      {
+                                          "cookingMode": {
+                                              "name": "cru/pas de cuisson",
+                                              "createdAt": "2019-01-24T15:24:25.717Z",
+                                              "updatedAt": "2019-01-24T15:24:25.717Z",
+                                              "objectId": "DInHvLSktg",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "vapeur/blanchi",
+                                              "createdAt": "2019-01-24T15:24:25.868Z",
+                                              "updatedAt": "2019-01-24T15:24:25.868Z",
+                                              "objectId": "D1L6gKE5AA",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 270
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "sauteuse",
+                                              "createdAt": "2019-01-24T15:24:25.899Z",
+                                              "updatedAt": "2019-01-24T15:24:25.899Z",
+                                              "objectId": "Omfuk4Oasf",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "four",
+                                              "createdAt": "2019-01-24T15:24:25.928Z",
+                                              "updatedAt": "2019-01-24T15:24:25.928Z",
+                                              "objectId": "ZiN1CF4PyJ",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "longue",
+                                              "createdAt": "2019-01-24T15:24:25.960Z",
+                                              "updatedAt": "2019-01-24T15:24:25.960Z",
+                                              "objectId": "cquKyWB3CZ",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 220
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 1",
+                                              "createdAt": "2019-03-26T16:51:49.892Z",
+                                              "updatedAt": "2019-03-26T16:51:49.892Z",
+                                              "objectId": "VPYiIocv54",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 245
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 2",
+                                              "createdAt": "2019-03-26T16:51:49.939Z",
+                                              "updatedAt": "2019-03-26T16:51:49.939Z",
+                                              "objectId": "IYPrKjEUvV",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 94
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 3",
+                                              "createdAt": "2019-03-26T16:51:49.954Z",
+                                              "updatedAt": "2019-03-26T16:51:49.954Z",
+                                              "objectId": "AAVNNi5lER",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 350
+                                      }
+                                  ],
+                                  "type": "RAW_MATERIAL",
+                                  "name": "QUINOA FRANCAIS",
+                                  "supplierArticleId": "CA9002",
+                                  "supplierName": "BIOCOOP",
+                                  "genericId": 225,
+                                  "pricePerKg": 5.85,
+                                  "weightPerKg": 5,
+                                  "orderUnitWeight": "SAC DE 5KG",
+                                  "storageArea": "Packaging (Palettes Epicerie)",
+                                  "supplier": {
+                                      "__type": "Pointer",
+                                      "className": "Suppliers",
+                                      "objectId": "YFeKllhTs8"
+                                  },
+                                  "createdAt": "2022-01-10T11:44:42.237Z",
+                                  "updatedAt": "2023-04-07T14:00:22.127Z",
+                                  "commercialName": {
+                                      "name": "quinoa français bio",
+                                      "createdAt": "2019-01-17T17:18:09.064Z",
+                                      "updatedAt": "2023-04-07T14:00:32.967Z",
+                                      "group": {
+                                          "__type": "Pointer",
+                                          "className": "GroupsIngredients",
+                                          "objectId": "UcKwB0N30A"
+                                      },
+                                      "conservationMode": 2,
+                                      "firstOrigin": 2,
+                                      "firstOriginAverage": 100,
+                                      "label": 1,
+                                      "secondOriginAverage": 0,
+                                      "season": [
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                          "11",
+                                          "12"
+                                      ],
+                                      "recipeQuantity": 64,
+                                      "complexity": 3,
+                                      "secondOrigin": 0,
+                                      "objectId": "hBY1vA6VG6",
+                                      "__type": "Object",
+                                      "className": "CommercialName"
+                                  },
+                                  "conservationMode": "A température ambiante/frais",
+                                  "firstOrigin": "National",
+                                  "firstOriginAverage": 100,
+                                  "label": "Bio",
+                                  "recipeQuantity": 64,
+                                  "secondOrigin": "Aucun",
+                                  "units": {
+                                      "order": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 2
+                                          },
+                                          "weight": 5,
+                                          "price": 29.25
+                                      },
+                                      "billing": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 2
+                                          },
+                                          "weight": 5,
+                                          "price": 29.25
+                                      },
+                                      "stock": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 2
+                                          },
+                                          "weight": 5,
+                                          "price": 29.25
+                                      },
+                                      "conversions": [
+                                          {
+                                              "value": 5,
+                                              "type": 2
+                                          }
+                                      ]
+                                  },
+                                  "supplierArticleName": "QUINOA FRANCE 5KG (PALETTE DE 98 SACS)",
+                                  "site": {
+                                      "__type": "Pointer",
+                                      "className": "Site",
+                                      "objectId": "UPK3lbT78C"
+                                  },
+                                  "stockZone": {
+                                      "__type": "Pointer",
+                                      "className": "StockZone",
+                                      "objectId": "ewmEK71A7N"
+                                  },
+                                  "isActive": false,
+                                  "useOnRecipe": true,
+                                  "availabilityAtSupplier": true,
+                                  "objectId": "uJtFrZxcpp",
+                                  "__type": "Object",
+                                  "className": "SupplierItems"
+                              },
+                              "complexity": 3
+                          },
+                          {
+                              "grossWeight": 0.0825,
+                              "cookingMode": {
+                                  "name": "vapeur/blanchi",
+                                  "createdAt": "2019-01-24T15:24:25.868Z",
+                                  "updatedAt": "2019-01-24T15:24:25.868Z",
+                                  "objectId": "D1L6gKE5AA",
+                                  "__type": "Object",
+                                  "className": "CookingMode"
+                              },
+                              "supplierItem": {
+                                  "cookingModes": [
+                                      {
+                                          "cookingMode": {
+                                              "name": "cru/pas de cuisson",
+                                              "createdAt": "2019-01-24T15:24:25.717Z",
+                                              "updatedAt": "2019-01-24T15:24:25.717Z",
+                                              "objectId": "DInHvLSktg",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "vapeur/blanchi",
+                                              "createdAt": "2019-01-24T15:24:25.868Z",
+                                              "updatedAt": "2019-01-24T15:24:25.868Z",
+                                              "objectId": "D1L6gKE5AA",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 0
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "sauteuse",
+                                              "createdAt": "2019-01-24T15:24:25.899Z",
+                                              "updatedAt": "2019-01-24T15:24:25.899Z",
+                                              "objectId": "Omfuk4Oasf",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 80
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "four",
+                                              "createdAt": "2019-01-24T15:24:25.928Z",
+                                              "updatedAt": "2019-01-24T15:24:25.928Z",
+                                              "objectId": "ZiN1CF4PyJ",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 65
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "longue",
+                                              "createdAt": "2019-01-24T15:24:25.960Z",
+                                              "updatedAt": "2019-01-24T15:24:25.960Z",
+                                              "objectId": "cquKyWB3CZ",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 45
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 1",
+                                              "createdAt": "2019-03-26T16:51:49.892Z",
+                                              "updatedAt": "2019-03-26T16:51:49.892Z",
+                                              "objectId": "VPYiIocv54",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 40
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 2",
+                                              "createdAt": "2019-03-26T16:51:49.939Z",
+                                              "updatedAt": "2019-03-26T16:51:49.939Z",
+                                              "objectId": "IYPrKjEUvV",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 50
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 3",
+                                              "createdAt": "2019-03-26T16:51:49.954Z",
+                                              "updatedAt": "2019-03-26T16:51:49.954Z",
+                                              "objectId": "AAVNNi5lER",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 30
+                                      }
+                                  ],
+                                  "type": "RAW_MATERIAL",
+                                  "name": "EAU",
+                                  "supplierArticleId": null,
+                                  "supplierName": "EAU",
+                                  "genericId": 3660,
+                                  "pricePerKg": 0,
+                                  "weightPerKg": 1,
+                                  "orderUnitWeight": "Kilogramme",
+                                  "storageArea": "Economat",
+                                  "supplier": {
+                                      "__type": "Pointer",
+                                      "className": "Suppliers",
+                                      "objectId": "jHoSXgB8p7"
+                                  },
+                                  "createdAt": "2022-01-10T11:44:42.020Z",
+                                  "updatedAt": "2023-04-11T05:53:07.033Z",
+                                  "commercialName": {
+                                      "name": "eau",
+                                      "createdAt": "2019-01-17T17:18:09.357Z",
+                                      "updatedAt": "2023-04-11T05:53:17.434Z",
+                                      "group": {
+                                          "__type": "Pointer",
+                                          "className": "GroupsIngredients",
+                                          "objectId": "KneB9hoizt"
+                                      },
+                                      "conservationMode": 1,
+                                      "firstOrigin": 3,
+                                      "firstOriginAverage": 100,
+                                      "label": 0,
+                                      "secondOriginAverage": 0,
+                                      "season": [
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                          "11",
+                                          "12"
+                                      ],
+                                      "recipeQuantity": 827,
+                                      "complexity": 1,
+                                      "exportEtiquettable": 1681192397418,
+                                      "secondOrigin": 0,
+                                      "objectId": "UhDECPEONt",
+                                      "__type": "Object",
+                                      "className": "CommercialName"
+                                  },
+                                  "recipeQuantity": 828,
+                                  "units": {
+                                      "order": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 0
+                                          },
+                                          "weight": 1,
+                                          "price": 0
+                                      },
+                                      "billing": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 0
+                                          },
+                                          "weight": 1,
+                                          "price": 0
+                                      },
+                                      "stock": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 0
+                                          },
+                                          "weight": 1,
+                                          "price": 0
+                                      },
+                                      "conversions": []
+                                  },
+                                  "supplierArticleName": "EAU",
+                                  "site": {
+                                      "__type": "Pointer",
+                                      "className": "Site",
+                                      "objectId": "hNvU2RuAZW"
+                                  },
+                                  "stockZone": {
+                                      "__type": "Pointer",
+                                      "className": "StockZone",
+                                      "objectId": "OrNvXeZs56"
+                                  },
+                                  "isActive": true,
+                                  "useOnRecipe": true,
+                                  "availabilityAtSupplier": true,
+                                  "objectId": "FymZT9QEny",
+                                  "__type": "Object",
+                                  "className": "SupplierItems"
+                              },
+                              "complexity": 1
+                          },
+                          {
+                              "grossWeight": 0.00165,
+                              "cookingMode": {
+                                  "name": "vapeur/blanchi",
+                                  "createdAt": "2019-01-24T15:24:25.868Z",
+                                  "updatedAt": "2019-01-24T15:24:25.868Z",
+                                  "objectId": "D1L6gKE5AA",
+                                  "__type": "Object",
+                                  "className": "CookingMode"
+                              },
+                              "supplierItem": {
+                                  "cookingModes": [
+                                      {
+                                          "cookingMode": {
+                                              "name": "cru/pas de cuisson",
+                                              "createdAt": "2019-01-24T15:24:25.717Z",
+                                              "updatedAt": "2019-01-24T15:24:25.717Z",
+                                              "objectId": "DInHvLSktg",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "vapeur/blanchi",
+                                              "createdAt": "2019-01-24T15:24:25.868Z",
+                                              "updatedAt": "2019-01-24T15:24:25.868Z",
+                                              "objectId": "D1L6gKE5AA",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "sauteuse",
+                                              "createdAt": "2019-01-24T15:24:25.899Z",
+                                              "updatedAt": "2019-01-24T15:24:25.899Z",
+                                              "objectId": "Omfuk4Oasf",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "four",
+                                              "createdAt": "2019-01-24T15:24:25.928Z",
+                                              "updatedAt": "2019-01-24T15:24:25.928Z",
+                                              "objectId": "ZiN1CF4PyJ",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "longue",
+                                              "createdAt": "2019-01-24T15:24:25.960Z",
+                                              "updatedAt": "2019-01-24T15:24:25.960Z",
+                                              "objectId": "cquKyWB3CZ",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 1",
+                                              "createdAt": "2019-03-26T16:51:49.892Z",
+                                              "updatedAt": "2019-03-26T16:51:49.892Z",
+                                              "objectId": "VPYiIocv54",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 10
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 2",
+                                              "createdAt": "2019-03-26T16:51:49.939Z",
+                                              "updatedAt": "2019-03-26T16:51:49.939Z",
+                                              "objectId": "IYPrKjEUvV",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      },
+                                      {
+                                          "cookingMode": {
+                                              "name": "Spécial 3",
+                                              "createdAt": "2019-03-26T16:51:49.954Z",
+                                              "updatedAt": "2019-03-26T16:51:49.954Z",
+                                              "objectId": "AAVNNi5lER",
+                                              "__type": "Object",
+                                              "className": "CookingMode"
+                                          },
+                                          "transformRate": 100
+                                      }
+                                  ],
+                                  "type": "RAW_MATERIAL",
+                                  "name": "SEL FIN",
+                                  "supplierArticleId": "GU0146",
+                                  "supplierName": "BIOCOOP",
+                                  "genericId": 589,
+                                  "pricePerKg": 1.6,
+                                  "weightPerKg": 1,
+                                  "orderUnitWeight": "kg",
+                                  "storageArea": "Economat",
+                                  "supplier": {
+                                      "__type": "Pointer",
+                                      "className": "Suppliers",
+                                      "objectId": "YFeKllhTs8"
+                                  },
+                                  "createdAt": "2022-01-10T11:44:43.453Z",
+                                  "updatedAt": "2023-04-11T05:53:07.251Z",
+                                  "commercialName": {
+                                      "name": "sel fin",
+                                      "createdAt": "2019-01-17T17:18:06.672Z",
+                                      "updatedAt": "2023-04-11T05:53:15.343Z",
+                                      "group": {
+                                          "__type": "Pointer",
+                                          "className": "GroupsIngredients",
+                                          "objectId": "0SVGixMf5R"
+                                      },
+                                      "conservationMode": 1,
+                                      "firstOrigin": 6,
+                                      "firstOriginAverage": 100,
+                                      "label": 2,
+                                      "secondOriginAverage": 0,
+                                      "season": [
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                          "11",
+                                          "12"
+                                      ],
+                                      "recipeQuantity": 813,
+                                      "complexity": 1,
+                                      "exportEtiquettable": 1681192395328,
+                                      "secondOrigin": 2,
+                                      "objectId": "RMLAN6owiK",
+                                      "__type": "Object",
+                                      "className": "CommercialName"
+                                  },
+                                  "conservationMode": "A température ambiante/frais",
+                                  "firstOrigin": "Reste du monde",
+                                  "firstOriginAverage": 100,
+                                  "label": "AOP/AOC/IGP",
+                                  "recipeQuantity": 813,
+                                  "secondOrigin": "National",
+                                  "units": {
+                                      "order": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 0
+                                          },
+                                          "weight": 1,
+                                          "price": 1.6
+                                      },
+                                      "billing": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 0
+                                          },
+                                          "weight": 1,
+                                          "price": 1.6
+                                      },
+                                      "stock": {
+                                          "unity": {
+                                              "name": "",
+                                              "quantity": 1,
+                                              "unity": 0
+                                          },
+                                          "weight": 1,
+                                          "price": 1.6
+                                      },
+                                      "conversions": []
+                                  },
+                                  "supplierArticleName": "SEL FIN IGP 10KG",
+                                  "site": {
+                                      "__type": "Pointer",
+                                      "className": "Site",
+                                      "objectId": "UPK3lbT78C"
+                                  },
+                                  "stockZone": {
+                                      "__type": "Pointer",
+                                      "className": "StockZone",
+                                      "objectId": "ewmEK71A7N"
+                                  },
+                                  "isActive": false,
+                                  "useOnRecipe": true,
+                                  "availabilityAtSupplier": true,
+                                  "objectId": "knGAi6Yuzx",
+                                  "__type": "Object",
+                                  "className": "SupplierItems"
+                              },
+                              "complexity": 1
+                          }
+                      ],
+                      "name": "",
+                      "description": "Reusable faire cuire le quinoa au four vapeur pendant 27 min.",
+                      "grossWeight": 1.13915,
+                      "netWeight": 2.85015,
+                      "cost": 6.17439,
+                      "realCost": 6.17439,
+                      "createdAt": "2023-03-20T19:30:42.281Z",
+                      "updatedAt": "2023-04-28T12:39:45.960Z",
+                      "objectId": "vbdgBLLBha",
+                      "__type": "Object",
+                      "className": "ProductionStep"
+                  },
+                ]
+              },
               {
                   "stepComponents": [
                       {

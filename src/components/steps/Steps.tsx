@@ -36,32 +36,38 @@ const StyledAccordion = styled((props: AccordionProps) => (
 
 type StyledAccordionSummaryProps = {
   expandedIconLeftStep?: number;
+  isReusable?: boolean;
 };
 const StyledAccordionSummary = styled(
   (props: AccordionSummaryProps) => <AccordionSummary {...props} />,
   {
-    shouldForwardProp: (prop) => prop !== "expandedIconLeftStep"
+    shouldForwardProp: (prop) =>
+      prop !== "expandedIconLeftStep" && prop !== "isReusable"
   }
-)<StyledAccordionSummaryProps>(({ expandedIconLeftStep = 0 }) => ({
-  flexDirection: "row-reverse",
-  position: "relative",
-  // opened and closed expanded icon
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded,& .MuiAccordionSummary-expandIconWrapper": {
-    position: "sticky",
-    left:
-      PRODUCTION_STEPS_SPACINGS.ACCORDION_EXPANDED_ICON_LEFT +
-      PRODUCTION_STEPS_SPACINGS.STEP_FIRST_COL_PL_DIFF +
-      expandedIconLeftStep
-  },
-  // row
-  "& .MuiAccordionSummary-content": {
-    padding: 0,
-    margin: 0,
-    borderBottom: "1px solid #cccccc",
-    marginLeft: -28, // important! for the summary to not take account of the expand icon space
-    backgroundColor: COLORS.PRODUCTION_STEPS_GREY
-  }
-}));
+)<StyledAccordionSummaryProps>(
+  ({ expandedIconLeftStep = 0, isReusable = false }) => ({
+    flexDirection: "row-reverse",
+    position: "relative",
+    // opened and closed expanded icon
+    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded,& .MuiAccordionSummary-expandIconWrapper": {
+      position: "sticky",
+      left:
+        PRODUCTION_STEPS_SPACINGS.ACCORDION_EXPANDED_ICON_LEFT +
+        PRODUCTION_STEPS_SPACINGS.STEP_FIRST_COL_PL_DIFF +
+        expandedIconLeftStep
+    },
+    // row
+    "& .MuiAccordionSummary-content": {
+      padding: 0,
+      margin: 0,
+      borderBottom: "1px solid #cccccc",
+      marginLeft: -28, // important! for the summary to not take account of the expand icon space
+      backgroundColor: isReusable
+        ? COLORS.REUSABLE_PRODUCTION_STEP_YELLOW
+        : COLORS.PRODUCTION_STEPS_GREY
+    }
+  })
+);
 
 type Props = {
   steps: Record<string, any>[];
@@ -95,7 +101,10 @@ type Props = {
   // onDeleteBlur: () => void;
   machineTypes: Record<string, any>[];
   kitchenAreas: Record<string, any>[];
-  computeStepsFormValues: (steps: Record<string, any>, sectionIndex: number) => void;
+  computeStepsFormValues: (
+    steps: Record<string, any>,
+    sectionIndex: number
+  ) => void;
 };
 
 const Steps: FC<Props> = ({
@@ -165,6 +174,7 @@ const Steps: FC<Props> = ({
             expandIcon={<img alt="chevron" src="/icons/chevron-down.svg" />}
             onMouseEnter={() => onRowHover(COMPONENT_NAME, index, sectionIndex)}
             onMouseLeave={onRowBlur}
+            isReusable={step.isReusable}
           >
             {isEdition ? (
               <EditableStep
